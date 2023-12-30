@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// halaman pertama masuk di FrontPage untuk login register
 Route::get('/', function () {
-    return view('welcome');
+    return view('FrontPage');
 });
+Route::post('/login', [UserController::class, 'login']);
