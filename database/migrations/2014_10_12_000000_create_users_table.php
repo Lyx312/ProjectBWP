@@ -11,14 +11,29 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('items')) {
+            Schema::table('items', function (Blueprint $table) {
+                $table->dropForeign(['item_seller']);
+            });
+        }
+        if (Schema::hasTable('orders')) {
+            Schema::table('orders', function (Blueprint $table) {
+                $table->dropForeign(['order_buyer']);
+            });
+        }
+        Schema::dropIfExists('users');
+
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->string("username", 100)->primary();
+            $table->string("password", 100);
+            $table->string("name", 100);
+            $table->string("email", 100)->unique();
+            $table->string("phone_number", 15);
+            $table->integer("balance", false, true)->default(0);
+            $table->tinyInteger("role");
+            $table->boolean("is_banned")->default(0);
+            $table->timestampsTz();
+            $table->softDeletesTz();
         });
     }
 
@@ -27,6 +42,17 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (Schema::hasTable('items')) {
+            Schema::table('items', function (Blueprint $table) {
+                $table->dropForeign(['item_seller']);
+            });
+        }
+        if (Schema::hasTable('orders')) {
+            Schema::table('orders', function (Blueprint $table) {
+                $table->dropForeign(['order_buyer']);
+            });
+        }
+
         Schema::dropIfExists('users');
     }
 };
