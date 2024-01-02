@@ -12,6 +12,47 @@ class OrderDetailSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        OrderDetail::create(
+            [
+                "detail_id" => 1,
+                "detail_order_id" => 1,
+                "detail_item_id" => 1,
+                "detail_item_price" => 2390000,
+                "detail_item_quantity" => 2,
+                "detail_subtotal" => 4780000
+            ],
+            [
+                "detail_id" => 2,
+                "detail_order_id" => 1,
+                "detail_item_id" => 3,
+                "detail_item_price" => 449000,
+                "detail_item_quantity" => 1,
+                "detail_subtotal" => 449000
+            ],
+            [
+                "detail_id" => 3,
+                "detail_order_id" => 2,
+                "detail_item_id" => 4,
+                "detail_item_price" => 119000,
+                "detail_item_quantity" => 3,
+                "detail_subtotal" => 357000
+            ],
+            [
+                "detail_id" => 4,
+                "detail_order_id" => 3,
+                "detail_item_id" => 1,
+                "detail_item_price" => 2390000,
+                "detail_item_quantity" => 1,
+                "detail_subtotal" => 2390000
+            ],
+            [
+                "detail_id" => 5,
+                "detail_order_id" => 3,
+                "detail_item_id" => 5,
+                "detail_item_price" => 1290000,
+                "detail_item_quantity" => 1,
+                "detail_subtotal" => 1290000
+            ],
+        );
     }
 }

@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string("name", 100);
             $table->string("email", 100)->unique();
             $table->string("phone_number", 15);
+            $table->string("address", 200);
             $table->integer("balance", false, true)->default(0);
             $table->tinyInteger("role");
             $table->boolean("is_banned")->default(0);

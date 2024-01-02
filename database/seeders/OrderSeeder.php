@@ -12,6 +12,22 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Order::create(
+            [
+                "order_id" => 1,
+                "order_buyer" => "bobi",
+                "order_total" => 5229000
+            ],
+            [
+                "order_id" => 2,
+                "order_buyer" => "andi",
+                "order_total" => 357000
+            ],
+            [
+                "order_id" => 3,
+                "order_buyer" => "suti",
+                "order_total" => 3680000
+            ],
+        );
     }
 }
