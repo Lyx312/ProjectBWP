@@ -22,7 +22,6 @@ return new class extends Migration
             $table->id("category_id");
             $table->string("category_name", 30);
             $table->timestampsTz();
-            $table->softDeletesTz();
         });
     }
 
