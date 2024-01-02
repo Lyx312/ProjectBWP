@@ -1,4 +1,4 @@
-@extends("Home")
+@extends("layout.Home")
 
 @section("content")
 

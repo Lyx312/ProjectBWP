@@ -1,4 +1,4 @@
-@extends("FrontPage")
+@extends("layout.FrontPage")
 
 @section("content")
     <div class="container mt-5">
@@ -8,28 +8,43 @@
                     <h2 class="text-center">E-commerce Registration</h2>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('register') }}" method="post">
+                    <form action="{{ route('register-process') }}" method="post">
                         @csrf
                         <div class="mb-3">
                             <label for="username" class="form-label">Username:</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
+                            <input type="text" class="form-control" id="username" name="username">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name">
                         </div>
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Password:</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                            <input type="password" class="form-control" id="password" name="password">
                         </div>
 
                         <div class="mb-3">
                             <label for="password_confirmation" class="form-label">Confirm Password:</label>
-                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password_confirmation" class="form-label">Email:</label>
+                            <input type="password" class="form-control" id="email" name="email">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password_confirmation" class="form-label">Phone Number:</label>
+                            <input type="password" class="form-control" id="phone_number" name="phone_number">
                         </div>
 
                         <button type="submit" class="btn btn-success">Register</button>
                     </form>
                 </div>
                 <div class="card-footer text-center">
-                    <p>Already have an account? <a href="{{ route('login') }}">Login</a></p>
+                    <p>Already have an account? <a href="{{ route('login-page') }}">Login</a></p>
                 </div>
             </div>
         </div>

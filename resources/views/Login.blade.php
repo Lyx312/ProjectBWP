@@ -1,4 +1,4 @@
-@extends("FrontPage")
+@extends("layout.FrontPage")
 
 @section("content")
     <div class="container mt-5">
@@ -8,7 +8,7 @@
                     <h2 class="text-center">E-commerce Login</h2>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('login') }}" method="post">
+                    <form action="{{ route('login-process') }}" method="post">
                         @csrf
                         <div class="mb-3">
                             <label for="username" class="form-label">Username:</label>
@@ -24,7 +24,7 @@
                     </form>
                 </div>
                 <div class="card-footer text-center">
-                    <p>Don't have an account? <a href="{{ route('register') }}">Register</a></p>
+                    <p>Don't have an account? <a href="{{ route('register-page') }}">Register</a></p>
                 </div>
             </div>
         </div>
