@@ -11,7 +11,6 @@ class UserSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    protected $connection = 'mysql';
     public function run(): void
     {
         $usersData = [
@@ -72,7 +71,7 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($usersData as $userData) {
-            User::on($this->connection)->create($userData);
+            User::create($userData);
         }
     }
 }

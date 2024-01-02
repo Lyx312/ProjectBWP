@@ -11,7 +11,6 @@ class CategorySeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    protected $connection = 'mysql';
     public function run(): void
     {
         $categoriesData = [
@@ -58,7 +57,7 @@ class CategorySeeder extends Seeder
         ];
 
         foreach ($categoriesData as $categoryData) {
-            Category::on($this->connection)->create($categoryData);
+            Category::create($categoryData);
         }
     }
 }

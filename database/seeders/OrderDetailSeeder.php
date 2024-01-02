@@ -11,7 +11,6 @@ class OrderDetailSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    protected $connection = 'mysql';
     public function run(): void
     {
         $orderDetailsData = [
@@ -58,7 +57,7 @@ class OrderDetailSeeder extends Seeder
         ];
 
         foreach ($orderDetailsData as $orderDetailData) {
-            OrderDetail::on($this->connection)->create($orderDetailData);
+            OrderDetail::create($orderDetailData);
         }
     }
 }

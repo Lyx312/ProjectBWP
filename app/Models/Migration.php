@@ -9,7 +9,6 @@ class Migration extends Model
 {
     use HasFactory;
 
-    protected $connection = "db_project_bwp";
     protected $table = "migrations";
     protected $primaryKey = "id";
     public $incrementing = true;

@@ -19,7 +19,6 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $connection = "db_project_bwp";
     protected $table = "users";
     protected $primaryKey = "username";
     public $incrementing = false;

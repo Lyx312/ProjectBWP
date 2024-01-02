@@ -9,7 +9,6 @@ class OrderDetail extends Model
 {
     use HasFactory;
 
-    protected $connection = "db_project_bwp";
     protected $table = "order_details";
     protected $primaryKey = "detail_id";
     public $incrementing = true;

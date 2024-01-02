@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -18,14 +19,19 @@ class UserController extends Controller
     public function getHomePage() {
         return view('layout.Home');
     }
-    // sementara tidak ada pengecekkan karena database msh tdk tau.
-    public function LoginUser(Request $request)
-    {
-        $user = new User(); // Anda bisa menggunakan model User atau membuat instance User yang fiktif
-        $user->username = 'dummy'; // Contoh: set username ke 'dummy'
 
-        // Login berhasil
-        session(['user' => $user]); // Menyimpan informasi pengguna ke dalam session
+    public function loginProcess(Request $request)
+    {
+        $credential = [
+            'username' => $request->username,
+            'password' => $request->password
+        ];
+
+        if (Auth::attempt($credential)){
+            return view('layout.FrontPage');
+        } else {
+            return redirect("login")->with("error", "Login Failed");
+        }
 
         return  view("Home");
     }

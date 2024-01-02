@@ -11,7 +11,6 @@ class ItemSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    protected $connection = 'mysql';
     public function run(): void
     {
         $itemsData = [
@@ -63,7 +62,7 @@ class ItemSeeder extends Seeder
         ];
 
         foreach ($itemsData as $itemData) {
-            Item::on($this->connection)->create($itemData);
+            Item::create($itemData);
         }
     }
 }

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 // halaman pertama masuk di FrontPage untuk login register
 Route::get('/', function () {
-    return view('FrontPage');
+    return view('layout.FrontPage');
 });
 Route::controller(UserController::class)->group(function () {
     //Route::middleware('guest')->group(function () {

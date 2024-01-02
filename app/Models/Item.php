@@ -11,7 +11,6 @@ class Item extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $connection = "db_project_bwp";
     protected $table = "items";
     protected $primaryKey = "item_id";
     public $incrementing = true;

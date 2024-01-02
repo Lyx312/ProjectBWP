@@ -9,7 +9,6 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $connection = "db_project_bwp";
     protected $table = "categories";
     protected $primaryKey = "category_id";
     public $incrementing = true;
