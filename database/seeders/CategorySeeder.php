@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -10,9 +11,10 @@ class CategorySeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    protected $connection = 'mysql';
     public function run(): void
     {
-        Category::create(
+        $categoriesData = [
             [
                 "category_id" => 1,
                 "category_name" => "Electronics",
@@ -53,6 +55,10 @@ class CategorySeeder extends Seeder
                 "category_id" => 10,
                 "category_name" => "Food and Groceries",
             ],
-        );
+        ];
+
+        foreach ($categoriesData as $categoryData) {
+            Category::on($this->connection)->create($categoryData);
+        }
     }
 }

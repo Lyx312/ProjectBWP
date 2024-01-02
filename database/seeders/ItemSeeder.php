@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Item;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -10,9 +11,10 @@ class ItemSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    protected $connection = 'mysql';
     public function run(): void
     {
-        Item::create(
+        $itemsData = [
             [
                 "item_id" => 1,
                 "item_name" => "Sofa-L Shape 3 Seat",
@@ -58,6 +60,10 @@ class ItemSeeder extends Seeder
                 "item_category" => 2,
                 "item_seller" => "robert"
             ],
-        );
+        ];
+
+        foreach ($itemsData as $itemData) {
+            Item::on($this->connection)->create($itemData);
+        }
     }
 }

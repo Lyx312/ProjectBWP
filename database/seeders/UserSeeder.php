@@ -11,17 +11,17 @@ class UserSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    protected $connection = 'mysql';
     public function run(): void
     {
-        User::create(
+        $usersData = [
             [
                 "username" => "bobi",
                 "password" => "123",
                 "name" => "Bobi Hermawan",
                 "email" => "bobi@mail.com",
-                "phone" => "081145125683",
+                "phone_number" => "081145125683",
                 "address" => "Jalan Jawa No.1",
-                "balance" => 0,
                 "role" => 0
             ],
             [
@@ -29,9 +29,8 @@ class UserSeeder extends Seeder
                 "password" => "111",
                 "name" => "Andi Kusuma",
                 "email" => "andi@mail.com",
-                "phone" => "083314512356",
+                "phone_number" => "083314512356",
                 "address" => "Jalan Supratman VII No.53",
-                "balance" => 0,
                 "role" => 0
             ],
             [
@@ -39,9 +38,8 @@ class UserSeeder extends Seeder
                 "password" => "369",
                 "name" => "Suti Susanti",
                 "email" => "suti@mail.com",
-                "phone" => "081244636345",
+                "phone_number" => "081244636345",
                 "address" => "Jalan Munir XI No.12",
-                "balance" => 0,
                 "role" => 0
             ],
             [
@@ -49,9 +47,8 @@ class UserSeeder extends Seeder
                 "password" => "420",
                 "name" => "Jonathan Josquare",
                 "email" => "jo@jo.com",
-                "phone" => "08884929503",
+                "phone_number" => "08884929503",
                 "address" => "Jalan Ngagel No.34",
-                "balance" => 0,
                 "role" => 1
             ],
             [
@@ -59,9 +56,8 @@ class UserSeeder extends Seeder
                 "password" => "666",
                 "name" => "Walter Black",
                 "email" => "black@heisenberg.com",
-                "phone" => "081388359405",
+                "phone_number" => "081388359405",
                 "address" => "Jalan Antah IX No.27",
-                "balance" => 0,
                 "role" => 1
             ],
             [
@@ -69,11 +65,14 @@ class UserSeeder extends Seeder
                 "password" => "789",
                 "name" => "Robert Cllosenheimer",
                 "email" => "trinity@manhattan.com",
-                "phone" => "080148479999",
+                "phone_number" => "080148479999",
                 "address" => "Jalan Apah No.9",
-                "balance" => 0,
                 "role" => 1
             ],
-        );
+        ];
+
+        foreach ($usersData as $userData) {
+            User::on($this->connection)->create($userData);
+        }
     }
 }

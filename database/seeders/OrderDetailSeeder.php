@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\OrderDetail;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -10,9 +11,10 @@ class OrderDetailSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    protected $connection = 'mysql';
     public function run(): void
     {
-        OrderDetail::create(
+        $orderDetailsData = [
             [
                 "detail_id" => 1,
                 "detail_order_id" => 1,
@@ -53,6 +55,10 @@ class OrderDetailSeeder extends Seeder
                 "detail_item_quantity" => 1,
                 "detail_subtotal" => 1290000
             ],
-        );
+        ];
+
+        foreach ($orderDetailsData as $orderDetailData) {
+            OrderDetail::on($this->connection)->create($orderDetailData);
+        }
     }
 }

@@ -14,4 +14,10 @@ class Order extends Model
     protected $primaryKey = "order_id";
     public $incrementing = true;
     public $timestamps = true;
+
+    protected $fillable = [
+        "order_id",
+        "order_buyer",
+        "order_total"
+    ];
 }
