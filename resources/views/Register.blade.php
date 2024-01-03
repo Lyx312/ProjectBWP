@@ -3,7 +3,7 @@
 @section("content")
     <div class="container mt-5">
         <div class="col-md-6 offset-md-3">
-            <div class="card">
+            <div class="card" style="margin-bottom: 10%">
                 <div class="card-header bg-primary text-white">
                     <h2 class="text-center">E-commerce Registration</h2>
                 </div>
@@ -12,12 +12,22 @@
                         @csrf
                         <div class="mb-3">
                             <label for="username" class="form-label">Username:</label>
-                            <input type="text" class="form-control" id="username" name="username">
+                            @if($errors->has('username'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('username') }}
+                                </div>
+                            @endif
+                            <input type="text" class="form-control" id="username" name="username" value="{{old('username')}}">
                         </div>
 
                         <div class="mb-3">
-                            <label for="username" class="form-label">Name:</label>
-                            <input type="text" class="form-control" id="name" name="name">
+                            <label for="name" class="form-label">Name:</label>
+                            @if($errors->has('name'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('name') }}
+                                </div>
+                            @endif
+                            <input type="text" class="form-control" id="name" name="name" value="{{old('name')}}">
                         </div>
 
                         <div class="mb-3">
@@ -27,17 +37,40 @@
 
                         <div class="mb-3">
                             <label for="password_confirmation" class="form-label">Confirm Password:</label>
+                            @if($errors->has('password'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('password') }}
+                                </div>
+                            @endif
                             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
                         </div>
 
                         <div class="mb-3">
-                            <label for="password_confirmation" class="form-label">Email:</label>
-                            <input type="password" class="form-control" id="email" name="email">
+                            <label for="email" class="form-label">Email:</label>
+                            @if($errors->has('email'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('email') }}
+                                </div>
+                            @endif
+                            <input type="text" class="form-control" id="email" name="email" value="{{old('email')}}">
                         </div>
 
                         <div class="mb-3">
-                            <label for="password_confirmation" class="form-label">Phone Number:</label>
-                            <input type="password" class="form-control" id="phone_number" name="phone_number">
+                            <label for="phone_number" class="form-label">Phone Number:</label>
+                            @if($errors->has('phone_number'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('phone_number') }}
+                                </div>
+                            @endif
+                            <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{old('phone_number')}}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Role:</label>
+                            <select class="form-select" id="role" name="role">
+                                <option value="0" {{ old('role') == 0 ? 'selected' : '' }}>Customer</option>
+                                <option value="1" {{ old('role') == 1 ? 'selected' : '' }}>Seller</option>
+                            </select>
                         </div>
 
                         <button type="submit" class="btn btn-success">Register</button>
