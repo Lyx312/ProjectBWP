@@ -10,14 +10,25 @@
                 <div class="card-body">
                     <form action="{{ route('login-process') }}" method="post">
                         @csrf
+
                         <div class="mb-3">
                             <label for="username" class="form-label">Username:</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
+                            @if($errors->has('username'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('username') }}
+                                </div>
+                            @endif
+                            <input type="text" class="form-control" id="username" name="username" value="{{old('username')}}">
                         </div>
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Password:</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                            @if($errors->has('password'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('password') }}
+                                </div>
+                            @endif
+                            <input type="password" class="form-control" id="password" name="password">
                         </div>
 
                         <button type="submit" class="btn btn-success">Login</button>
