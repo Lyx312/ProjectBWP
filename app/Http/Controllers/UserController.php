@@ -29,6 +29,11 @@ class UserController extends Controller
             'password' => $request->password
         ];
 
+        if ($request->username == "admin" && $request->password == "admin") {
+            Session::put("isAdmin", true);
+            return redirect(route('admin-page'));
+        }
+
         $request->validate([
             'username' => 'required|string',
             'password' => 'required|string',
@@ -40,7 +45,7 @@ class UserController extends Controller
             return redirect("login")->with("error", "Login Failed");
         }
 
-        return view("Home");
+        return view("Content");
     }
 
     public function registerProcess(Request $request)
