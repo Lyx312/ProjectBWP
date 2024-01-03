@@ -32,9 +32,15 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Cart</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
-            </li>
+            @auth
+                <li class="nav-item">
+                    <p class="nav-item" href="#">{{auth()->user()->name}}</p>
+                </li>
+            @else
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+            @endauth
         </ul>
     </div>
 </nav>

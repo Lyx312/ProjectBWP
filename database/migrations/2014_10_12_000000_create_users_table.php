@@ -21,6 +21,11 @@ return new class extends Migration
                 $table->dropForeign(['order_buyer']);
             });
         }
+        if (Schema::hasTable('carts')) {
+            Schema::table('carts', function (Blueprint $table) {
+                $table->dropForeign(['cart_owner']);
+            });
+        }
         Schema::dropIfExists('users');
 
         Schema::create('users', function (Blueprint $table) {

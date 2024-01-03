@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,8 @@ Route::get('/', function () {
 });
 Route::controller(UserController::class)->group(function () {
     //Route::middleware('guest')->group(function () {
+        Route::get('/admin', 'getAdminPage')->name('admin-page')->middleware([EnsureUserIsAdmin::class]);
+
         Route::get('/login', 'getLoginPage')->name('login-page');
         Route::get('/register', 'getRegisterPage')->name('register-page');
 

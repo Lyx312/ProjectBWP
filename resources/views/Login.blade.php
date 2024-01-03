@@ -26,6 +26,9 @@
                 <div class="card-footer text-center">
                     <p>Don't have an account? <a href="{{ route('register-page') }}">Register</a></p>
                 </div>
+                @if (Session::has('error'))
+                    <p>{{Session::get('error')}}</p>
+                @endif
             </div>
         </div>
     </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,12 +29,19 @@ class UserController extends Controller
             'password' => $request->password
         ];
 
-        if (Auth::attempt($credential)){
-            return view('layout.FrontPage');
-        } else {
+        if ($request->username == "admin" && $request->password == "admin") {
+            Session::put("isAdmin", true);
+            return redirect(route('admin-page'));
+        }
+
+        if (!Auth::attempt($credential)) {
             return redirect("login")->with("error", "Login Failed");
         }
 
-        return  view("Home");
+        return  view("Content");
+    }
+
+    public function getAdminPage() {
+        return view('Admin');
     }
 }
