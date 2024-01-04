@@ -32,6 +32,9 @@ Route::controller(UserController::class)->group(function () {
 
         Route::post('/login', 'loginProcess')->name('login-process');
         Route::post('/register', 'registerProcess')->name('register-process');
+
+        Route::get('/test', 'test')->name('test-page');
+
     //});
 });
 

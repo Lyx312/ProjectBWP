@@ -2,12 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
+use App\Models\Category;
+use App\Models\Cart;
+use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function test() {
+        $table = Order::Find(1);
+        $test = $table->OrderDetail;
+        dd($test);
+    }
+
     public function getLoginPage() {
         return view('Login');
     }

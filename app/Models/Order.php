@@ -19,4 +19,12 @@ class Order extends Model
         "order_buyer",
         "order_total"
     ];
+
+    public function User(){
+        return $this->belongsTo(User::class, "order_buyer", "username");
+    }
+
+    public function OrderDetail(){
+        return $this->hasMany(OrderDetail::class, "detail_order_id", "order_id");
+    }
 }

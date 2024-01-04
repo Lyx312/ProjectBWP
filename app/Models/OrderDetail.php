@@ -22,4 +22,12 @@ class OrderDetail extends Model
         "detail_item_quantity",
         "detail_subtotal"
     ];
+
+    public function Item(){
+        return $this->hasMany(Item::class, "item_id", "detail_item_id");
+    }
+
+    public function Order(){
+        return $this->belongsTo(Order::class, "detail_order_id", "order_id");
+    }
 }

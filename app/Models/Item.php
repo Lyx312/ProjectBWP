@@ -25,4 +25,20 @@ class Item extends Model
         "item_category",
         "item_seller"
     ];
+
+    public function User(){
+        return $this->belongsTo(User::class, "item_seller", "username");
+    }
+
+    public function OrderDetail(){
+        return $this->belongsTo(OrderDetail::class, "item_id", "detail_item_id");
+    }
+
+    public function Cart(){
+        return $this->belongsTo(Cart::class, "item_id", "cart_item_id");
+    }
+
+    public function Category(){
+        return $this->belongsTo(Category::class,"item_category" , "category_id");
+    }
 }

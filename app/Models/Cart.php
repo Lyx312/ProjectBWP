@@ -22,4 +22,13 @@ class Cart extends Model
         "cart_subtotal",
         "cart_owner"
     ];
+
+    public function User(){
+        return $this->belongsTo(User::class, "cart_owner", "username");
+    }
+
+    public function Item(){
+        return $this->hasMany(Item::class, "item_id", "cart_item_id");
+    }
+
 }
