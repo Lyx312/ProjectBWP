@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,8 +16,16 @@ class UserController extends Controller
         return view('Register');
     }
 
-    public function getHomePage() {
-        return view('layout.Home');
+    public function getCustomerPage() {
+        return view('Customer');
+    }
+
+    public function getSellerPage() {
+        return view('Seller');
+    }
+
+    public function getAdminPage() {
+        return view('Admin');
     }
 
     public function loginProcess(Request $request)
@@ -28,11 +34,6 @@ class UserController extends Controller
             'username' => $request->username,
             'password' => $request->password
         ];
-
-        if ($request->username == "admin" && $request->password == "admin") {
-            Session::put("isAdmin", true);
-            return redirect(route('admin-page'));
-        }
 
         $request->validate([
             'username' => 'required|string',
@@ -45,7 +46,7 @@ class UserController extends Controller
             return redirect("login")->with("error", "Login Failed");
         }
 
-        return view("Content");
+        return view("Home");
     }
 
     public function registerProcess(Request $request)
@@ -67,19 +68,12 @@ class UserController extends Controller
             'phone_number' => 'required|digits:9',
         ]);
 
-        if ($request->username == "admin" && $request->password == "admin") {
-            Session::put("isAdmin", true);
-            return redirect(route('admin-page'));
-        }
+        // if (Auth::attempt($credential)){
+        //     return view('layout.FrontPage');
+        // } else {
+        //     return redirect("login")->with("error", "Login Failed");
+        // }
 
-        if (!Auth::attempt($credential)) {
-            return redirect("login")->with("error", "Login Failed");
-        }
-
-        return  view("Content");
-    }
-
-    public function getAdminPage() {
-        return view('Admin');
+        return view("Home");
     }
 }
