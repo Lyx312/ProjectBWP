@@ -19,7 +19,7 @@ class EnsureUserIsAdmin
         if (Session::has("isAdmin") && Session::get("isAdmin")) {
             return $next($request);
         } else {
-            return redirect("login")->with("error", "Unauthorized entry");
+            return back()->with("error", "Unauthorized entry");
         }
 
     }
