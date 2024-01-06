@@ -32,15 +32,25 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Cart</a>
             </li>
-            @auth
+            @if(Auth::check())
                 <li class="nav-item">
-                    <p class="nav-item" href="#">{{auth()->user()->name}}</p>
+                    <p class="navbar-text">{{auth()->user()->name}}</p>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-danger" href="{{route('logout-process')}}">Logout</a>
+                </li>
+            @elseif (Session::has('isAdmin'))
+                <li class="nav-item">
+                    <p class="navbar-text">Admin</p>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-danger" href="{{route('logout-process')}}">Logout</a>
                 </li>
             @else
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
-                </li>
-            @endauth
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('login-page')}}">Login</a>
+            </li>
+            @endif
         </ul>
     </div>
 </nav>

@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -21,6 +22,7 @@ class UserController extends Controller
     }
 
     public function getLoginPage() {
+        Session::forget("isAdmin");
         return view('Login');
     }
 
@@ -57,8 +59,15 @@ class UserController extends Controller
             'password' => 'required|string',
         ]);
 
-        if (Auth::attempt($credential)){
-            return view('layout.FrontPage');
+        if ($request->username == "admin" && $request->password == "admin") {
+            Session::put('isAdmin', true);
+            return redirect('admin');
+        } else if (Auth::attempt($credential)){
+            if (Auth::user()->role == 0) {
+                return redirect('customer');
+            } else {
+                return redirect('seller');
+            }
         } else {
             return redirect("login")->with("error", "Login Failed");
         }
@@ -92,5 +101,13 @@ class UserController extends Controller
         // }
 
         return view("Home");
+    }
+
+    public function logoutProcess(Request $request) {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        Session::forget('isAdmin');
+        return redirect("login");
     }
 }

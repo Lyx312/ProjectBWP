@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureUserIsCustomer;
 use App\Http\Middleware\EnsureUserIsSeller;
+use App\Http\Middleware\EnsureUserNotLoggedIn;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,9 +31,13 @@ Route::controller(UserController::class)->group(function () {
         Route::get('/login', 'getLoginPage')->name('login-page');
         Route::get('/register', 'getRegisterPage')->name('register-page');
         Route::get('/shop', 'getShopPage')->name('Shop-page');
+        Route::get('/login', 'getLoginPage')->name('login-page')->middleware([EnsureUserNotLoggedIn::class]);
+        Route::get('/register', 'getRegisterPage')->name('register-page')->middleware([EnsureUserNotLoggedIn::class]);
 
         Route::post('/login', 'loginProcess')->name('login-process');
         Route::post('/register', 'registerProcess')->name('register-process');
+
+        Route::get('/logout', 'logoutProcess')->name('logout-process');
 
         Route::get('/test', 'test')->name('test-page');
 
