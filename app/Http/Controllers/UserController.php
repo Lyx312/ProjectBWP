@@ -40,6 +40,11 @@ class UserController extends Controller
         return view('Admin');
     }
 
+    public function getShopPage()
+    {
+        return view('layout.Shop');
+    }
+
     public function loginProcess(Request $request)
     {
         $credential = [
