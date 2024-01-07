@@ -7,6 +7,13 @@
     <title>Home Page</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+         .full-width-dropdown .dropdown-menu {
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    </style>
 </head>
 <body>
 
@@ -23,8 +30,23 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{route('Shop-page')}}">Shop</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Categories</a>
+            <li class="nav-item dropdown full-width-dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCategories" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Categories
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownCategories">
+                    <!-- Tambahkan pilihan kategori di sini -->
+                    <a class="dropdown-item" href="#">Category 1</a>
+                    <a class="dropdown-item" href="#">Category 2</a>
+                    <a class="dropdown-item" href="#">Category 3</a>
+                    <a class="dropdown-item" href="#">Category 4</a>
+                    <a class="dropdown-item" href="#">Category 5</a>
+                    <a class="dropdown-item" href="#">Category 6</a>
+                    <a class="dropdown-item" href="#">Category 7</a>
+                    <a class="dropdown-item" href="#">Category 8</a>
+                    <a class="dropdown-item" href="#">Category 9</a>
+                    <a class="dropdown-item" href="#">Category 10</a>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
@@ -36,11 +58,11 @@
                 <li class="nav-item">
                     <p class="navbar-text">{{auth()->user()->name}}</p>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item mx-2">
                     <a class="btn btn-danger" href="{{route('logout-process')}}">Logout</a>
                 </li>
             @elseif (Session::has('isAdmin'))
-                <li class="nav-item">
+                <li class="nav-item mx-2">
                     <p class="navbar-text">Admin</p>
                 </li>
                 <li class="nav-item">

@@ -5,7 +5,7 @@
 
 <div class="container">
 
-    <table class="table">
+    <table class="table table-striped table-hover">
         <tr>
             <th>Username</th>
             <th>Email</th>
