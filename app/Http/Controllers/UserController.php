@@ -77,21 +77,21 @@ class UserController extends Controller
 
     public function registerProcess(Request $request)
     {
-        $credential = [
+        $request->validate([
+            'username' => 'required|string|unique:users',
+            'name' => 'required|string',
+            'password' => 'required|confirmed',
+            'email' => 'required|email',
+            'phone_number' => 'required|digits:9',
+        ]);
+
+        $user = new User([
             'username' => $request->username,
             'name' => $request->name,
             'password' => $request->password,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'role' => $request->role,
-        ];
-
-        $request->validate([
-            'username' => 'required|string',
-            'name' => 'required|string',
-            'password' => 'required|confirmed',
-            'email' => 'required|email',
-            'phone_number' => 'required|digits:9',
         ]);
 
         // if (Auth::attempt($credential)){
@@ -100,7 +100,10 @@ class UserController extends Controller
         //     return redirect("login")->with("error", "Login Failed");
         // }
 
-        return view("login");
+        $user->save();
+
+    // Redirect to a success page or do something else
+        return redirect()->route('login-page')->with('success', 'Registration successful. Please log in.');
     }
 
     public function logoutProcess(Request $request) {
