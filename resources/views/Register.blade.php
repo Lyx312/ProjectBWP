@@ -66,6 +66,16 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="address" class="form-label">Address:</label>
+                            @if($errors->has('address'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('address') }}
+                                </div>
+                            @endif
+                            <input type="text" class="form-control" id="address" name="address" value="{{old('address')}}">
+                        </div>
+
+                        <div class="mb-3">
                             <label for="role" class="form-label">Role:</label>
                             <select class="form-select" id="role" name="role">
                                 <option value="0" {{ old('role') == 0 ? 'selected' : '' }}>Customer</option>

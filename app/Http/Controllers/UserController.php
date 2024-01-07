@@ -83,6 +83,7 @@ class UserController extends Controller
             'password' => 'required|confirmed',
             'email' => 'required|email',
             'phone_number' => 'required|digits:9',
+            'address' => 'required|string',
         ]);
 
         $user = new User([
@@ -91,6 +92,7 @@ class UserController extends Controller
             'password' => $request->password,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
+            'address' => $request->address,
             'role' => $request->role,
         ]);
 
