@@ -25,6 +25,7 @@ Route::get('/', function () {
 Route::controller(UserController::class)->group(function () {
     //Route::middleware('guest')->group(function () {
         Route::get('/admin', 'getAdminPage')->name('admin-page')->middleware([EnsureUserIsAdmin::class]);
+        Route::get('/admin', 'index')->name('admin-page')->middleware([EnsureUserIsAdmin::class]);
         Route::get('/customer', 'getCustomerPage')->name('customer-page')->middleware([EnsureUserIsCustomer::class]);
         Route::get('/seller', 'getSellerPage')->name('seller-page')->middleware([EnsureUserIsSeller::class]);
 

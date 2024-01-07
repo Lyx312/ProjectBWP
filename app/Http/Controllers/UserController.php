@@ -72,7 +72,7 @@ class UserController extends Controller
             return redirect("login")->with("error", "Login Failed");
         }
 
-        return view("Home");
+        return view("login");
     }
 
     public function registerProcess(Request $request)
@@ -100,7 +100,7 @@ class UserController extends Controller
         //     return redirect("login")->with("error", "Login Failed");
         // }
 
-        return view("Home");
+        return view("login");
     }
 
     public function logoutProcess(Request $request) {
@@ -109,5 +109,11 @@ class UserController extends Controller
         $request->session()->regenerateToken();
         Session::forget('isAdmin');
         return redirect("login");
+    }
+
+    public function index(){
+        $daftarUser = User::all();    
+        $param["daftarUser"] = $daftarUser;
+        return view("Admin", $param);
     }
 }
