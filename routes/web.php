@@ -26,7 +26,7 @@ Route::controller(UserController::class)->group(function () {
     //Route::middleware('guest')->group(function () {
         Route::get('/admin', 'getAdminPage')->name('admin-page')->middleware([EnsureUserIsAdmin::class]);
         Route::get('/admin', 'index')->name('admin-page')->middleware([EnsureUserIsAdmin::class]);
-        Route::get('/customer', 'getCustomerPage')->name('customer-page')->middleware([EnsureUserIsCustomer::class]);
+        Route::get('/customer', 'getCustomerPage')->name('customer-page');
         Route::get('/seller', 'getSellerPage')->name('seller-page')->middleware([EnsureUserIsSeller::class]);
 
         Route::get('/login', 'getLoginPage')->name('login-page');
@@ -34,6 +34,9 @@ Route::controller(UserController::class)->group(function () {
         Route::get('/shop', 'getShopPage')->name('Shop-page');
         Route::get('/login', 'getLoginPage')->name('login-page')->middleware([EnsureUserNotLoggedIn::class]);
         Route::get('/register', 'getRegisterPage')->name('register-page')->middleware([EnsureUserNotLoggedIn::class]);
+
+        Route::get('/detail/{itemID}', 'getDetailPage')->name('detail-page');
+        Route::post('/detail/{itemID}', 'addToCartProcess')->name('add-to-cart')->middleware([EnsureUserIsCustomer::class]);
 
         Route::post('/login', 'loginProcess')->name('login-process');
         Route::post('/register', 'registerProcess')->name('register-process');

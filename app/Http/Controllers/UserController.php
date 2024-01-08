@@ -117,8 +117,19 @@ class UserController extends Controller
     }
 
     public function index(){
-        $daftarUser = User::all();    
+        $daftarUser = User::all();
         $param["daftarUser"] = $daftarUser;
         return view("Admin", $param);
+    }
+
+    public function getDetailPage($itemID) {
+        $item = Item::find($itemID);
+        $param["item"] = $item;
+
+        return view('Detail', $param);
+    }
+
+    public function addToCartProcess(Request $req) {
+
     }
 }
