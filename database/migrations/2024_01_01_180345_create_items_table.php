@@ -21,6 +21,11 @@ return new class extends Migration
                 $table->dropForeign(['cart_item_id']);
             });
         }
+        if (Schema::hasTable('discounts')) {
+            Schema::table('discounts', function (Blueprint $table) {
+                $table->dropForeign(['discount_item_id']);
+            });
+        }
         Schema::dropIfExists('items');
 
         Schema::create('items', function (Blueprint $table) {
@@ -47,7 +52,16 @@ return new class extends Migration
                 $table->dropForeign(['detail_item_id']);
             });
         }
-
+        if (Schema::hasTable('carts')) {
+            Schema::table('carts', function (Blueprint $table) {
+                $table->dropForeign(['cart_item_id']);
+            });
+        }
+        if (Schema::hasTable('discounts')) {
+            Schema::table('discounts', function (Blueprint $table) {
+                $table->dropForeign(['discount_item_id']);
+            });
+        }
         Schema::dropIfExists('items');
     }
 };
