@@ -1,3 +1,4 @@
+@extends("layout.Home")
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,6 +20,7 @@
     </style>
 </head>
 
+@section("content")
 <body data-spy="scroll" data-target="#scrollspy" data-offset="50">
 
     <div class="container-fluid py-5 content">
@@ -129,5 +131,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
+@endsection
 
 </html>

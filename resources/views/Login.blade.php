@@ -38,7 +38,9 @@
                     <p>Don't have an account? <a href="{{ route('register-page') }}">Register</a></p>
                 </div>
                 @if (Session::has('error'))
-                    <p>{{Session::get('error')}}</p>
+                    <div class="alert alert-danger text-center">
+                        {{ Session::get('error') }}
+                    </div>
                 @endif
             </div>
         </div>
