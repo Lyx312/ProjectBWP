@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id("cart_id");
             $table->foreignId("cart_item_id")->constrained("items", "item_id");
             $table->integer("cart_item_price", false, true);
+            $table->foreignId("cart_discount_id")->nullable()->constrained("discounts", "discount_id");
             $table->integer("cart_item_quantity", false, true);
             $table->integer("cart_subtotal", false, true);
             $table->string("cart_owner", 100);

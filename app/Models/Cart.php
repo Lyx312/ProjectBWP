@@ -18,6 +18,7 @@ class Cart extends Model
         "cart_id",
         "cart_item_id",
         "cart_item_price",
+        "cart_discount_id",
         "cart_item_quantity",
         "cart_subtotal",
         "cart_owner"
@@ -28,7 +29,7 @@ class Cart extends Model
     }
 
     public function Item(){
-        return $this->hasMany(Item::class, "item_id", "cart_item_id");
+        return $this->belongsTo(Item::class, 'cart_item_id', 'item_id');
     }
 
 }

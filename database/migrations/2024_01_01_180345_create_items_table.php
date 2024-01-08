@@ -23,7 +23,7 @@ return new class extends Migration
         }
         if (Schema::hasTable('discounts')) {
             Schema::table('discounts', function (Blueprint $table) {
-                $table->dropForeign(['discount_item_id']);
+                //$table->dropForeign(['discount_item_id']);
             });
         }
         Schema::dropIfExists('items');

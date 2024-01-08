@@ -11,6 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('order_details')) {
+            Schema::table('order_details', function (Blueprint $table) {
+                $table->dropForeign(['detail_item_id']);
+            });
+        }
+        if (Schema::hasTable('carts')) {
+            Schema::table('carts', function (Blueprint $table) {
+                $table->dropForeign(['cart_discount_id']);
+            });
+        }
         Schema::dropIfExists('discounts');
 
         Schema::create('discounts', function (Blueprint $table) {
@@ -29,6 +39,17 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (Schema::hasTable('order_details')) {
+            Schema::table('order_details', function (Blueprint $table) {
+                $table->dropForeign(['detail_item_id']);
+            });
+        }
+        if (Schema::hasTable('carts')) {
+            Schema::table('carts', function (Blueprint $table) {
+                $table->dropForeign(['cart_discount_id']);
+            });
+        }
+
         Schema::dropIfExists('discounts');
     }
 };

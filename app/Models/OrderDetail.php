@@ -19,6 +19,7 @@ class OrderDetail extends Model
         "detail_order_id",
         "detail_item_id",
         "detail_item_price",
+        "detail_discount_id",
         "detail_item_quantity",
         "detail_subtotal"
     ];

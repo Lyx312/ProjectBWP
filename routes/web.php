@@ -32,11 +32,13 @@ Route::controller(UserController::class)->group(function () {
         Route::get('/login', 'getLoginPage')->name('login-page');
         Route::get('/register', 'getRegisterPage')->name('register-page');
         Route::get('/shop', 'getShopPage')->name('Shop-page');
+        Route::get('/cart', 'getCartPage')->name('Cart-page')->middleware([EnsureUserIsCustomer::class]);
         Route::get('/login', 'getLoginPage')->name('login-page')->middleware([EnsureUserNotLoggedIn::class]);
         Route::get('/register', 'getRegisterPage')->name('register-page')->middleware([EnsureUserNotLoggedIn::class]);
 
         Route::get('/detail/{itemID}', 'getDetailPage')->name('detail-page');
         Route::post('/detail/{itemID}', 'addToCartProcess')->name('add-to-cart')->middleware([EnsureUserIsCustomer::class]);
+
 
         Route::post('/login', 'loginProcess')->name('login-process');
         Route::post('/register', 'registerProcess')->name('register-process');
@@ -44,7 +46,6 @@ Route::controller(UserController::class)->group(function () {
         Route::get('/logout', 'logoutProcess')->name('logout-process');
 
         Route::get('/test', 'test')->name('test-page');
-
     //});
 });
 

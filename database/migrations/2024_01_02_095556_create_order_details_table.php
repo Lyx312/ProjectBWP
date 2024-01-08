@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId("detail_order_id")->constrained("orders", "order_id");
             $table->foreignId("detail_item_id")->constrained("items", "item_id");
             $table->integer("detail_item_price", false, true);
+            $table->foreignId("detail_discount_id")->nullable()->constrained("discounts", "discount_id");
             $table->integer("detail_item_quantity", false, true);
             $table->integer("detail_subtotal", false, true);
             $table->timestampsTz();
