@@ -39,6 +39,7 @@ Route::controller(UserController::class)->group(function () {
         Route::get('/detail/{itemID}', 'getDetailPage')->name('detail-page');
         Route::post('/detail/{itemID}', 'addToCartProcess')->name('add-to-cart')->middleware([EnsureUserIsCustomer::class]);
 
+        Route::post('/addItem', 'addItemProcess')->name('add-item-process')->middleware([EnsureUserIsSeller::class]);;
 
         Route::post('/login', 'loginProcess')->name('login-process');
         Route::post('/register', 'registerProcess')->name('register-process');

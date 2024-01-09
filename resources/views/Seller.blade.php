@@ -99,17 +99,53 @@
                                 </form>
                             </div>
                             <div id="daftar-produk-content" class="col-md-9">
+                                <form method="POST" action="{{route('add-item-process')}}">
+                                    @csrf
+                                    <h2 class="card-header">Add New Item</h2>
+                                    <div class="mb-3">
+                                        <label for="item_name" class="form-label">Item Name</label>
+                                        <input type="text" class="form-control" id="item_name" name="item_name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="item_description" class="form-label">Item Description</label>
+                                        <textarea class="form-control" id="item_description" name="item_description" rows="5"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="item_price" class="form-label">Item Price</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">Rp</span>
+                                            <input type="number" class="form-control" id="item_price" name="item_price" min="1000" step="1000" value="1000">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="item_stock" class="form-label">Item Stock</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" id="item_stock" name="item_stock" min="1" value="1">
+                                            <span class="input-group-text">item(s)</span>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="item_category" class="form-label">Item Category</label>
+                                        <select class="form-control" name="item_category" id="item_category">
+                                            @foreach ($categories as $category)
+                                                <option class="form-control" value="{{$category["category_id"]}}">{{$category["category_name"]}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Add New Item</button>
+                                </form>
+
                                 <!-- Daftar Produk -->
-                                <h2 id="simple-list-item-3" class="card-header">Daftar Produk</h2>
+                                <h2 id="simple-list-item-3" class="card-header mt-3">Daftar Produk</h2>
                                 <div class="row">
-                                    @foreach(range(1, 30) as $product)
+                                    @foreach($items as $item)
                                     <div class="col-md-4 mb-4">
                                         <div class="card">
                                             <a href="#" class="card-link">
                                                 <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="https://via.placeholder.com/600x400">
                                                 <div class="card-body text-dark">
-                                                    <h5 class="card-title">{{ $product }}</h5>
-                                                    <p class="card-text">Harga: ${{ $product }}</p>
+                                                    <h5 class="card-title">{{ $item["item_name"] }}</h5>
+                                                    <p class="card-text">Harga: Rp{{ $item["item_price"] }}</p>
                                                 </div>
                                             </a>
                                         </div>
@@ -125,7 +161,7 @@
         </div>
     </div>
 
-    {{-- ide ajax, bisa tampil langsung setelah add product baru --}}
+    {{-- ide ajax, bisa tampil langsung setelah add item baru --}}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

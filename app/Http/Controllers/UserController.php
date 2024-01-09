@@ -33,11 +33,15 @@ class UserController extends Controller
     }
 
     public function getCustomerPage() {
-        return view('Customer');
+        return view('Katalog');
     }
 
     public function getSellerPage() {
-        return view('Seller');
+        $items = Item::get()->where("item_seller", "=", Auth::user()->username);
+        $categories = Category::all();
+        $param["items"] = $items;
+        $param["categories"] = $categories;
+        return view('Seller', $param);
     }
 
     public function getAdminPage() {
@@ -166,5 +170,19 @@ class UserController extends Controller
         $param["cart"] = $cart;
 
         return view('Cart', $param);
+    }
+
+    public function addItemProcess(Request $req) {
+        // insert validation here
+
+        Item::create([
+            "item_name" => $req->item_name,
+            "item_description" => $req->item_description,
+            "item_price" => $req->item_price,
+            "item_stock" => $req->item_stock,
+            "item_category" => $req->item_category,
+            "item_seller" => Auth::user()->username
+        ]);
+        return redirect('seller');
     }
 }
