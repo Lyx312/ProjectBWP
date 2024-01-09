@@ -99,7 +99,7 @@
                                 </form>
                             </div>
                             <div id="daftar-produk-content" class="col-md-9">
-                                <form method="POST" action="{{route('add-item-process')}}">
+                                <form method="POST" action="{{route('add-item-process')}}" enctype="multipart/form-data">
                                     @csrf
                                     <h2 class="card-header">Add New Item</h2>
                                     <div class="mb-3">
@@ -109,6 +109,10 @@
                                     <div class="mb-3">
                                         <label for="item_description" class="form-label">Item Description</label>
                                         <textarea class="form-control" id="item_description" name="item_description" rows="5"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="item_image" class="form-label">Item Image</label>
+                                        <input type="file" class="form-control" id="item_image" name="item_image">
                                     </div>
                                     <div class="mb-3">
                                         <label for="item_price" class="form-label">Item Price</label>
@@ -142,7 +146,14 @@
                                     <div class="col-md-4 mb-4">
                                         <div class="card">
                                             <a href="#" class="card-link">
-                                                <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="https://via.placeholder.com/600x400">
+                                                @if ($item["item_image"]!=null)
+
+                                                    {{-- <img src="{{asset('storage/ItemImages/ImageItem2.webp')}}" class="card-img-top" alt="itemImage"> --}}
+                                                    <img src="{{ asset("storage/{$item['item_image']}") }}" class="card-img-top" alt="itemImage">
+                                                @else
+                                                    <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="itemImage">
+                                                @endif
+
                                                 <div class="card-body text-dark">
                                                     <h5 class="card-title">{{ $item["item_name"] }}</h5>
                                                     <p class="card-text">Harga: Rp{{ $item["item_price"] }}</p>

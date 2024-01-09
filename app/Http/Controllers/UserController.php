@@ -12,8 +12,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Discount;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -174,10 +176,16 @@ class UserController extends Controller
 
     public function addItemProcess(Request $req) {
         // insert validation here
+        $lastItemId = Item::latest()->first()->item_id;
+        $imageName = "ImageItem" . ($lastItemId+1);
+        $imageExtension = $req->item_image->extension();
+
+        $imagePath = Storage::putFileAs('public/ItemImages', $req->item_image, "$imageName.$imageExtension");
 
         Item::create([
             "item_name" => $req->item_name,
             "item_description" => $req->item_description,
+            "item_image" => 'ItemImages/' . "$imageName.$imageExtension",
             "item_price" => $req->item_price,
             "item_stock" => $req->item_stock,
             "item_category" => $req->item_category,

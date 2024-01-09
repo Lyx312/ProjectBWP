@@ -20,6 +20,7 @@ class Item extends Model
         "item_id",
         "item_name",
         "item_description",
+        "item_image",
         "item_price",
         "item_stock",
         "item_category",

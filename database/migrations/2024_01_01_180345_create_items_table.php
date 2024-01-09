@@ -32,6 +32,7 @@ return new class extends Migration
             $table->id("item_id");
             $table->string("item_name", 200);
             $table->string("item_description", 500);
+            $table->string("item_image", 100)->nullable();
             $table->integer("item_price", false, true);
             $table->integer("item_stock", false, true)->default(0);
             $table->foreignId("item_category")->constrained("categories", "category_id");
