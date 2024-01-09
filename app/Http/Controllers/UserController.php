@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     public function test() {
-        $table = Order::Find(1);
-        $test = $table->OrderDetail;
+        $table = Item::Find(1);
+        $test = $table->Discount;
         dd($test);
     }
 

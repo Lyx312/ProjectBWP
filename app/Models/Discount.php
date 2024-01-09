@@ -22,4 +22,12 @@ class Discount extends Model
         "discount_start_date",
         "discount_end_date",
     ];
+
+    public function Item(){
+        return $this->belongsTo(Item::class,"discount_item_id" , "item_id");
+    }
+
+    public function Cart(){
+        return $this->hasMany(Cart::class, "cart_discount_id", "discount_id");
+    }
 }

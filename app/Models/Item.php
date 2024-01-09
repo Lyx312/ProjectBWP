@@ -42,4 +42,8 @@ class Item extends Model
     public function Category(){
         return $this->belongsTo(Category::class,"item_category" , "category_id");
     }
+
+    public function Discount(){
+        return $this->hasOne(Discount::class,"discount_item_id" , "item_id");
+    }
 }

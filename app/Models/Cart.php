@@ -32,4 +32,7 @@ class Cart extends Model
         return $this->belongsTo(Item::class, 'cart_item_id', 'item_id');
     }
 
+    public function Discount(){
+        return $this->belongsTo(Discount::class, "cart_discount_id", "discount_id");
+    }
 }
