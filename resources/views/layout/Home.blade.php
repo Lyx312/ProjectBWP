@@ -52,7 +52,7 @@
                 <a class="nav-link" href="#">Contact</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Cart</a>
+                <a class="nav-link" href="{{route("Cart-page")}}">Cart</a>
             </li>
             @if(Auth::check())
                 <li class="nav-item">
