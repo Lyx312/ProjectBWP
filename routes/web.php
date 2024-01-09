@@ -5,6 +5,7 @@ use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureUserIsCustomer;
 use App\Http\Middleware\EnsureUserIsSeller;
 use App\Http\Middleware\EnsureUserNotLoggedIn;
+use App\Http\Middleware\EnsureUserIsLoggedIn;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,7 @@ Route::controller(UserController::class)->group(function () {
         Route::get('/admin', 'index')->name('admin-page')->middleware([EnsureUserIsAdmin::class]);
         Route::get('/customer', 'getCustomerPage')->name('customer-page');
         Route::get('/seller', 'getSellerPage')->name('seller-page')->middleware([EnsureUserIsSeller::class]);
+        Route::get('/account', 'getAccountPage')->name('account-page')->middleware([EnsureUserIsLoggedIn::class]);
 
         Route::get('/login', 'getLoginPage')->name('login-page');
         Route::get('/register', 'getRegisterPage')->name('register-page');

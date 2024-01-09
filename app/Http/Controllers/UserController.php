@@ -38,6 +38,10 @@ class UserController extends Controller
         return view('Katalog');
     }
 
+    public function getAccountPage() {
+        return view('Account');
+    }
+
     public function getSellerPage() {
         $items = Item::get()->where("item_seller", "=", Auth::user()->username);
         $categories = Category::all();

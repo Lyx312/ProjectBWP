@@ -25,7 +25,11 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                @if (Auth::check() && Auth::user()->role == 0)
+                    <a class="nav-link" href="{{route('customer-page')}}">Home <span class="sr-only">(current)</span></a>
+                @elseif (Auth::check() && Auth::user()->role == 1)
+                    <a class="nav-link" href="{{route('seller-page')}}">Home <span class="sr-only">(current)</span></a>
+                @endif
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{route('Shop-page')}}">Shop</a>
@@ -56,7 +60,7 @@
             </li>
             @if(Auth::check())
                 <li class="nav-item">
-                    <p class="navbar-text">{{auth()->user()->name}}</p>
+                    <a class="navbar-text" href="{{route('account-page')}}">{{auth()->user()->name}}</a>
                 </li>
                 <li class="nav-item mx-2">
                     <a class="btn btn-danger" href="{{route('logout-process')}}">Logout</a>
