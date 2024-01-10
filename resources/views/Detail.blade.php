@@ -5,6 +5,15 @@
         <div class="w-75 row pt-5">
             <div class="col-3">
                 <img src="https://i.pinimg.com/originals/8a/39/03/8a390326148f845c0e26c23d56b7fde9.gif" alt="item_image" width="100%">
+
+                <div>
+                    <h3>Overall Rating</h3>
+                    <div class="d-flex">
+                        <img class="star align-self-baseline mt-2" width="20px" height="20px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAABFUExURfakAPelAPakAPekAPakAPelAPalAEdwTP+vAPiuAPakAPqoAPalAPalAPelAP/WAP/TAP/MAP/PAP/bAPq1APy/AP7HAGxqCN8AAAAPdFJOU/5Lu2byeuMADP2nIMmTOjbD1MQAAAD7SURBVCjPhdNbkoMgEAXQq4KhAZWn+1/qAFFjk5TTH1pwuIoIeD0WeFPJR5ZCPbASkA8sQTzOWM3keBw8HGJicfBwjIHF7zzBx8jj6MJxY/HGZpiWcQb8VjwShNVyWlXjpfSXopT3rZXLKVHtErPBS1kk77a+wg5M9eFqRP7SzVHR9u7qrqtAGM6pffuhx4c1D8GFAuUeTr2+WyOHqzyJoVsWkW58rczJ6p4OWDpekf2nyHY8YW/wvibR8YLanQmpDkgwnEfye8FZowzYM7qZi1SxLKNpA86pH2zqD5LvfbCOpaEZDxDLZ5OsFpax1Ibt6GH+eUr+OWN9/QE2YB+QdE4J4wAAAABJRU5ErkJggg==">
+                        <h1>{{$reviews->avg('review_rating')}}</h1>
+                        <h5 class="align-self-end">/5</h5>
+                    </div>
+                </div>
             </div>
             <div class="col-6">
                 <h4><b>{{$item["item_name"]}}</b></h4>
@@ -19,8 +28,40 @@
 
                 <p class="mt-5" style="height: 40vh">{{$item["item_description"]}}</p>
                 <hr>
-                <p>Seller: {{$item->User->name}}</p>
+                <div class="d-flex align-items-center">
+                    Seller:
+                    <div style="margin-left: 10px; width: 30px; height: 30px; overflow: hidden; border-radius: 50%;">
+                        <img src="{{ asset('storage/' . $item->User->profile_picture) }}" alt="profile_picture" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <span class="mx-1">{{ $item->User->display_name }}</span>
+                </div>
                 <hr>
+
+                <h3>Reviews</h3>
+                <hr>
+                @foreach ($reviews as $review)
+                    <div class="d-flex align-items-center">
+                        <div style="margin-left: 10px; width: 30px; height: 30px; overflow: hidden; border-radius: 50%;">
+                            <img src="{{ asset('storage/' . $review->User->profile_picture) }}" alt="profile_picture" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <span class="mx-1">{{ $review->User->display_name }}</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        @for ($i = 1; $i <= 5; $i++)
+                            @if ($review->review_rating < $i)
+                            <img class="star" width="20px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAA/UExURf/XAPakAPalAPenAPakAPalAPenAEdwTP+vAP69APalAPivAPemAPmrAP+1APelAPakAPalAPmvAPioAPajAHElIkoAAAAUdFJOUxr0zm3rwngADSm3TZRFBqfggTda/y+eEwAAAPRJREFUKM+N09mShCAMBdCwNjuC9/+/dQDLaaCnrcmDVeSQCIL0egxah0Y8smbmgY1EeWANLs1XNlJF6K8s4Mkt5TMnqYjWctqKaS2f2BytmMjP5Z2TjSK4A6OYSIHxXM5qBpeWR88EMZSqDmrkJLf0MgrOW9qjCoazN28uPpQsbzre/Zdfeq08OehdmX9vbPdb732nPHvTuH6WxPLEv8d6s0GZmsuwccU5sVIbC9Sr73hmtnFgPX1yFvoEDVpZ8XZWCkdGn+CxrVzm6CBFetkMWex9qHcTHJD6ugfVtUFeOIKV9yWJCnxhEdYb7VdO//vH9vgB7woXsbjqY50AAAAASUVORK5CYII=">
+                            @else
+                            <img class="star" width="20px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAABFUExURfakAPelAPakAPekAPakAPelAPalAEdwTP+vAPiuAPakAPqoAPalAPalAPelAP/WAP/TAP/MAP/PAP/bAPq1APy/AP7HAGxqCN8AAAAPdFJOU/5Lu2byeuMADP2nIMmTOjbD1MQAAAD7SURBVCjPhdNbkoMgEAXQq4KhAZWn+1/qAFFjk5TTH1pwuIoIeD0WeFPJR5ZCPbASkA8sQTzOWM3keBw8HGJicfBwjIHF7zzBx8jj6MJxY/HGZpiWcQb8VjwShNVyWlXjpfSXopT3rZXLKVHtErPBS1kk77a+wg5M9eFqRP7SzVHR9u7qrqtAGM6pffuhx4c1D8GFAuUeTr2+WyOHqzyJoVsWkW58rczJ6p4OWDpekf2nyHY8YW/wvibR8YLanQmpDkgwnEfye8FZowzYM7qZi1SxLKNpA86pH2zqD5LvfbCOpaEZDxDLZ5OsFpax1Ibt6GH+eUr+OWN9/QE2YB+QdE4J4wAAAABJRU5ErkJggg==">
+                            @endif
+                        @endfor
+                        <p class="m-0 mx-2">{{$review->created_at->format('j F Y - H:i')}}</p>
+
+                    </div>
+                    <p>{{$review->review_text}}</p>
+
+                    <hr>
+                @endforeach
+
             </div>
             <div class="col-3">
                 <form class="rounded border border-dark p-3" method="POST" action="{{route("add-to-cart", $item["item_id"])}}">

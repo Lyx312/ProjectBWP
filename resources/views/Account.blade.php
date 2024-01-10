@@ -7,13 +7,9 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center pb-3">
-                    @if (auth()->user()->profile_picture == null)
-                        <img src="https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png" alt="default_profile_picture" width="50px" style="display: inline-block; margin-right: 10px;">
-                    @else
                     <div style="display: inline-block; margin-right: 10px; width: 50px; height: 50px; overflow: hidden; border-radius: 50%;">
-                        <img src="{{ asset('storage/' . auth()->user()->profile_picture) }}" alt="default_profile_picture" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="{{ asset('storage/' . auth()->user()->profile_picture) }}" alt="profile_picture" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
-                    @endif
                     <h3 class="card-title" style="display: inline-block; margin: 0;">Account Information</h3>
                 </div>
 

@@ -37,7 +37,7 @@ return new class extends Migration
             $table->string("username", 100)->primary();
             $table->string("password", 100);
             $table->string("display_name", 100);
-            $table->string("profile_picture", 100)->nullable();
+            $table->string("profile_picture", 100)->default('ProfilePictures/default-profile-picture.png');
             $table->string("email", 100)->unique();
             $table->string("phone_number", 15);
             $table->string("address", 200);

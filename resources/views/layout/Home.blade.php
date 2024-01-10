@@ -17,7 +17,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <a class="navbar-brand" href="#">E-Commerce</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -57,8 +57,13 @@
                 </li>
             @endif
             @if(Auth::check())
-                <li class="nav-item">
-                    <a class="navbar-text" href="{{route('account-page')}}">{{auth()->user()->display_name}}</a>
+                <li class="nav-item" style="display: flex; align-items: center;">
+                    <a href="{{ route('account-page') }}" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+                        <div style="width: 30px; height: 30px; overflow: hidden; border-radius: 50%; margin-left: 10px;">
+                            <img src="{{ asset('storage/' . auth()->user()->profile_picture) }}" alt="profile_picture" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <span class="nav-link">{{ auth()->user()->display_name }}</span>
+                    </a>
                 </li>
                 <li class="nav-item mx-2">
                     <a class="btn btn-danger" href="{{route('logout-process')}}">Logout</a>
@@ -82,7 +87,7 @@
 @yield("content")
 
 
-<footer class="bg-dark text-light d-flex align-items-center" style="margin-top: 10px; padding: 10px 24px 0px 24px;">
+<footer class="bg-dark text-light d-flex align-items-center" style="padding: 10px 24px 0px 24px;">
     <div class="container">
       <div class="row">
         <div class="col-md-6">

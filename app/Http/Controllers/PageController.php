@@ -42,9 +42,11 @@ class PageController extends Controller
     public function getDetailPage($itemID) {
         $item = Item::find($itemID);
         $discount = $this->getDiscount($itemID);
+        $reviews = Review::where("review_item_id", "=", $itemID)->get();
 
         $param["item"] = $item;
         if ($discount != null) $param["discount"] = $discount;
+        $param["reviews"] = $reviews;
 
         return view('Detail', $param);
     }

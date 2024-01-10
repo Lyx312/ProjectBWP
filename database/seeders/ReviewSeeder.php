@@ -18,7 +18,7 @@ class ReviewSeeder extends Seeder
                 "review_id" => 1,
                 "review_user" => "bobi",
                 "review_item_id" => 1,
-                "review_rating" => 4.5,
+                "review_rating" => 4,
                 "review_text" => "Very comfortable and affordable. Deffinitely recommended!",
             ],
             [
