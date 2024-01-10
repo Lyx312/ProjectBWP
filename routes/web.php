@@ -42,28 +42,6 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/login', 'loginProcess')->name('login-process');
     Route::post('/register', 'registerProcess')->name('register-process');
 
-    Route::get('/detail/{itemID}', 'getDetailPage')->name('detail-page');
-
-    Route::get('/shop', 'getShopPage')->name('Shop-page');
-    Route::get('/login', 'getLoginPage')->name('login-page')->middleware([EnsureUserNotLoggedIn::class]);
-    Route::get('/register', 'getRegisterPage')->name('register-page')->middleware([EnsureUserNotLoggedIn::class]);
-
-    Route::get('/test', 'test')->name('test-page');
-});
-
-Route::controller(UserController::class)->group(function () {
-    Route::post('/login', 'loginProcess')->name('login-process');
-    Route::post('/register', 'registerProcess')->name('register-process');
-
-    Route::get('/logout', 'logoutProcess')->name('logout-process');
-});
-
-Route::controller(CustomerController::class)->group(function () {
-    Route::get('/topup', 'getTopUpPage')->name('Topup-page')->middleware([EnsureUserIsCustomer::class]);
-    Route::get('/cart', 'getCartPage')->name('Cart-page')->middleware([EnsureUserIsCustomer::class]);
-
-        Route::get('/test', 'test')->name('test-page');
-    //});
     Route::get('/logout', 'logoutProcess')->name('logout-process');
 });
 

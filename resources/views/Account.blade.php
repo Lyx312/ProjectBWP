@@ -6,7 +6,12 @@
 
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title">Account Information</h3>
+                @if (auth()->user()->profile_picture == null)
+                    <img src="https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png" alt="default_profile_picture" width="50px" style="display: inline-block">
+                @else
+
+                @endif
+                <h3 class="card-title" style="display: inline-block">Account Information</h3>
 
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><strong>Username:</strong> {{ auth()->user()->username }}</li>
