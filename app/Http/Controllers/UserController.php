@@ -55,7 +55,7 @@ class UserController extends Controller
     {
         $request->validate([
             'username' => 'required|string|unique:users',
-            'name' => 'required|string',
+            'display_name' => 'required|string',
             'password' => 'required|confirmed',
             'email' => 'required|email',
             'phone_number' => 'required|digits:9',
@@ -64,7 +64,7 @@ class UserController extends Controller
 
         $user = new User([
             'username' => $request->username,
-            'name' => $request->name,
+            'display_name' => $request->display_name,
             'password' => $request->password,
             'email' => $request->email,
             'phone_number' => $request->phone_number,

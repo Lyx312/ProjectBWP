@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
             [
                 "username" => "bobi",
                 "password" => "123",
-                "name" => "Bobi Hermawan",
+                "display_name" => "Bobi Hermawan",
                 "email" => "bobi@mail.com",
                 "phone_number" => "081145125683",
                 "address" => "Jalan Jawa No.1",
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             [
                 "username" => "andi",
                 "password" => "111",
-                "name" => "Andi Kusuma",
+                "display_name" => "Andi Kusuma",
                 "email" => "andi@mail.com",
                 "phone_number" => "083314512356",
                 "address" => "Jalan Supratman VII No.53",
@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
             [
                 "username" => "suti",
                 "password" => "369",
-                "name" => "Suti Susanti",
+                "display_name" => "Suti Susanti",
                 "email" => "suti@mail.com",
                 "phone_number" => "081244636345",
                 "address" => "Jalan Munir XI No.12",
@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
             [
                 "username" => "jonathan",
                 "password" => "420",
-                "name" => "Jonathan Josquare",
+                "display_name" => "Jonathan Josquare",
                 "email" => "jo@jo.com",
                 "phone_number" => "08884929503",
                 "address" => "Jalan Ngagel No.34",
@@ -53,7 +53,7 @@ class UserSeeder extends Seeder
             [
                 "username" => "walter",
                 "password" => "666",
-                "name" => "Walter Black",
+                "display_name" => "Walter Black",
                 "email" => "black@heisenberg.com",
                 "phone_number" => "081388359405",
                 "address" => "Jalan Antah IX No.27",
@@ -62,7 +62,7 @@ class UserSeeder extends Seeder
             [
                 "username" => "robert",
                 "password" => "789",
-                "name" => "Robert Cllosenheimer",
+                "display_name" => "Robert Cllosenheimer",
                 "email" => "trinity@manhattan.com",
                 "phone_number" => "080148479999",
                 "address" => "Jalan Apah No.9",

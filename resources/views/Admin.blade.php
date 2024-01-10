@@ -5,6 +5,7 @@
     <table class="table table-striped table-hover">
         <tr>
             <th>Username</th>
+            <th>Display Name</th>
             <th>Email</th>
             <th>Phone Number</th>
             <th>Address</th>
@@ -15,6 +16,7 @@
         @foreach ($daftarUser as $user)
             <tr @if($user->is_banned == 1) style="background-color: red;" @endif>
                 <td>{{$user->username}}</td>
+                <td>{{$user->display_name}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->phone_number}}</td>
                 <td>{{$user->address}}</td>

@@ -66,7 +66,7 @@
             @endif
             @if(Auth::check())
                 <li class="nav-item">
-                    <a class="navbar-text" href="{{route('account-page')}}">{{auth()->user()->name}}</a>
+                    <a class="navbar-text" href="{{route('account-page')}}">{{auth()->user()->display_name}}</a>
                 </li>
                 <li class="nav-item mx-2">
                     <a class="btn btn-danger" href="{{route('logout-process')}}">Logout</a>
