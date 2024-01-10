@@ -17,12 +17,15 @@ class EnsureUserIsLoggedIn
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() && !Session::Has("isAdmin")) {
+        if (!Auth::check()) {
             return redirect(route("login-page"))->with("error", "Please login first");
-        } else if (Session::has("isAdmin") && Session::get("isAdmin")) {
-            return back()->with("error", "Unauthorized entry");
-        } else {
-            return $next($request);
         }
+
+        if (Session::has("isAdmin")) {
+            return back()->with("error", "Unauthorized entry");
+        }
+
+        return $next($request);
+
     }
 }

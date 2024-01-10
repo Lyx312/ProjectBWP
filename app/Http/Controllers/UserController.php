@@ -42,7 +42,7 @@ class UserController extends Controller
 
         if (Auth::attempt($credential)) {
             if (Auth::user()->role == 0) {
-                return redirect()->intended('customer');
+                return redirect()->intended('/');
             } else {
                 return redirect('seller');
             }
