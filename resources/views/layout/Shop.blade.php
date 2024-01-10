@@ -69,7 +69,7 @@
                                     <div class="card-body">
                                         <h3 class="text-primary font-semibold mb-2">Product {{ $index }}</h3>
                                         <p class="text-primary mb-3">Price: ${{ rand(20, 100) }}</p>
-                                        @if (Auth::check())
+                                        @if (Auth::check() && Auth::user()->role == 0)
                                             <a href="#" class="btn btn-primary btn-block">Add to Cart</a>
                                         @endif
                                     </div>

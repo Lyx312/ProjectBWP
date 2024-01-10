@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Discount;
 use App\Models\Item;
 use App\Models\User;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -13,8 +14,8 @@ use Illuminate\Support\Facades\Session;
 class PageController extends Controller
 {
     public function test() {
-        $table = Review::Find(1);
-        $test = $table->Discount;
+        $table = Item::Find(1);
+        $test = $table->Review;
         dd($test);
     }
 
