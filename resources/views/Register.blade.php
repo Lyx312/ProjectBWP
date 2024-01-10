@@ -21,13 +21,13 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name:</label>
-                            @if($errors->has('name'))
+                            <label for="display_name" class="form-label">Display Name:</label>
+                            @if($errors->has('display_name'))
                                 <div class="alert alert-danger">
                                     {{ $errors->first('name') }}
                                 </div>
                             @endif
-                            <input type="text" class="form-control" id="name" name="name" value="{{old('name')}}">
+                            <input type="text" class="form-control" id="display_name" name="display_name" value="{{old('display_name')}}">
                         </div>
 
                         <div class="mb-3">
