@@ -9,12 +9,27 @@
                 <div class="d-flex align-items-center pb-3">
                     @if (auth()->user()->profile_picture == null)
                         <img src="https://jeffjbutler.com//wp-content/uploads/2018/01/default-user.png" alt="default_profile_picture" width="50px" style="display: inline-block; margin-right: 10px;">
+                    @else
+                    <div style="display: inline-block; margin-right: 10px; width: 50px; height: 50px; overflow: hidden; border-radius: 50%;">
+                        <img src="{{ asset('storage/' . auth()->user()->profile_picture) }}" alt="default_profile_picture" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
                     @endif
                     <h3 class="card-title" style="display: inline-block; margin: 0;">Account Information</h3>
                 </div>
 
+                @if ($errors->editProfile->any())
+                    <ul>
+                        @foreach ($errors->editProfile->all() as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                @endif
+                @if (Session::has("success-profile"))
+                    {{Session::get('success-profile')}}
+                @endif
+
                 <div class="list-group list-group-flush px-3">
-                    <form action="" method="post">
+                    <form action="{{ route('edit-profile-process') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <li class="row d-flex align-items-center list-group-item">
                             <div class="col-2"><strong>Profile Picture:</strong></div>
@@ -22,7 +37,7 @@
                         </li>
                         <li class="row d-flex align-items-center list-group-item">
                             <div class="col-2"><strong>Username:</strong></div>
-                            <div class="col-10"><input type="text" class="form-control" name="username" id="username" value="{{ auth()->user()->username }}"></div>
+                            <div class="col-10">{{ auth()->user()->username }}</div>
                         </li>
                         <li class="row d-flex align-items-center list-group-item">
                             <div class="col-2"><strong>Display Name:</strong></div>
@@ -70,8 +85,19 @@
                     <h3 class="card-title" style="display: inline-block; margin: 0;">Change Password</h3>
                 </div>
 
+                @if ($errors->changePassword->any())
+                    <ul>
+                        @foreach ($errors->changePassword->all() as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                @endif
+                @if (Session::has("success-password"))
+                    {{Session::get('success-password')}}
+                @endif
+
                 <div class="list-group list-group-flush px-3">
-                    <form action="" method="post">
+                    <form action="{{route('change-password-process')}}" method="post">
                         @csrf
                         <li class="row d-flex align-items-center list-group-item">
                             <div class="col-2"><strong>Old Password:</strong></div>

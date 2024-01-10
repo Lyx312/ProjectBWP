@@ -6,7 +6,10 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -72,12 +75,6 @@ class UserController extends Controller
             'role' => $request->role,
         ]);
 
-        // if (Auth::attempt($credential)){
-        //     return view('layout.FrontPage');
-        // } else {
-        //     return redirect("login")->with("error", "Login Failed");
-        // }
-
         $user->save();
 
     // Redirect to a success page or do something else
@@ -90,5 +87,73 @@ class UserController extends Controller
         $request->session()->regenerateToken();
         Session::forget('isAdmin');
         return redirect("login");
+    }
+
+    public function editProfileProcess(Request $req) {
+        $user = User::find(auth()->user()->username);
+
+        $validator = Validator::make(
+            $req->all(),
+            [
+                'profile_picture' => "sometimes|mimes:gif,jpg,jpeg,png,webp",
+                'display_name' => 'required|string',
+                'email' => 'required|email',
+                'phone_number' => 'required|digits:12',
+                'address' => 'required|string',
+            ],
+        );
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator, 'editProfile');
+        }
+
+        if ($req->hasFile('profile_picture')) {
+            $imageName = "PP" . ($user->username);
+            $imageExtension = $req->profile_picture->extension();
+            try {
+                Storage::putFileAs('public/ProfilePictures', $req->profile_picture, "$imageName.$imageExtension");
+                $user->profile_picture = 'ProfilePictures/' . "$imageName.$imageExtension";
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Error storing profile picture.');
+            }
+        }
+
+        $user->display_name = $req->display_name;
+        $user->email = $req->email;
+        $user->phone_number = $req->phone_number;
+        $user->address = $req->address;
+
+        $user->save();
+
+        return redirect('account')->with("success-profile", "Successfully edit profile");
+    }
+
+    public function changePasswordProcess(Request $req) {
+        $user = User::find(auth()->user()->username);
+
+        $validator = Validator::make(
+            $req->all(),
+            [
+                'old_password' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        if (!Hash::check($value, Auth::user()->password)) {
+                            $fail('The old password is incorrect.');
+                        }
+                    },
+                ],
+                'password' => 'required|confirmed',
+            ]
+        );
+
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator, 'changePassword');
+        }
+
+        $user->password = $req->password;
+        $user->save();
+
+        return redirect('account')->with("success-password", "Successfully changed password");
     }
 }
