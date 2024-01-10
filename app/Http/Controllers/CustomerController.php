@@ -10,21 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
-    public function getDiscount($itemID) {
-        return Discount::where('discount_item_id', $itemID)
-                            ->where('discount_start_date', '<=', now())
-                            ->where('discount_end_date', '>=', now())
-                            ->first();
-    }
-
-    public function getDetailPage($itemID) {
-        $item = Item::find($itemID);
-        $discount = $this->getDiscount($itemID);
-
-        $param["item"] = $item;
-        if ($discount != null) $param["discount"] = $discount;
-
-        return view('Detail', $param);
+    public function getTopUpPage() {
+        return view('TopUp');
     }
 
     public function addToCartProcess(Request $req) {

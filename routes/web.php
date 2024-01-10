@@ -57,6 +57,6 @@ Route::controller(SellerController::class)->group(function () {
 });
 
 Route::controller(AdminController::class)->group(function () {
-    Route::post('/admin/ban/{username}', 'banUser')->name('ban-user')->middleware([EnsureUserIsAdmin::class]);
     Route::get('/admin/ban/{username}', 'banUser')->name('ban-user-get')->middleware([EnsureUserIsAdmin::class]);
+    Route::post('/admin/ban/{username}', 'banUser')->name('ban-user')->middleware([EnsureUserIsAdmin::class]);
 });
