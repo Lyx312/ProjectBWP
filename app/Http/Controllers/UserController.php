@@ -71,10 +71,25 @@ class UserController extends Controller
             'password' => 'required|string',
         ]);
 
+        // Check if the user is attempting to log in as admin
         if ($request->username == "admin" && $request->password == "admin") {
             Session::put('isAdmin', true);
             return redirect('admin');
-        } else if (Auth::attempt($credential)){
+        }
+
+        // Regular user login attempt
+        $user = User::where('username', $request->username)->first();
+
+        if (!$user) {
+            return redirect("login")->with("error", "Login Failed");
+        }
+
+        // Check if the user is banned
+        if ($user->is_banned == 1) {
+            return redirect("login")->with("error", "Login Failed. Your account is banned.");
+        }
+
+        if (Auth::attempt($credential)) {
             if (Auth::user()->role == 0) {
                 return redirect()->intended('customer');
             } else {
@@ -83,8 +98,6 @@ class UserController extends Controller
         } else {
             return redirect("login")->with("error", "Login Failed");
         }
-
-        return view("login");
     }
 
     public function registerProcess(Request $request)
