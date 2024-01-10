@@ -23,6 +23,14 @@ class UserController extends Controller
         $request->validate([
             'username' => 'required|string',
             'password' => 'required|string',
+        ], [
+            'username.required' => ':attribute is required.',
+            'username.string' => ':attribute must be a string.',
+            'password.required' => ':attribute is required.',
+            'password.string' => ':attribute must be a string.',
+        ], [
+            'username' => 'Username',
+            'password' => 'Password',
         ]);
 
         // Check if the user is attempting to log in as admin
@@ -63,6 +71,27 @@ class UserController extends Controller
             'email' => 'required|email',
             'phone_number' => 'required|digits:9',
             'address' => 'required|string',
+        ], [
+            'username.required' => ':attribute is required.',
+            'username.string' => ':attribute must be a string.',
+            'username.unique' => ':attribute has already been taken.',
+            'display_name.required' => ':attribute is required.',
+            'display_name.string' => ':attribute must be a string.',
+            'password.required' => ':attribute is required.',
+            'password.confirmed' => ':attribute confirmation does not match.',
+            'email.required' => ':attribute is required.',
+            'email.email' => ':attribute must be a valid email address.',
+            'phone_number.required' => ':attribute is required.',
+            'phone_number.digits' => ':attribute must be :digits digits.',
+            'address.required' => ':attribute is required.',
+            'address.string' => ':attribute must be a string.',
+        ], [
+            'username' => 'Username',
+            'display_name' => 'Name',
+            'password' => 'Password',
+            'email' => 'Email',
+            'phone_number' => 'Phone Number',
+            'address' => 'Address',
         ]);
 
         $user = new User([
@@ -101,6 +130,25 @@ class UserController extends Controller
                 'phone_number' => 'required|digits:12',
                 'address' => 'required|string',
             ],
+            [
+                'profile_picture.sometimes' => ':attribute may only be included when updating the profile picture.',
+                'profile_picture.mimes' => ':attribute must be a file of type: gif, jpg, jpeg, png, webp.',
+                'display_name.required' => ':attribute is required.',
+                'display_name.string' => ':attribute must be a string.',
+                'email.required' => ':attribute is required.',
+                'email.email' => ':attribute must be a valid email address.',
+                'phone_number.required' => ':attribute is required.',
+                'phone_number.digits' => ':attribute must be :digits digits.',
+                'address.required' => ':attribute is required.',
+                'address.string' => ':attribute must be a string.',
+            ],
+            [
+                'profile_picture' => 'Profile Picture',
+                'display_name' => 'Name',
+                'email' => 'Email',
+                'phone_number' => 'Phone Number',
+                'address' => 'Address',
+            ]
         );
 
         if ($validator->fails()) {
@@ -138,18 +186,28 @@ class UserController extends Controller
                     'required',
                     function ($attribute, $value, $fail) {
                         if (!Hash::check($value, Auth::user()->password)) {
-                            $fail('The old password is incorrect.');
+                            $fail('The :attribute is incorrect.');
                         }
                     },
                 ],
                 'password' => 'required|confirmed',
+            ],
+            [
+                'old_password.required' => ':attribute is required.',
+                'old_password' => ':attribute is incorrect.',
+                'password.required' => ':attribute is required.',
+                'password.confirmed' => ':attribute confirmation does not match.',
+            ],
+            [
+                'old_password' => 'Old Password',
+                'password' => 'New Password',
             ]
         );
-
 
         if ($validator->fails()) {
             return back()->withErrors($validator, 'changePassword');
         }
+
 
         $user->password = $req->password;
         $user->save();
