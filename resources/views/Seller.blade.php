@@ -104,18 +104,38 @@
                                     <h2 class="card-header" id="simple-list-item-4">Add New Item</h2>
                                     <div class="mb-3">
                                         <label for="item_name" class="form-label">Item Name</label>
+                                        @if($errors->has('item_name'))
+                                            <div class="alert alert-danger">
+                                                {{ $errors->first('item_name') }}
+                                            </div>
+                                        @endif
                                         <input type="text" class="form-control" id="item_name" name="item_name">
                                     </div>
                                     <div class="mb-3">
                                         <label for="item_description" class="form-label">Item Description</label>
+                                        @if($errors->has('item_description'))
+                                            <div class="alert alert-danger">
+                                                {{ $errors->first('item_description') }}
+                                            </div>
+                                        @endif
                                         <textarea class="form-control" id="item_description" name="item_description" rows="5"></textarea>
                                     </div>
                                     <div class="mb-3">
                                         <label for="item_image" class="form-label">Item Image</label>
+                                        @if($errors->has('item_image'))
+                                            <div class="alert alert-danger">
+                                                {{ $errors->first('item_image') }}
+                                            </div>
+                                        @endif
                                         <input type="file" class="form-control" id="item_image" name="item_image">
                                     </div>
                                     <div class="mb-3">
                                         <label for="item_price" class="form-label">Item Price</label>
+                                        @if($errors->has('item_price'))
+                                            <div class="alert alert-danger">
+                                                {{ $errors->first('item_price') }}
+                                            </div>
+                                        @endif
                                         <div class="input-group">
                                             <span class="input-group-text">Rp</span>
                                             <input type="number" class="form-control" id="item_price" name="item_price" min="1000" step="1000" value="1000">
@@ -123,6 +143,11 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="item_stock" class="form-label">Item Stock</label>
+                                        @if($errors->has('item_stock'))
+                                            <div class="alert alert-danger">
+                                                {{ $errors->first('item_stock') }}
+                                            </div>
+                                        @endif
                                         <div class="input-group">
                                             <input type="number" class="form-control" id="item_stock" name="item_stock" min="1" value="1">
                                             <span class="input-group-text">item(s)</span>
@@ -130,6 +155,11 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="item_category" class="form-label">Item Category</label>
+                                        @if($errors->has('item_category'))
+                                            <div class="alert alert-danger">
+                                                {{ $errors->first('item_category') }}
+                                            </div>
+                                        @endif
                                         <select class="form-control" name="item_category" id="item_category">
                                             @foreach ($categories as $category)
                                                 <option class="form-control" value="{{$category["category_id"]}}">{{$category["category_name"]}}</option>
