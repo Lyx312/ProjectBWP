@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Session;
 class PageController extends Controller
 {
     public function test() {
-        $table = Item::Find(1);
+        $table = Review::Find(1);
         $test = $table->Discount;
         dd($test);
     }

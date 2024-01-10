@@ -43,17 +43,9 @@
                     Categories
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownCategories">
-                    <!-- Tambahkan pilihan kategori di sini -->
-                    <a class="dropdown-item" href="#">Category 1</a>
-                    <a class="dropdown-item" href="#">Category 2</a>
-                    <a class="dropdown-item" href="#">Category 3</a>
-                    <a class="dropdown-item" href="#">Category 4</a>
-                    <a class="dropdown-item" href="#">Category 5</a>
-                    <a class="dropdown-item" href="#">Category 6</a>
-                    <a class="dropdown-item" href="#">Category 7</a>
-                    <a class="dropdown-item" href="#">Category 8</a>
-                    <a class="dropdown-item" href="#">Category 9</a>
-                    <a class="dropdown-item" href="#">Category 10</a>
+                    @foreach (\App\Models\Category::all() as $category)
+                        <a class="dropdown-item" href="/shop/{{ $category->category_id }}" data-category-id="{{ $category->category_id }}">{{ $category->category_name }}</a>
+                    @endforeach
                 </div>
             </li>
             @if (Auth::check() && Auth::user()->role == 0)
@@ -89,6 +81,30 @@
 
 @yield("content")
 
+
+<footer class="bg-dark text-light d-flex align-items-center" style="margin-top: 10px; padding: 10px 24px 0px 24px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <p>&copy; 2024 M.I.E. All rights reserved.</p>
+        </div>
+        <div class="col-md-6 text-right">
+          <a href="https://id.linkedin.com/company/istts" target="_blank" rel="noopener noreferrer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/900px-Facebook_f_logo_%282019%29.svg.png" alt="Facebook" class="text-light" style="width: 32px; height: 32px; margin-right: 10px;">
+          </a>
+          <a href="https://www.facebook.com/istts.page/" target="_blank" rel="noopener noreferrer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/X_logo_2023_%28white%29.png/900px-X_logo_2023_%28white%29.png" alt="X" class="text-light" style="width: 32px; height: 32px; margin-right: 10px;">
+          </a>
+          <a href="https://www.instagram.com/haloistts/" target="_blank" rel="noopener noreferrer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/900px-Instagram_logo_2022.svg.png" alt="Instagram" class="text-light" style="width: 32px; height: 32px; margin-right: 10px;">
+          </a>
+          <a href="https://id.linkedin.com/company/istts" target="_blank" rel="noopener noreferrer">
+            <img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/circle-linkedin-512.png" alt="LinkedIn" class="text-light" style="width: 32px; height: 32px; margin-right: 10px;">
+          </a>
+        </div>
+      </div>
+    </div>
+</footer>
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
