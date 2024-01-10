@@ -18,7 +18,7 @@
                 <td>{{$user->email}}</td>
                 <td>{{$user->phone_number}}</td>
                 <td>{{$user->address}}</td>
-                <td>{{$user->balance}}</td>
+                <td>Rp.{{$user->balance}}</td>
                 <td>
                     @if($user->role == 0)
                         Customer

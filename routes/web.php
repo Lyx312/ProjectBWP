@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 // halaman pertama masuk di FrontPage untuk login register
 Route::get('/', function () {
-    return view('Login');
+    return view('Katalog');
 });
 Route::controller(UserController::class)->group(function () {
     //Route::middleware('guest')->group(function () {
@@ -29,14 +29,14 @@ Route::controller(UserController::class)->group(function () {
         Route::get('/admin', 'index')->name('admin-page')->middleware([EnsureUserIsAdmin::class]);
         Route::post('/admin/ban/{username}', 'banUser')->name('ban-user')->middleware([EnsureUserIsAdmin::class]);
         Route::get('/admin/ban/{username}', 'banUser')->name('ban-user-get')->middleware([EnsureUserIsAdmin::class]);
-        Route::get('/customer', 'getCustomerPage')->name('customer-page');
+        Route::get('/customer', 'getCustomerPage')->name('customer-page')->middleware([EnsureUserIsCustomer::class]);
         Route::get('/seller', 'getSellerPage')->name('seller-page')->middleware([EnsureUserIsSeller::class]);
         Route::get('/account', 'getAccountPage')->name('account-page')->middleware([EnsureUserIsLoggedIn::class]);
 
         Route::get('/login', 'getLoginPage')->name('login-page');
         Route::get('/register', 'getRegisterPage')->name('register-page');
         Route::get('/shop', 'getShopPage')->name('Shop-page');
-        Route::get('/topup', 'getTopUpPage')->name('Topup-page');
+        Route::get('/topup', 'getTopUpPage')->name('Topup-page')->middleware([EnsureUserIsCustomer::class]);
         Route::get('/cart', 'getCartPage')->name('Cart-page')->middleware([EnsureUserIsCustomer::class]);
         Route::get('/login', 'getLoginPage')->name('login-page')->middleware([EnsureUserNotLoggedIn::class]);
         Route::get('/register', 'getRegisterPage')->name('register-page')->middleware([EnsureUserNotLoggedIn::class]);

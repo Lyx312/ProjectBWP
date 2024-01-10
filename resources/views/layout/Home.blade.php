@@ -29,6 +29,10 @@
                     <a class="nav-link" href="{{route('customer-page')}}">Home <span class="sr-only">(current)</span></a>
                 @elseif (Auth::check() && Auth::user()->role == 1)
                     <a class="nav-link" href="{{route('seller-page')}}">Home <span class="sr-only">(current)</span></a>
+                @elseif (Session::has('isAdmin'))
+                    <a class="nav-link" href="{{route('admin-page')}}">Home <span class="sr-only">(current)</span></a>
+                @else
+                    <a class="nav-link" href="{{url('/')}}">Home <span class="sr-only">(current)</span></a>
                 @endif
             </li>
             <li class="nav-item">
@@ -52,12 +56,14 @@
                     <a class="dropdown-item" href="#">Category 10</a>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route("Topup-page")}}">Top up</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route("Cart-page")}}">Cart</a>
-            </li>
+            @if (Auth::check() && Auth::user()->role == 0)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route("Topup-page")}}">Top up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route("Cart-page")}}">Cart</a>
+                </li>
+            @endif
             @if(Auth::check())
                 <li class="nav-item">
                     <a class="navbar-text" href="{{route('account-page')}}">{{auth()->user()->name}}</a>
@@ -69,7 +75,7 @@
                 <li class="nav-item mx-2">
                     <p class="navbar-text">Admin</p>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item mx-2">
                     <a class="btn btn-danger" href="{{route('logout-process')}}">Logout</a>
                 </li>
             @else
