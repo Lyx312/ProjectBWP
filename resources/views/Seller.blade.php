@@ -35,7 +35,7 @@
                             <li class="list-group-item" ><a href="#simple-list-item-1">Daftar Pesanan </a></li>
                             <li class="list-group-item"><a href="#simple-list-item-2">Data Penjualan</a></li>
                             <li class="list-group-item"><a href="#simple-list-item-3">Daftar Produk</a></li>
-                            <li class="list-group-item"><a href="#">Tambah Product</a></li>
+                            <li class="list-group-item"><a href="#simple-list-item-4">Tambah Product</a></li>
                         </ul>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                             <div id="daftar-produk-content" class="col-md-9">
                                 <form method="POST" action="{{route('add-item-process')}}" enctype="multipart/form-data">
                                     @csrf
-                                    <h2 class="card-header">Add New Item</h2>
+                                    <h2 class="card-header" id="simple-list-item-4">Add New Item</h2>
                                     <div class="mb-3">
                                         <label for="item_name" class="form-label">Item Name</label>
                                         <input type="text" class="form-control" id="item_name" name="item_name">

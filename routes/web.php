@@ -36,6 +36,7 @@ Route::controller(UserController::class)->group(function () {
         Route::get('/login', 'getLoginPage')->name('login-page');
         Route::get('/register', 'getRegisterPage')->name('register-page');
         Route::get('/shop', 'getShopPage')->name('Shop-page');
+        Route::get('/topup', 'getTopUpPage')->name('Topup-page');
         Route::get('/cart', 'getCartPage')->name('Cart-page')->middleware([EnsureUserIsCustomer::class]);
         Route::get('/login', 'getLoginPage')->name('login-page')->middleware([EnsureUserNotLoggedIn::class]);
         Route::get('/register', 'getRegisterPage')->name('register-page')->middleware([EnsureUserNotLoggedIn::class]);

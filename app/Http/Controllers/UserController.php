@@ -42,6 +42,10 @@ class UserController extends Controller
         return view('Account');
     }
 
+    public function getTopUpPage() {
+        return view('TopUp');
+    }
+
     public function getSellerPage() {
         $items = Item::get()->where("item_seller", "=", Auth::user()->username);
         $categories = Category::all();
