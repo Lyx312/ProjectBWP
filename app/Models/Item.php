@@ -46,4 +46,8 @@ class Item extends Model
     public function Discount(){
         return $this->hasOne(Discount::class,"discount_item_id" , "item_id");
     }
+
+    public function Review(){
+        return $this->hasMany(Review::class, "review_item_id", "item_id");
+    }
 }
