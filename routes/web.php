@@ -27,6 +27,8 @@ Route::controller(UserController::class)->group(function () {
     //Route::middleware('guest')->group(function () {
         Route::get('/admin', 'getAdminPage')->name('admin-page')->middleware([EnsureUserIsAdmin::class]);
         Route::get('/admin', 'index')->name('admin-page')->middleware([EnsureUserIsAdmin::class]);
+        Route::post('/admin/ban/{username}', 'banUser')->name('ban-user')->middleware([EnsureUserIsAdmin::class]);
+        Route::get('/admin/ban/{username}', 'banUser')->name('ban-user-get')->middleware([EnsureUserIsAdmin::class]);
         Route::get('/customer', 'getCustomerPage')->name('customer-page');
         Route::get('/seller', 'getSellerPage')->name('seller-page')->middleware([EnsureUserIsSeller::class]);
         Route::get('/account', 'getAccountPage')->name('account-page')->middleware([EnsureUserIsLoggedIn::class]);

@@ -26,7 +26,13 @@
                         Seller
                     @endif
                 </td>
-                <td>{{$user->is_banned}}</td>
+                <td>
+                    @if($user->is_banned == 0)
+                        <a class="btn btn-danger" href='{{url("admin/ban/" . $user->username)}}'>Ban</a>
+                    @elseif($user->is_banned == 1)
+                        <a class="btn btn-primary" href='{{url("admin/ban/" . $user->username)}}'>Unban</a>
+                    @endif
+                </td>
             </tr>
         @endforeach
     </table>
