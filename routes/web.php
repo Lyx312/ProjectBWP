@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\SellerController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureUserIsCustomer;
@@ -19,40 +23,62 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// halaman pertama masuk di FrontPage untuk login register
-Route::get('/', function () {
-    return view('Login');
+Route::controller(PageController::class)->group(function () {
+    Route::get('/', 'getKatalogPage')->name('customer-page');
+    Route::get('/admin', 'getAdminPage')->name('admin-page')->middleware([EnsureUserIsAdmin::class]);
+    Route::get('/seller', 'getSellerPage')->name('seller-page')->middleware([EnsureUserIsSeller::class]);
+    Route::get('/account', 'getAccountPage')->name('account-page')->middleware([EnsureUserIsLoggedIn::class]);
+
+    Route::get('/detail/{itemID}', 'getDetailPage')->name('detail-page');
+
+    Route::get('/shop', 'getShopPage')->name('Shop-page');
+    Route::get('/login', 'getLoginPage')->name('login-page')->middleware([EnsureUserNotLoggedIn::class]);
+    Route::get('/register', 'getRegisterPage')->name('register-page')->middleware([EnsureUserNotLoggedIn::class]);
+
+    Route::get('/test', 'test')->name('test-page');
 });
+
 Route::controller(UserController::class)->group(function () {
-    //Route::middleware('guest')->group(function () {
-        Route::get('/admin', 'getAdminPage')->name('admin-page')->middleware([EnsureUserIsAdmin::class]);
-        Route::get('/admin', 'index')->name('admin-page')->middleware([EnsureUserIsAdmin::class]);
-        Route::post('/admin/ban/{username}', 'banUser')->name('ban-user')->middleware([EnsureUserIsAdmin::class]);
-        Route::get('/admin/ban/{username}', 'banUser')->name('ban-user-get')->middleware([EnsureUserIsAdmin::class]);
-        Route::get('/customer', 'getCustomerPage')->name('customer-page');
-        Route::get('/seller', 'getSellerPage')->name('seller-page')->middleware([EnsureUserIsSeller::class]);
-        Route::get('/account', 'getAccountPage')->name('account-page')->middleware([EnsureUserIsLoggedIn::class]);
+    Route::post('/login', 'loginProcess')->name('login-process');
+    Route::post('/register', 'registerProcess')->name('register-process');
 
-        Route::get('/login', 'getLoginPage')->name('login-page');
-        Route::get('/register', 'getRegisterPage')->name('register-page');
-        Route::get('/shop', 'getShopPage')->name('Shop-page');
-        Route::get('/topup', 'getTopUpPage')->name('Topup-page');//
-        Route::get('/cart', 'getCartPage')->name('Cart-page')->middleware([EnsureUserIsCustomer::class]);
-        Route::get('/login', 'getLoginPage')->name('login-page')->middleware([EnsureUserNotLoggedIn::class]);
-        Route::get('/register', 'getRegisterPage')->name('register-page')->middleware([EnsureUserNotLoggedIn::class]);
+    Route::get('/detail/{itemID}', 'getDetailPage')->name('detail-page');
 
-        Route::get('/detail/{itemID}', 'getDetailPage')->name('detail-page');
-        Route::post('/detail/{itemID}', 'addToCartProcess')->name('add-to-cart')->middleware([EnsureUserIsCustomer::class]);
+    Route::get('/shop', 'getShopPage')->name('Shop-page');
+    Route::get('/login', 'getLoginPage')->name('login-page')->middleware([EnsureUserNotLoggedIn::class]);
+    Route::get('/register', 'getRegisterPage')->name('register-page')->middleware([EnsureUserNotLoggedIn::class]);
 
-        Route::post('/addItem', 'addItemProcess')->name('add-item-process')->middleware([EnsureUserIsSeller::class]);;
+    Route::get('/test', 'test')->name('test-page');
+});
 
-        Route::post('/login', 'loginProcess')->name('login-process');
-        Route::post('/register', 'registerProcess')->name('register-process');
+Route::controller(UserController::class)->group(function () {
+    Route::post('/login', 'loginProcess')->name('login-process');
+    Route::post('/register', 'registerProcess')->name('register-process');
 
-        Route::get('/logout', 'logoutProcess')->name('logout-process');
+    Route::get('/logout', 'logoutProcess')->name('logout-process');
+});
+
+Route::controller(CustomerController::class)->group(function () {
+    Route::get('/topup', 'getTopUpPage')->name('Topup-page')->middleware([EnsureUserIsCustomer::class]);
+    Route::get('/cart', 'getCartPage')->name('Cart-page')->middleware([EnsureUserIsCustomer::class]);
 
         Route::get('/test', 'test')->name('test-page');
     //});
+    Route::get('/logout', 'logoutProcess')->name('logout-process');
 });
 
+Route::controller(CustomerController::class)->group(function () {
+    Route::get('/topup', 'getTopUpPage')->name('Topup-page')->middleware([EnsureUserIsCustomer::class]);
+    Route::get('/cart', 'getCartPage')->name('Cart-page')->middleware([EnsureUserIsCustomer::class]);
 
+    Route::post('/detail/{itemID}', 'addToCartProcess')->name('add-to-cart')->middleware([EnsureUserIsCustomer::class]);
+});
+
+Route::controller(SellerController::class)->group(function () {
+    Route::post('/addItem', 'addItemProcess')->name('add-item-process')->middleware([EnsureUserIsSeller::class]);
+});
+
+Route::controller(AdminController::class)->group(function () {
+    Route::get('/admin/ban/{username}', 'banUser')->name('ban-user-get')->middleware([EnsureUserIsAdmin::class]);
+    Route::post('/admin/ban/{username}', 'banUser')->name('ban-user')->middleware([EnsureUserIsAdmin::class]);
+});

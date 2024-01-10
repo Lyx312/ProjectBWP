@@ -17,10 +17,10 @@ class EnsureUserNotLoggedIn
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() && !Session::has("isAdmin")) {
-            return $next($request);
-        } else {
-            return back()->with("error", "Unauthorized entry");
+        if (Auth::check() || Session::has("isAdmin")) {
+            return back()->with("error", "Please logout first!");
         }
+
+        return $next($request);
     }
 }

@@ -23,7 +23,12 @@ return new class extends Migration
         }
         if (Schema::hasTable('discounts')) {
             Schema::table('discounts', function (Blueprint $table) {
-                //$table->dropForeign(['discount_item_id']);
+                $table->dropForeign(['discount_item_id']);
+            });
+        }
+        if (Schema::hasTable('reviews')) {
+            Schema::table('reviews', function (Blueprint $table) {
+                $table->dropForeign(['review_item_id']);
             });
         }
         Schema::dropIfExists('items');
@@ -61,6 +66,11 @@ return new class extends Migration
         if (Schema::hasTable('discounts')) {
             Schema::table('discounts', function (Blueprint $table) {
                 $table->dropForeign(['discount_item_id']);
+            });
+        }
+        if (Schema::hasTable('reviews')) {
+            Schema::table('reviews', function (Blueprint $table) {
+                $table->dropForeign(['review_item_id']);
             });
         }
         Schema::dropIfExists('items');

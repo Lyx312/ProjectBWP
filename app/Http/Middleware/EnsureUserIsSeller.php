@@ -17,12 +17,14 @@ class EnsureUserIsSeller
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() && !Session::Has("isAdmin")) {
-            return redirect(route("login-page"))->with("error", "Please login first");
-        } else if ((Auth::check() && Auth::user()->role != 1) || (Session::has("isAdmin") && Session::get("isAdmin"))) {
-            return back()->with("error", "Unauthorized entry");
-        } else {
-            return $next($request);
+        if (!Auth::check()) {
+            return redirect(route("login-page"))->with("error", "Please login first!");
         }
+
+        if (Auth::user()->role != 1 || Session::has("isAdmin")) {
+            return back()->with("error", "Unauthorized entry");
+        }
+
+        return $next($request);
     }
 }

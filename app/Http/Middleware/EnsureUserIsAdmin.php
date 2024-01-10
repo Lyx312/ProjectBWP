@@ -16,11 +16,10 @@ class EnsureUserIsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Session::has("isAdmin") && Session::get("isAdmin")) {
-            return $next($request);
-        } else {
+        if (!Session::has("isAdmin")) {
             return back()->with("error", "Unauthorized entry");
         }
 
+        return $next($request);
     }
 }
