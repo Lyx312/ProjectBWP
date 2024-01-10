@@ -50,6 +50,7 @@ Route::controller(UserController::class)->group(function () {
 
 Route::controller(CustomerController::class)->group(function () {
     Route::get('/topup', 'getTopUpPage')->name('Topup-page')->middleware([EnsureUserIsCustomer::class]);
+    Route::post('/top-up', 'topUpProcess')->name('top-up-process')->middleware([EnsureUserIsCustomer::class]);
     Route::get('/cart', 'getCartPage')->name('Cart-page')->middleware([EnsureUserIsCustomer::class]);
 
     Route::post('/detail/{itemID}', 'addToCartProcess')->name('add-to-cart')->middleware([EnsureUserIsCustomer::class]);

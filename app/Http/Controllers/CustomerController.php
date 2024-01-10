@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Discount;
 use App\Models\Item;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,5 +40,27 @@ class CustomerController extends Controller
         $param["cart"] = $cart;
 
         return view('Cart', $param);
+    }
+
+    public function topUpProcess(Request $request)
+    {
+        $request->validate([
+            'jumlah' => 'required|numeric|min:0',
+            'payment_method' => 'required|in:bank_transfer,e_wallet',
+        ], [
+            'jumlah.required' => ':attribute is required.',
+            'jumlah.numeric' => ':attribute must be a number.',
+            'jumlah.min' => ':attribute cant be 0 or lower.',
+            'payment_method.required' => ':attribute is required.',
+        ]);
+
+        $user = User::where('username', Auth::user()->username)->first();
+
+        // Update user's balance
+        $user->balance += $request->jumlah;
+        $user->save();
+
+        // Redirect back to the top-up page with a success message
+        return redirect()->route('Topup-page')->with('success', 'Top-up successful. Your balance has been updated.');
     }
 }
