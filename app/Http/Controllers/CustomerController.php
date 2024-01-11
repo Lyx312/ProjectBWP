@@ -35,6 +35,14 @@ class CustomerController extends Controller
         return redirect('cart');
     }
 
+    protected function getDiscount($itemId)
+    {
+        return Discount::where('discount_item_id', $itemId)
+            ->where('discount_start_date', '<=', now())
+            ->where('discount_end_date', '>=', now())
+            ->first();
+    }
+
     public function getCartPage() {
         $cart = Cart::where('cart_owner', '=', Auth::user()->username)->get();
         $param["cart"] = $cart;
