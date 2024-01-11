@@ -64,16 +64,18 @@
                     <div class="row">
                         @foreach($sellerItems as $item)
                             <div class="col-md-2 mb-3">
-                                <div class="card product-card">
-                                    <img src="{{ $item->item_image }}" class="card-img-top" alt="Product Image">
-                                    <div class="card-body">
-                                        <h3 class="text-primary font-semibold mb-2">{{ $item->item_name }}</h3>
-                                        <p class="text-primary mb-3">Price: ${{ $item->item_price }}</p>
-                                        @if (Auth::check() && Auth::user()->role == 0)
-                                            <a href="#" class="btn btn-primary btn-block">Add to Cart</a>
-                                        @endif
+                                <a href="/detail/{{ $item->item_id }}" value="{{ $item->item_id }}" style="text-decoration: none">
+                                    <div class="card product-card">
+                                        <img src="{{ $item->item_image }}" class="card-img-top" alt="Product Image">
+                                        <div class="card-body">
+                                            <h3 class="text-primary font-semibold mb-2">{{ $item->item_name }}</h3>
+                                            <p class="text-primary mb-3">Price: ${{ $item->item_price }}</p>
+                                            @if (Auth::check() && Auth::user()->role == 0)
+                                                <a href="#" class="btn btn-primary btn-block">Add to Cart</a>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         @endforeach
                     </div>
