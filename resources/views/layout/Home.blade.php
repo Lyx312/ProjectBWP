@@ -94,10 +94,10 @@
           <p>&copy; 2024 M.I.E. All rights reserved.</p>
         </div>
         <div class="col-md-6 text-right">
-          <a href="https://id.linkedin.com/company/istts" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.facebook.com/istts.page/" target="_blank" rel="noopener noreferrer">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/900px-Facebook_f_logo_%282019%29.svg.png" alt="Facebook" class="text-light" style="width: 32px; height: 32px; margin-right: 10px;">
           </a>
-          <a href="https://www.facebook.com/istts.page/" target="_blank" rel="noopener noreferrer">
+          <a href="https://twitter.com/istts_sby" target="_blank" rel="noopener noreferrer">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/X_logo_2023_%28white%29.png/900px-X_logo_2023_%28white%29.png" alt="X" class="text-light" style="width: 32px; height: 32px; margin-right: 10px;">
           </a>
           <a href="https://www.instagram.com/haloistts/" target="_blank" rel="noopener noreferrer">
