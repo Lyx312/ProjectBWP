@@ -47,7 +47,7 @@ class SellerController extends Controller
 
         $latestItem = Item::latest()->first();
         $lastItemId = $latestItem ? $latestItem->item_id : 0;
-        $imageName = "ImageItem" . ($lastItemId+1);
+        $imageName = "ItemImage" . ($lastItemId+1);
         $imageExtension = $req->item_image->extension();
 
         $imagePath = Storage::putFileAs('public/ItemImages', $req->item_image, "$imageName.$imageExtension");

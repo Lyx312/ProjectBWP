@@ -53,7 +53,7 @@
     <div class="container-fluid d-flex justify-content-center">
         <div class="w-75 row pt-5">
             <div class="col-3">
-                <img src="https://i.pinimg.com/originals/8a/39/03/8a390326148f845c0e26c23d56b7fde9.gif" alt="item_image" width="100%">
+                <img src="{{asset("storage/$item->item_image")}}" alt="item_image" width="100%">
 
                 <div>
                     <h3>Overall Rating</h3>

@@ -46,9 +46,27 @@ class UserSeeder extends Seeder
                 "password" => "420",
                 "display_name" => "Jonathan Josquare",
                 "email" => "jo@jo.com",
-                "phone_number" => "08884929503",
+                "phone_number" => "088849295035",
                 "address" => "Jalan Ngagel No.34",
                 "role" => 1
+            ],
+            [
+                "username" => "siska",
+                "password" => "246",
+                "display_name" => "Siska Putri",
+                "email" => "siska@mail.com",
+                "phone_number" => "085623451234",
+                "address" => "Jalan Dahlia No.3",
+                "role" => 0
+            ],
+            [
+                "username" => "eko",
+                "password" => "135",
+                "display_name" => "Eko Prasetyo",
+                "email" => "eko@mail.com",
+                "phone_number" => "087712345678",
+                "address" => "Jalan Mangga No.8",
+                "role" => 0
             ],
             [
                 "username" => "walter",
@@ -66,6 +84,69 @@ class UserSeeder extends Seeder
                 "email" => "trinity@manhattan.com",
                 "phone_number" => "080148479999",
                 "address" => "Jalan Apah No.9",
+                "role" => 1
+            ],
+            [
+                "username" => "david",
+                "password" => "100",
+                "display_name" => "David's Treasures",
+                "email" => "david.treasures@example.com",
+                "phone_number" => "084567890123",
+                "address" => "Jalan Indah No.4",
+                "role" => 1
+            ],
+            [
+                "username" => "eva",
+                "password" => "374",
+                "display_name" => "Eva's Creations",
+                "email" => "eva.creations@example.com",
+                "phone_number" => "085678901234",
+                "address" => "Jalan Damai No.5",
+                "role" => 1
+            ],
+            [
+                "username" => "frank",
+                "password" => "888",
+                "display_name" => "Frank's Depot",
+                "email" => "frank.depot@example.com",
+                "phone_number" => "086789012345",
+                "address" => "Jalan Sentosa No.6",
+                "role" => 1
+            ],
+            [
+                "username" => "grace",
+                "password" => "444",
+                "display_name" => "Grace's Boutique",
+                "email" => "grace.boutique@example.com",
+                "phone_number" => "087890123456",
+                "address" => "Jalan Sejahtera No.7",
+                "role" => 1
+            ],
+            [
+                "username" => "henry",
+                "password" => "999",
+                "display_name" => "Henry's Gallery",
+                "email" => "henry.gallery@example.com",
+                "phone_number" => "088901234567",
+                "address" => "Jalan Harmoni No.8",
+                "role" => 1
+            ],
+            [
+                "username" => "isabel",
+                "password" => "111",
+                "display_name" => "Isabel's Emporium",
+                "email" => "isabel.emporium@example.com",
+                "phone_number" => "089012345678",
+                "address" => "Jalan Impian No.9",
+                "role" => 1
+            ],
+            [
+                "username" => "jack",
+                "password" => "746",
+                "display_name" => "Jack's Treasures",
+                "email" => "jack.treasures@example.com",
+                "phone_number" => "090123456789",
+                "address" => "Jalan Jaya No.10",
                 "role" => 1
             ],
         ];
