@@ -46,6 +46,8 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/account/edit', 'editProfileProcess')->name('edit-profile-process');
     Route::post('/account/password', 'changePasswordProcess')->name('change-password-process');
 
+    Route::post('/review', 'postReviewProcess')->name('post-review-process');
+
     Route::get('/logout', 'logoutProcess')->name('logout-process');
 });
 

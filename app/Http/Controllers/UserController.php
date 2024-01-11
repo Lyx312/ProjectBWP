@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -213,5 +214,30 @@ class UserController extends Controller
         $user->save();
 
         return redirect('account')->with("success-password", "Successfully changed password");
+    }
+
+    public function postReviewProcess(Request $req) {
+        $req->validate(
+            [
+                'review_rating' => 'required',
+                'review_text' => 'required',
+            ],
+            [
+                'required' => ':attribute is required.',
+            ],
+            [
+                'review_rating' => 'Rating',
+                'review_text' => 'Review',
+            ]
+        );
+
+        Review::create([
+            "review_user" => Auth::user()->username,
+            "review_item_id" => $req->review_item_id,
+            "review_rating" => $req->review_rating,
+            "review_text" => $req->review_text,
+        ]);
+
+        return back()->with('success', 'Review posted! Thank you for reviewing this item!');
     }
 }
