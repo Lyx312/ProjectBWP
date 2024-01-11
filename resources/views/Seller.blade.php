@@ -30,12 +30,12 @@
 
                 <div class="col-md-3">
                     <div id="kategori" class="sticky-top">
-                        <h2>Kategori</h2>
+                        <h2>Categories</h2>
                         <ul class="list-group" id="scrollspy">
-                            <li class="list-group-item" ><a href="#simple-list-item-1">Daftar Pesanan </a></li>
-                            <li class="list-group-item"><a href="#simple-list-item-2">Data Penjualan</a></li>
-                            <li class="list-group-item"><a href="#simple-list-item-3">Daftar Produk</a></li>
-                            <li class="list-group-item"><a href="#simple-list-item-4">Tambah Product</a></li>
+                            <li class="list-group-item" ><a href="#simple-list-item-1">List Of Orders</a></li>
+                            <li class="list-group-item"><a href="#simple-list-item-2">Order Data</a></li>
+                            <li class="list-group-item"><a href="#simple-list-item-3">Add New Item</a></li>
+                            <li class="list-group-item"><a href="#simple-list-item-4">Items Being Sold</a></li>
                         </ul>
                     </div>
                 </div>
@@ -45,24 +45,32 @@
                     <div id="daftar-pesanan">
                         <div class="card" style="width: auto;">
                             <div class="card-header" id="simple-list-item-1">
-                                <h2>Daftar Pesanan</h2>
+                                <h2>List Of Orders</h2>
                             </div>
-                            @foreach(range(1, 10) as $orderNumber)
+                            @foreach($items as $item)
+                            @if ($item->OrderDetail != null)
                             <ul class="list-group list-group-flush rounded">
-                                <button type="button" class="list-group-item list-group-item-action rounded" value="'{{$orderNumber}}'">
-                                    ID Pesanan: {{ $orderNumber}}
-                                    <br> Nama Pemesan: {{$orderNumber}}
+                                <button type="button" class="list-group-item list-group-item-action rounded" value="'{{$item->item_id}}'">
+                                    <img src="{{$item->item_image}}" alt="Item_Image_{{$item->item_id}}"><br>
+                                    Order Detail ID: {{$item->OrderDetail->detail_id}}<br>
+                                    Item Name: {{$item->item_name}}<br>
+                                    Item Price: Rp{{number_format($item->OrderDetail->detail_item_price, 0, ",", ".")}}<br>
+                                    Item Quantity: {{$item->OrderDetail->detail_item_quantity}}<br>
+                                    Item Subtotal: Rp{{number_format($item->OrderDetail->detail_subtotal, 0, ",", ".")}}<br>
+                                    Category: {{$item->Category->category_name}}<br>
+                                    Buyer: {{$item->OrderDetail->Order->User->display_name}}
                                 </button>
                             </ul>
+                            @endif
                             @endforeach
                         </div>
                     </div>
 
                     <!-- Data Penjualan -->
                     <div id="data-penjualan" class="container py-5" style="width:auto">
-                        <strong><h2 id="simple-list-item-2">Data Penjualan</h2></strong>
+                        <strong><h2 id="simple-list-item-2">Order Data</h2></strong>
 
-                        <h4>Terjual paling Banyak</h4>
+                        <h4>Best Seller </h4>
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="card">
@@ -101,7 +109,7 @@
                             <div id="daftar-produk-content" class="col-md-9">
                                 <form method="POST" action="{{route('add-item-process')}}" enctype="multipart/form-data">
                                     @csrf
-                                    <h2 class="card-header" id="simple-list-item-4">Add New Item</h2>
+                                    <h2 class="card-header" id="simple-list-item-3">Add New Item</h2>
                                     <div class="mb-3">
                                         <label for="item_name" class="form-label">Item Name</label>
                                         @if($errors->has('item_name'))
@@ -168,35 +176,32 @@
                                     </div>
                                     <button type="submit" class="btn btn-primary">Add New Item</button>
                                 </form>
-
-                                <!-- Daftar Produk -->
-                                <h2 id="simple-list-item-3" class="card-header mt-3">Daftar Produk</h2>
-                                <div class="row">
-                                    @foreach($items as $item)
-                                    <div class="col-md-4 mb-4">
-                                        <div class="card">
-                                            <a href="#" class="card-link">
-                                                @if ($item["item_image"]!=null)
-
-                                                    {{-- <img src="{{asset('storage/ItemImages/ImageItem2.webp')}}" class="card-img-top" alt="itemImage"> --}}
-                                                    <img src="{{ asset("storage/{$item['item_image']}") }}" class="card-img-top" alt="itemImage">
-                                                @else
-                                                    <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="itemImage">
-                                                @endif
-
-                                                <div class="card-body text-dark">
-                                                    <h5 class="card-title">{{ $item["item_name"] }}</h5>
-                                                    <p class="card-text">Harga: Rp{{ $item["item_price"] }}</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div>
                             </div>
                         </div>
                     </div>
-                    {{-- Tambah Product --}}
+                    <!-- Daftar Produk -->
+                        <div id="daftar-pesanan" style="padding-top: 50px">
+                            <div class="card" style="width: auto;">
+                                <div class="card-header" id="simple-list-item-4">
+                                    <h2>Items Being Sold</h2>
+                                </div>
+                                @foreach($items as $item)
+                                <ul class="list-group list-group-flush rounded">
+                                    <button type="button" class="list-group-item list-group-item-action rounded" value="'{{$item->item_id}}'">
+                                        <img src="{{$item->item_image}}" alt="Item_Image_{{$item->item_id}}"><br>
+                                        Item ID: {{ $item->item_id}}<br>
+                                        Item Name: {{$item->item_name}}<br>
+                                        Item Description: {{$item->item_description}}<br>
+                                        Item Price: Rp{{number_format($item["item_price"], 0, ",", ".")}}<br>
+                                        Item Stock: {{$item->item_stock}}<br>
+                                        Category: {{$item->Category->category_name}}<br>
+                                        <a href="/detail/{{ $item->item_id }}" style="text-decoration: none" class="btn btn-info btn-block mt-2">View Details</a>
+                                    </button>
+                                </ul>
+                                @endforeach
+                            </div>
+
+                    </div>
                 </div>
             </div>
         </div>
