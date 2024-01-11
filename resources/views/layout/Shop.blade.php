@@ -68,7 +68,7 @@
                                 <img src="{{ $item->item_image }}" class="card-img-top" alt="Product Image">
                                 <div class="card-body">
                                     <h3 class="text-primary font-semibold mb-2">{{ $item->item_name }}</h3>
-                                    <p class="text-primary mb-3">Price: Rp{{number_format($item["item_price"], 0, ",", ".")}}</p>
+                                    <p class="text-primary mb-3">Price: ${{ $item->item_price }}</p>
 
                                     @if (Auth::check() && Auth::user()->role == 0)
                                         <form action="{{ route('add-to-cart', ['itemID' => $item->item_id]) }}" method="POST">

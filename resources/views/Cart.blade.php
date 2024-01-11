@@ -33,7 +33,11 @@
                                 <input type="number" class="form-control" value="{{ $cartItem->cart_item_quantity }}" min="1">
                             </div>
                             <div class="col-md-4 text-right">
-                                <button class="btn btn-danger">Remove</button>
+                            <form method="POST" action="{{route("cart-remove", $cartItem["cart_id"])}}">
+                                @csrf
+                                <input type="hidden" name="cart_id" value="{{$cartItem["cart_id"]}}">
+                                <button type="submit" class="btn btn-danger">Remove</button>
+                            </form>
                             </div>
                         </div>
                     </div>

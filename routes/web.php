@@ -57,6 +57,7 @@ Route::controller(CustomerController::class)->group(function () {
     Route::get('/cart', 'getCartPage')->name('Cart-page')->middleware([EnsureUserIsCustomer::class]);
     Route::post('/add-to-cart/{itemID}', 'addToCartProcess')->name('add-to-cart')->middleware([EnsureUserIsCustomer::class]);
     //Route::post('/detail/{itemID}', 'addToCartProcess')->name('detail-add-to-cart')->middleware([EnsureUserIsCustomer::class]);
+    Route::post('/cart/remove/{cartId}', 'removeFromCart')->name('cart-remove')->middleware([EnsureUserIsCustomer::class]);
 });
 
 Route::controller(SellerController::class)->group(function () {

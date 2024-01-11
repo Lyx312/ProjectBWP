@@ -71,4 +71,16 @@ class CustomerController extends Controller
         // Redirect back to the top-up page with a success message
         return redirect()->route('Topup-page')->with('success', 'Top-up successful. Your balance has been updated.');
     }
+    public function removeFromCart(Request $request)
+    {
+        $cart = Cart::find($request->cart_id);
+
+        if ($cart) {
+            $cart->delete();
+        } else {
+            return redirect()->route('Cart-page')->with('error', 'Cart item not found.');
+        }
+
+        return redirect()->route('Cart-page');
+    }
 }
