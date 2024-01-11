@@ -48,39 +48,44 @@
     }
 </style>
 <section>
+<div class="air air1"></div>
+<div class="air air2"></div>
+<div class="air air3"></div>
+<div class="air air4"></div>
 
-    <div class="air air1"></div>
-    <div class="air air2"></div>
-    <div class="air air3"></div>
-    <div class="air air4"></div>
-
-    <div class="product-container">
-        <div class="container-fluid py-5 content">
-            <div class="container">
-                <div class="row justify-content-center align-items-start">
-                    <!-- Products  -->
-                    <div class="col">
-                        <div class="row">
-                            @foreach(range(1, 54) as $index)
+<div class="product-container">
+    <div class="container-fluid py-5 content">
+        <div class="container">
+            <div class="row justify-content-center align-items-start">
+                <div class="col">
+                    <div class="row">
+                        @php
+                            $sellerItems = \App\Models\Item::with('User')
+                                ->whereHas('User', function ($query) {
+                                    $query->where('is_banned', 0);
+                                })
+                                ->take(99)
+                                ->get();
+                        @endphp
+                        @foreach($sellerItems as $item)
                             <div class="col-md-2 mb-3">
                                 <div class="card product-card">
-                                    <img src="https://via.placeholder.com/600x400" class="card-img-top"
-                                        alt="Product Image">
+                                    <img src="{{ $item->item_image }}" class="card-img-top" alt="Product Image">
                                     <div class="card-body">
-                                        <h3 class="text-primary font-semibold mb-2">Product {{ $index }}</h3>
-                                        <p class="text-primary mb-3">Price: ${{ rand(20, 100) }}</p>
+                                        <h3 class="text-primary font-semibold mb-2">{{ $item->item_name }}</h3>
+                                        <p class="text-primary mb-3">Price: ${{ $item->item_price }}</p>
                                         @if (Auth::check() && Auth::user()->role == 0)
                                             <a href="#" class="btn btn-primary btn-block">Add to Cart</a>
                                         @endif
                                     </div>
                                 </div>
                             </div>
-                            @endforeach
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </section>
 @endsection
