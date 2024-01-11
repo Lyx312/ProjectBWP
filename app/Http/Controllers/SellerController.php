@@ -45,7 +45,8 @@ class SellerController extends Controller
             'item_category' => 'Item Category',
         ]);
 
-        $lastItemId = Item::latest()->first()->item_id;
+        $latestItem = Item::latest()->first();
+        $lastItemId = $latestItem ? $latestItem->item_id : 0;
         $imageName = "ImageItem" . ($lastItemId+1);
         $imageExtension = $req->item_image->extension();
 
