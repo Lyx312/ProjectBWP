@@ -30,6 +30,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/account', 'getAccountPage')->name('account-page')->middleware([EnsureUserIsLoggedIn::class]);
 
     Route::get('/detail/{itemID}', 'getDetailPage')->name('detail-page');
+    Route::get('/shop/{categoryID}', 'getCategoryPage')->name('category-page');
 
     Route::get('/shop', 'getShopPage')->name('Shop-page');
     Route::get('/login', 'getLoginPage')->name('login-page')->middleware([EnsureUserNotLoggedIn::class]);

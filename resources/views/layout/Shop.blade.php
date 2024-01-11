@@ -56,17 +56,12 @@
 <div class="product-container">
     <div class="container-fluid py-5 content">
         <div class="container">
+            @if ($categoryIsOn)
+                <h1>Category: {{$category->category_name}}</h1>
+            @endif
             <div class="row justify-content-center align-items-start">
                 <div class="col">
                     <div class="row">
-                        @php
-                            $sellerItems = \App\Models\Item::with('User')
-                                ->whereHas('User', function ($query) {
-                                    $query->where('is_banned', 0);
-                                })
-                                ->take(99)
-                                ->get();
-                        @endphp
                         @foreach($sellerItems as $item)
                             <div class="col-md-2 mb-3">
                                 <div class="card product-card">

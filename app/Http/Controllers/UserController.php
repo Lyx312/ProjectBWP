@@ -69,7 +69,7 @@ class UserController extends Controller
             'display_name' => 'required|string',
             'password' => 'required|confirmed',
             'email' => 'required|email',
-            'phone_number' => 'required|digits:9',
+            'phone_number' => 'required|digits:12',
             'address' => 'required|string',
         ], [
             'username.required' => ':attribute is required.',

@@ -71,6 +71,27 @@ class PageController extends Controller
 
     public function getShopPage()
     {
-        return view('layout.Shop');
+        $sellerItems = Item::with('User')
+            ->whereHas('User', function ($query) {
+                $query->where('is_banned', 0);
+            })
+            ->get();
+        $param["sellerItems"] = $sellerItems;
+        $param["categoryIsOn"] = false;
+        return view('layout.Shop',$param);
+    }
+
+    public function getCategoryPage($categoryID)
+    {
+        $sellerItems = Item::with('User')
+            ->whereHas('User', function ($query) {
+                $query->where('is_banned', 0);
+            })
+            ->where('item_category', $categoryID)
+            ->get();
+            $param["sellerItems"] = $sellerItems;
+            $param["categoryIsOn"] = true;
+            $param["category"] = Category::Find($categoryID);
+            return view('layout.Shop',$param);
     }
 }
