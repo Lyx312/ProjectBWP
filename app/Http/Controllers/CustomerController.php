@@ -22,15 +22,27 @@ class CustomerController extends Controller
 
         $item = Item::find($req->item_id);
         $discount = $this->getDiscount($req->item_id);
+        $cartOwner = Auth::user()->username;
 
-        Cart::create([
-            "cart_item_id" => $item->item_id,
-            "cart_item_price" => $item->item_price,
-            "cart_discount_id" => $discount==null?null:$discount->discount_id,
-            "cart_item_quantity" => $req->item_quantity,
-            "cart_subtotal" => $req->subtotal,
-            "cart_owner" => Auth::user()->username
-        ]);
+        $existingCartItem = Cart::where('cart_item_id', $item->item_id)
+                                ->where('cart_owner', $cartOwner)
+                                ->first();
+
+        if ($existingCartItem) {
+            $existingCartItem->update([
+                'cart_item_quantity' => $existingCartItem->cart_item_quantity + $req->item_quantity,
+                'cart_subtotal' => $existingCartItem->cart_subtotal + $req->subtotal,
+            ]);
+        } else {
+            Cart::create([
+                "cart_item_id" => $item->item_id,
+                "cart_item_price" => $item->item_price,
+                "cart_discount_id" => $discount == null ? null : $discount->discount_id,
+                "cart_item_quantity" => $req->item_quantity,
+                "cart_subtotal" => $req->subtotal,
+                "cart_owner" => $cartOwner
+            ]);
+        }
 
         return redirect('cart');
     }
@@ -45,7 +57,19 @@ class CustomerController extends Controller
 
     public function getCartPage() {
         $cart = Cart::where('cart_owner', '=', Auth::user()->username)->get();
+        $cartSubtotal = 0;
+
+        foreach ($cart as $cartItem) {
+            if (isset($cartItem->Discount)) {
+                $cartSubtotal += $cartItem->Discount->discount_amount * $cartItem->cart_subtotal / 100;
+            }
+            else{
+                $cartSubtotal += $cartItem->cart_subtotal;
+            }
+        }
+
         $param["cart"] = $cart;
+        $param["cartSubtotal"] = $cartSubtotal;
 
         return view('Cart', $param);
     }
@@ -81,6 +105,23 @@ class CustomerController extends Controller
             return redirect()->route('Cart-page')->with('error', 'Cart item not found.');
         }
 
+        return redirect()->route('Cart-page');
+    }
+
+    public function doCheckout()
+    {
+        $cart = Cart::where('cart_owner', Auth::user()->username)->get();
+        $total = 0;
+        foreach ($cart as $cartSubtotal) {
+            if (isset($cartSubtotal->Discount)) {
+                $total += $cartSubtotal->Discount->discount_amount * $cartSubtotal->cart_subtotal / 100;
+            }
+            else{
+                $total += $cartSubtotal->cart_subtotal;
+            }
+        }
+        //add to order & order detail
+        //dd($total);
         return redirect()->route('Cart-page');
     }
 }

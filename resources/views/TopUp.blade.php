@@ -11,7 +11,7 @@
                         @csrf
 
                         <div class="form-group">
-                            <label for="jumlah">Jumlah</label>
+                            <label for="jumlah">Total</label>
                             @if($errors->has('jumlah'))
                                 <div class="alert alert-danger">
                                     {{ $errors->first('jumlah') }}
@@ -21,7 +21,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="payment_method">Pilih Metode Pembayaran</label>
+                            <label for="payment_method">Payment Method</label>
                             @if($errors->has('payment_method'))
                                 <div class="alert alert-danger">
                                     {{ $errors->first('payment_method') }}

@@ -1,7 +1,7 @@
 @extends("layout.Home")
 
 @section("content")
-<div class="container">
+<div class="container" style="margin-bottom: 75px;">
     <table class="table table-striped table-hover">
         <tr>
             <th>Username</th>
@@ -20,7 +20,7 @@
                 <td>{{$user->email}}</td>
                 <td>{{$user->phone_number}}</td>
                 <td>{{$user->address}}</td>
-                <td>Rp.{{$user->balance}}</td>
+                <td>Rp.{{ number_format($user->balance, 0, ",", ".") }}</td>
                 <td>
                     @if($user->role == 0)
                         Customer
