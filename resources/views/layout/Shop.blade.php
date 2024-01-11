@@ -57,23 +57,34 @@
     <div class="container-fluid py-5 content">
         <div class="container">
             @if ($categoryIsOn)
-                <h1>Category: {{$category->category_name}}</h1>
+                <h1>Category: {{ $category->category_name }}</h1>
             @endif
             <div class="row justify-content-center align-items-start">
                 <div class="col">
                     <div class="row">
                         @foreach($sellerItems as $item)
                             <div class="col-md-2 mb-3">
-                                <div class="card product-card">
-                                    <img src="{{ $item->item_image }}" class="card-img-top" alt="Product Image">
-                                    <div class="card-body">
-                                        <h3 class="text-primary font-semibold mb-2">{{ $item->item_name }}</h3>
-                                        <p class="text-primary mb-3">Price: ${{ $item->item_price }}</p>
-                                        @if (Auth::check() && Auth::user()->role == 0)
-                                            <a href="#" class="btn btn-primary btn-block">Add to Cart</a>
-                                        @endif
-                                    </div>
+                            <div class="card product-card">
+                                <img src="{{ $item->item_image }}" class="card-img-top" alt="Product Image">
+                                <div class="card-body">
+                                    <h3 class="text-primary font-semibold mb-2">{{ $item->item_name }}</h3>
+                                    <p class="text-primary mb-3">Price: ${{ $item->item_price }}</p>
+
+                                    @if (Auth::check() && Auth::user()->role == 0)
+                                        <form action="{{ route('add-to-cart', ['itemID' => $item->item_id]) }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="item_id" value="{{ $item->item_id }}">
+                                            <input type="hidden" name="item_quantity" value="1">
+                                            <input type="hidden" name="subtotal" value="{{ $item->item_price }}">
+                                            <button type="submit" class="btn btn-primary btn-block">Add to Cart</button>
+                                        </form>
+                                    @endif
+
+                                    <!-- Separate link to the detail page -->
+                                    <a href="/detail/{{ $item->item_id }}" style="text-decoration: none" class="btn btn-info btn-block mt-2">View Details</a>
                                 </div>
+                            </div>
+
                             </div>
                         @endforeach
                     </div>
@@ -82,5 +93,6 @@
         </div>
     </div>
 </div>
+
 </section>
 @endsection
