@@ -74,6 +74,7 @@ Route::controller(SellerController::class)->group(function () {
     Route::get('/restore/{itemID}', 'restoreItemProcess')->name('restore-item-process')->middleware([EnsureUserIsSeller::class]);
 
     Route::post('/masterDiscount', 'masterDiscountProcess')->name('master-discount-process')->middleware([EnsureUserIsSeller::class]);
+    //Route::post('/delete/{discountID}', 'delete')->name('master-discount-process')->middleware([EnsureUserIsSeller::class]);
 });
 
 Route::controller(AdminController::class)->group(function () {

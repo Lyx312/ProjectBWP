@@ -355,7 +355,7 @@
                                     </div>
                                     <div class="d-flex btn-group mt-2" role="group" aria-label="Item Actions">
                                         <button class="btn btn-warning" id="btnUpdateDiscount" discount="{{json_encode($discount)}}">Update Discount</button>
-                                        <a href="/deleteDiscount/{{ $discount->discount_id }}" id="btnDeleteDiscount" class="btn btn-danger">Delete Discount</a>
+                                        {{-- <a href="/deleteDiscount/{{ $discount->discount_id }}" id="btnDeleteDiscount" class="btn btn-danger">Delete Discount</a> --}}
                                     </div>
                                 </li>
                             </ul>
@@ -387,7 +387,7 @@
                                     </div>
                                     <div class="d-flex btn-group mt-2" role="group" aria-label="Item Actions">
                                         <button class="btn btn-warning" id="btnUpdateDiscount" discount="{{json_encode($discount)}}">Update Discount</button>
-                                        <a href="/deleteDiscount/{{ $discount->discount_id }}" id="btnDeleteDiscount" class="btn btn-danger">Delete Discount</a>
+                                        {{-- <a href="/deleteDiscount/{{ $discount->discount_id }}" id="btnDeleteDiscount" class="btn btn-danger">Delete Discount</a> --}}
                                     </div>
                                 </li>
                             </ul>
@@ -419,7 +419,7 @@
                                     </div>
                                     <div class="d-flex btn-group mt-2" role="group" aria-label="Item Actions">
                                         <button class="btn btn-warning" id="btnUpdateDiscount" discount="{{json_encode($discount)}}">Update Discount</button>
-                                        <a href="/deleteDiscount/{{ $discount->discount_id }}" id="btnDeleteDiscount" class="btn btn-danger">Delete Discount</a>
+                                        {{-- <a href="/deleteDiscount/{{ $discount->discount_id }}" id="btnDeleteDiscount" class="btn btn-danger">Delete Discount</a> --}}
                                     </div>
                                 </li>
                             </ul>

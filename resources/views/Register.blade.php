@@ -24,7 +24,7 @@
                             <label for="display_name" class="form-label">Display Name:</label>
                             @if($errors->has('display_name'))
                                 <div class="alert alert-danger">
-                                    {{ $errors->first('name') }}
+                                    {{ $errors->first('display_name') }}
                                 </div>
                             @endif
                             <input type="text" class="form-control" id="display_name" name="display_name" value="{{old('display_name')}}">

@@ -159,7 +159,7 @@
                         <hr>
                     @endforeach
                 @endif
-
+                <br><br>
 
             </div>
             <div class="col-3">
