@@ -30,4 +30,8 @@ class Discount extends Model
     public function Cart(){
         return $this->hasMany(Cart::class, "cart_discount_id", "discount_id");
     }
+
+    public function OrderDetail(){
+        return $this->hasMany(Cart::class, "detail_discount_id", "discount_id");
+    }
 }
