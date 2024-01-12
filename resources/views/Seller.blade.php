@@ -51,7 +51,7 @@
                             @if ($item->OrderDetail != null)
                             <ul class="list-group list-group-flush rounded">
                                 <button type="button" class="list-group-item list-group-item-action rounded" value="'{{$item->item_id}}'">
-                                    <img src="{{$item->item_image}}" alt="Item_Image_{{$item->item_id}}"><br>
+                                    <img src="{{"storage/$item->item_image"}}" width="200px" alt="Item_Image_{{$item->item_id}}"><br>
                                     Order Detail ID: {{$item->OrderDetail->detail_id}}<br>
                                     Item Name: {{$item->item_name}}<br>
                                     Item Price: Rp{{number_format($item->OrderDetail->detail_item_price, 0, ",", ".")}}<br>
@@ -188,7 +188,7 @@
                                 @foreach($items as $item)
                                 <ul class="list-group list-group-flush rounded">
                                     <button type="button" class="list-group-item list-group-item-action rounded" value="'{{$item->item_id}}'">
-                                        <img src="{{$item->item_image}}" alt="Item_Image_{{$item->item_id}}"><br>
+                                        <img src="{{"storage/$item->item_image"}}" width="200px" alt="Item_Image_{{$item->item_id}}"><br>
                                         Item ID: {{ $item->item_id}}<br>
                                         Item Name: {{$item->item_name}}<br>
                                         Item Description: {{$item->item_description}}<br>

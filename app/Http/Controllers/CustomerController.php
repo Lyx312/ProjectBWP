@@ -45,7 +45,15 @@ class CustomerController extends Controller
 
     public function getCartPage() {
         $cart = Cart::where('cart_owner', '=', Auth::user()->username)->get();
+        $discounts = [];
+        foreach ($cart as $cartItem) {
+            $discount = $this->getDiscount($cartItem->cart_item_id);
+            if ($discount != null) {
+                $discounts[] = $discount;
+            }
+        }
         $param["cart"] = $cart;
+        $param["discounts"] = $discounts;
 
         return view('Cart', $param);
     }
