@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\FuncCall;
 
 class AdminController extends Controller
 {
@@ -32,11 +33,17 @@ class AdminController extends Controller
         $param["order"] = Order::all();
         $customers = User::whereHas('Order')->with('Order')->get();
 
-        // Pass the customers data to the view
         $param["customers"] = $customers;
 
         return view('Report', $param);
     }
-
-    
+    public function filter(Request $req) {
+        if ($req->filter != -1) {
+            $daftarUser = User::all()->where('role', '=', $req->filter);
+        } else {
+            $daftarUser = User::all();
+        }
+        $param["daftarUser"] = $daftarUser;
+        return view("Admin", $param);
+    }
 }

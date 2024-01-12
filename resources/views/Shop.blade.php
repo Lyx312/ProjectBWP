@@ -59,11 +59,11 @@
             @if ($categoryIsOn)
                 <h1>Category: {{ $category->category_name }}</h1>
             @endif
-            <div class="search d-flex align-items-center my-2">
+            {{-- <div class="search d-flex align-items-center my-2">
                 <p class="m-0" style="width: 8vw">Search Item:</p>
                 <input type="text" class="form-control" name="search" id="search" onkeyup="refreshItems()">
-            </div>
-            <div class="row justify-content-center align-items-start" id="item_list" onload="refreshItems()">
+            </div> --}}
+            <div class="row justify-content-center align-items-start" id="item_list">
                 <div class="col">
                     <div class="row">
                         @foreach($sellerItems as $item)

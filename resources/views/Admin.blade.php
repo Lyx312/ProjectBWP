@@ -2,6 +2,18 @@
 
 @section("content")
 <div class="container" style="margin-bottom: 75px;">
+    <form action="{{route('filter-user')}}" method="POST">
+        @csrf
+        <div class="mb-3 d-flex align-items-center">
+            <label for="filter" class="form-label" style="width: 10vw">Role Filter: </label>
+            <select class="form-control" name="filter" id="filter">
+                <option value="-1">All</option>
+                <option value="0">Customer</option>
+                <option value="1">Seller</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </form>
     <table class="table table-striped table-hover">
         <tr>
             <th>Username</th>

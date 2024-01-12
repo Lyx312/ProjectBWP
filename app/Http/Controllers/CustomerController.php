@@ -63,12 +63,7 @@ class CustomerController extends Controller
         $cartTotalItems = 0;
 
         foreach ($cart as $cartItem) {
-            if (isset($cartItem->Discount)) {
-                $cartSubtotal += $cartItem->Discount->discount_amount * $cartItem->cart_subtotal / 100;
-            }
-            else{
-                $cartSubtotal += $cartItem->cart_subtotal;
-            }
+            $cartSubtotal += $cartItem->cart_subtotal ;
             $cartTotalItems += $cartItem->cart_item_quantity;
         }
 
@@ -104,17 +99,33 @@ class CustomerController extends Controller
         // Redirect back to the top-up page with a success message
         return redirect()->route('Topup-page')->with('success', 'Top-up successful. Your balance has been updated.');
     }
-    public function removeFromCart(Request $request)
+    public function masterCart(Request $request)
     {
-        $cart = Cart::find($request->cart_id);
+        if ($request->has('removeCart')) {
+            $cart = Cart::find($request->cart_id);
 
-        if ($cart) {
-            $cart->delete();
-        } else {
-            return redirect()->route('Cart-page')->with('error', 'Cart item not found.');
+            if ($cart) {
+                $cart->delete();
+            } else {
+                return redirect()->route('Cart-page')->with('error', 'Cart item not found.');
+            }
+
+            return redirect()->route('Cart-page');
+        } else if ($request->has('editCart')) {
+            $cart = Cart::find($request->cart_id);
+
+            $cart->cart_item_quantity = $request->cart_item_quantity;
+            if (isset($cart->cart_discount_id)) {
+                $discount = Discount::find($cart->cart_discount_id);
+                $cart->cart_subtotal = $cart->cart_item_price * ((100-$discount->discount_amount)/100) * $request->cart_item_quantity;
+                //dd($cart->cart_item_price * ((100-$discount->discount_amount)/100) * $request->cart_item_quantity);
+            } else {
+                $cart->cart_subtotal = $cart->cart_item_price * $request->cart_item_quantity;
+            }
+
+            $cart->save();
+            return redirect()->route('Cart-page');
         }
-
-        return redirect()->route('Cart-page');
     }
 
     public function doCheckout()
@@ -128,12 +139,7 @@ class CustomerController extends Controller
 
         $total = 0;
         foreach ($cart as $cartSubtotal) {
-            if (isset($cartSubtotal->Discount)) {
-                $total += $cartSubtotal->Discount->discount_amount * $cartSubtotal->cart_subtotal / 100;
-            }
-            else{
-                $total += $cartSubtotal->cart_subtotal;
-            }
+            $total += $cartSubtotal->cart_subtotal;
         }
 
         if ($total>Auth::user()->balance) {
