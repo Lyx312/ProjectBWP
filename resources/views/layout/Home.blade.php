@@ -90,7 +90,7 @@
 @yield("content")
 
 
-<footer class="bg-dark text-light d-flex align-items-center" style="padding: 10px 24px 0px 24px; position: fixed; bottom: 0; width: 100%;">
+<footer class="bg-dark text-light d-flex align-items-center z-0" style="padding: 10px 24px 0px 24px; position: fixed; bottom: 0; width: 100%;">
     <div class="container">
         <div class="row">
             <div class="col-md-6">

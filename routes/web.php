@@ -62,7 +62,8 @@ Route::controller(CustomerController::class)->group(function () {
 });
 
 Route::controller(SellerController::class)->group(function () {
-    Route::post('/addItem', 'addItemProcess')->name('add-item-process')->middleware([EnsureUserIsSeller::class]);
+    Route::post('/masterItem', 'masterItemProcess')->name('master-item-process')->middleware([EnsureUserIsSeller::class]);
+    Route::get('/delete/{itemID}', 'deleteItemProcess')->name('delete-item-process')->middleware([EnsureUserIsSeller::class]);
 });
 
 Route::controller(AdminController::class)->group(function () {
