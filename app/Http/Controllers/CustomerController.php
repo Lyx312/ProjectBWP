@@ -58,6 +58,7 @@ class CustomerController extends Controller
     public function getCartPage() {
         $cart = Cart::where('cart_owner', '=', Auth::user()->username)->get();
         $cartSubtotal = 0;
+        $cartTotalItems = 0;
 
         foreach ($cart as $cartItem) {
             if (isset($cartItem->Discount)) {
@@ -66,10 +67,12 @@ class CustomerController extends Controller
             else{
                 $cartSubtotal += $cartItem->cart_subtotal;
             }
+            $cartTotalItems += $cartItem->cart_item_quantity;
         }
 
         $param["cart"] = $cart;
         $param["cartSubtotal"] = $cartSubtotal;
+        $param["cartTotalItems"] = $cartTotalItems;
 
         return view('Cart', $param);
     }
@@ -77,13 +80,17 @@ class CustomerController extends Controller
     public function topUpProcess(Request $request)
     {
         $request->validate([
-            'jumlah' => 'required|numeric|min:0',
-            'payment_method' => 'required|in:bank_transfer,e_wallet',
+            'jumlah' => 'required|numeric|min:50000',
+            'payment_method' => 'required',
         ], [
             'jumlah.required' => ':attribute is required.',
             'jumlah.numeric' => ':attribute must be a number.',
-            'jumlah.min' => ':attribute cant be 0 or lower.',
+            'jumlah.min' => ':attribute cant be 50000 or lower.',
             'payment_method.required' => ':attribute is required.',
+        ],
+        [
+            'jumlah' => 'Payment amount',
+            'payment_method' => 'Payment method',
         ]);
 
         $user = User::where('username', Auth::user()->username)->first();

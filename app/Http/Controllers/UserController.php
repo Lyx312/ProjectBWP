@@ -70,7 +70,7 @@ class UserController extends Controller
             'display_name' => 'required|string',
             'password' => 'required|confirmed',
             'email' => 'required|email',
-            'phone_number' => 'required|digits:12',
+            'phone_number' => 'required|numeric|digits_between:9,12',
             'address' => 'required|string',
         ], [
             'username.required' => ':attribute is required.',
@@ -83,7 +83,8 @@ class UserController extends Controller
             'email.required' => ':attribute is required.',
             'email.email' => ':attribute must be a valid email address.',
             'phone_number.required' => ':attribute is required.',
-            'phone_number.digits' => ':attribute must be :digits digits.',
+            'phone_number.numeric' => ':attribute must be a number.',
+            'phone_number.digits_between' => ':attribute must be between :min and :max digits.',
             'address.required' => ':attribute is required.',
             'address.string' => ':attribute must be a string.',
         ], [
@@ -128,7 +129,7 @@ class UserController extends Controller
                 'profile_picture' => "sometimes|mimes:gif,jpg,jpeg,png,webp",
                 'display_name' => 'required|string',
                 'email' => 'required|email',
-                'phone_number' => 'required|digits:12',
+                'phone_number' => 'required|numeric|min:9|max:12',
                 'address' => 'required|string',
             ],
             [
@@ -139,7 +140,8 @@ class UserController extends Controller
                 'email.required' => ':attribute is required.',
                 'email.email' => ':attribute must be a valid email address.',
                 'phone_number.required' => ':attribute is required.',
-                'phone_number.digits' => ':attribute must be :digits digits.',
+                'phone_number.numeric' => ':attribute must be a number.',
+                'phone_number.digits_between' => ':attribute must be between :min and :max digits.',
                 'address.required' => ':attribute is required.',
                 'address.string' => ':attribute must be a string.',
             ],

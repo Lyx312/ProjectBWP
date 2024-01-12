@@ -13,7 +13,7 @@
 
 
 
-<div class="container mt-5">
+<div class="container mt-5" style="margin-bottom: 75px;">
     <div class="row">
         <div class="col-md-8">
         @forelse ($cart as $cartItem)
@@ -52,11 +52,12 @@
         @endforelse
         </div>
         <div class="col-md-4">
-            <div class="card sticky-top mt-4">
+            <div class="card position-fixed mt-4" style="top: 50; right: 50; z-index: 1000; width: 400px;">
                 <div class="card-body">
                     <h5 class="card-title">Total</h5>
-                    <p class="card-text font-weight-bold">Total: Rp{{ number_format($cartSubtotal, 0, ",", ".") }}</p>
-                    <a href="{{route('doCheckout')}}" class="btn btn-primary btn-block">Checkout</a>
+                    <p class="card-text font-weight-bold">Items In Cart: {{$cartTotalItems}}</p>
+                    <p class="card-text font-weight-bold">Price: Rp{{ number_format($cartSubtotal, 0, ",", ".") }}</p>
+                    <a href="{{ route('doCheckout') }}" class="btn btn-primary btn-block">Checkout</a>
                 </div>
             </div>
         </div>
