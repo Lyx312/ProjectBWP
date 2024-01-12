@@ -31,7 +31,7 @@
     <div class="container-fluid py-5 content">
 
         <div class="container">
-            <div class="row">
+            <div class="row row-cols-1">
 
                 <div class="col-md-3">
                     <div id="kategori" class="sticky-top">
@@ -85,7 +85,8 @@
 
 
                     <!-- Data Penjualan -->
-                    <div  id="simple-list-item-2" class="container py-5" style="width:auto">
+                    <div  id="simple-list-item-2" class="container py-5">
+                        <div class="card" style="width: auto; margin: 0px;">
                         <div class="card-header">
                             <h2>Best Seller</h2>
                         </div>
@@ -110,6 +111,7 @@
                                 <strong><h5>No Item Has Been Reviewed</h5></strong>
                             @endif
                         </ul>
+                    </div>
                     </div>
 
                     <!-- Produk -->

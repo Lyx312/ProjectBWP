@@ -22,10 +22,10 @@
                 <tr>
                     <td scope="col">{{$index+1}}</td>
                     <td scope="col">{{$detail->Item->item_name}}</td>
-                    <td scope="col">Rp{{$detail->Item->item_price}}</td>
+                    <td scope="col">Rp{{number_format($detail->Item->item_price, 0, ",", ".")}}</td>
                     <td scope="col">{{$detail->detail_discount_id!=null ? "Rp" . $detail->Item->item_price * ((100-$detail->Discount->discount_amount)/100) : "-"}}</td>
                     <td scope="col">{{$detail->detail_item_quantity}}</td>
-                    <td scope="col">Rp{{$detail->detail_subtotal}}</td>
+                    <td scope="col">Rp{{number_format($detail->detail_subtotal, 0, ",", ".")}}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -35,7 +35,7 @@
                 <div class="col ">
                     </div>
                     <div class="col bg-success rounded-pill">
-                    <p class="mt-3 text-center" style="font-weight: bold;">Total Price: Rp{{$order->order_total}}</p>
+                    <p class="mt-3 text-center" style="font-weight: bold;">Total Price: Rp{{number_format($order->order_total, 0, ",", ".")}}</p>
                 </div>
             </div>
         </div>
