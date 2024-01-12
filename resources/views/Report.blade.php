@@ -1,9 +1,9 @@
 @extends("layout.Home")
 
 @section("content")
-    <div class="card-columns mx-3 mb-3">
+    <div class="card-rows mx-3 mb-3">
         @foreach ($order as $orders)
-            <div class="card">
+            <div class="card mt-5">
                 <div class="card-header bg-primary">
                     <h5 class="card-title">Order ID: {{$orders->order_id}}</h5>
                 </div>
@@ -25,7 +25,7 @@
                             @foreach ($orders->OrderDetail as $index => $detail)
                                 <tr>
                                     <th scope="row">{{$index+1}}</th>
-                                    <td class="">{{$detail->detail_item_id}}</td>
+                                    <td class="">{{$detail->Item->item_name}}</td>
                                     <td>{{$detail->detail_item_quantity}}</td>
                                     <td>{{ number_format($detail->detail_subtotal, 0, ",", ".") }}</td>
                                 </tr>

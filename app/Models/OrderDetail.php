@@ -25,7 +25,7 @@ class OrderDetail extends Model
     ];
 
     public function Item(){
-        return $this->hasMany(Item::class, "item_id", "detail_item_id");
+        return $this->hasOne(Item::class, "item_id", "detail_item_id");
     }
 
     public function Order(){
