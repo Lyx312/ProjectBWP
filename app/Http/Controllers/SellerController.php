@@ -129,4 +129,11 @@ class SellerController extends Controller
 
         return redirect('seller')->with('success', "Item $item->item_name with id $item->item_id deleted");
     }
+
+    public function restoreItemProcess($itemID) {
+        $item = Item::withTrashed()->find($itemID);
+        $item->restore();
+
+        return redirect('seller')->with('success', "Item $item->item_name with id $item->item_id restored");
+    }
 }

@@ -192,30 +192,56 @@
                         </div>
                     </div>
                     <!-- Daftar Produk -->
-                        <div id="daftar-pesanan" style="padding-top: 50px">
-                            <div class="card" style="width: auto;">
-                                <div class="card-header" id="simple-list-item-4">
-                                    <h2>Items Being Sold</h2>
-                                </div>
-                                @foreach($items as $item)
-                                <ul class="list-group list-group-flush rounded">
-                                    <li class="list-group-item list-group-item-action rounded">
-                                        <img src="{{"storage/$item->item_image"}}" width="200px" alt="Item_Image_{{$item->item_id}}"><br>
-                                        Item ID: {{ $item->item_id}}<br>
-                                        Item Name: {{$item->item_name}}<br>
-                                        Item Description: {{$item->item_description}}<br>
-                                        Item Price: Rp{{number_format($item["item_price"], 0, ",", ".")}}<br>
-                                        Item Stock: {{$item->item_stock}}<br>
-                                        Category: {{$item->Category->category_name}}<br>
-                                        <div class="d-flex btn-group mt-2" role="group" aria-label="Item Actions">
-                                            <a href="/detail/{{ $item->item_id }}" class="btn btn-info">View Details</a>
-                                            <button class="btn btn-warning" id="btnUpdate" item="{{json_encode($item)}}">Update Item</button>
-                                            <a href="/delete/{{ $item->item_id }}" id="btnDelete" class="btn btn-danger">Delete Item</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                                @endforeach
+                    <div id="daftar-pesanan" class="mb-5" style="padding-top: 50px">
+                        <div class="card" style="width: auto;">
+                            <div class="card-header" id="simple-list-item-4">
+                                <h2>Items Being Sold</h2>
                             </div>
+                            @if (count($items) == 0)
+                                <h5 class="text-center m-3">No items being sold</h5>
+                            @endif
+                            @foreach($items as $item)
+                            <ul class="list-group list-group-flush rounded">
+                                <li class="list-group-item list-group-item-action rounded">
+                                    <img src="{{"storage/$item->item_image"}}" width="200px" alt="Item_Image_{{$item->item_id}}"><br>
+                                    Item ID: {{ $item->item_id}}<br>
+                                    Item Name: {{$item->item_name}}<br>
+                                    Item Description: {{$item->item_description}}<br>
+                                    Item Price: Rp{{number_format($item["item_price"], 0, ",", ".")}}<br>
+                                    Item Stock: {{$item->item_stock}}<br>
+                                    Category: {{$item->Category->category_name}}<br>
+                                    <div class="d-flex btn-group mt-2" role="group" aria-label="Item Actions">
+                                        <a href="/detail/{{ $item->item_id }}" class="btn btn-info">View Details</a>
+                                        <button class="btn btn-warning" id="btnUpdate" item="{{json_encode($item)}}">Update Item</button>
+                                        <a href="/delete/{{ $item->item_id }}" id="btnDelete" class="btn btn-danger">Delete Item</a>
+                                    </div>
+                                </li>
+                            </ul>
+                            @endforeach
+                        </div>
+
+                        <div class="card mt-3" style="width: auto;">
+                            <div class="card-header" id="simple-list-item-4">
+                                <h2>Deleted Items</h2>
+                            </div>
+                            @if (count($deletedItems) == 0)
+                                <h5 class="text-center m-3">No deleted items</h5>
+                            @endif
+                            @foreach($deletedItems as $item)
+                            <ul class="list-group list-group-flush rounded">
+                                <li class="list-group-item list-group-item-action rounded">
+                                    <img src="{{"storage/$item->item_image"}}" width="200px" alt="Item_Image_{{$item->item_id}}"><br>
+                                    Item ID: {{ $item->item_id}}<br>
+                                    Item Name: {{$item->item_name}}<br>
+                                    Item Description: {{$item->item_description}}<br>
+                                    Item Price: Rp{{number_format($item["item_price"], 0, ",", ".")}}<br>
+                                    Item Stock: {{$item->item_stock}}<br>
+                                    Category: {{$item->Category->category_name}}<br>
+                                    <a href="/restore/{{ $item->item_id }}" id="btnRestore" class="btn btn-warning w-100 mt-2">Restore Item</a>
+                                </li>
+                            </ul>
+                            @endforeach
+                        </div>
 
                     </div>
                 </div>
@@ -253,7 +279,13 @@
         $(btnDelete).click(function (e) {
             var confirmDelete = confirm("Are you sure you want to delete this item?");
             if (!confirmDelete) {
-                // If user clicks Cancel, prevent the default behavior (navigation to the route)
+                e.preventDefault();
+            }
+        });
+
+        $(btnRestore).click(function (e) {
+            var confirmRestore = confirm("Are you sure you want to restore this item?");
+            if (!confirmRestore) {
                 e.preventDefault();
             }
         });
