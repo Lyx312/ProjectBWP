@@ -31,9 +31,12 @@ class AdminController extends Controller
     public function getReportPage()
     {
         $param["order"] = Order::all();
+        $customers = User::whereHas('Order')->with('Order')->get();
+
+        $param["customers"] = $customers;
+
         return view('Report', $param);
     }
-
     public function filter(Request $req) {
         if ($req->filter != -1) {
             $daftarUser = User::all()->where('role', '=', $req->filter);
