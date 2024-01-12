@@ -20,15 +20,11 @@
 
         <div id="carouselExampleControls" class="carousel slide" data-ride="false">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="https://via.placeholder.com/800x400" class="d-block w-100" alt="Slide 1">
+            @foreach ($topRatedItems as $index => $item)
+                <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                    <img src="{{ asset("storage/{$item->item_image}") }}" class="d-block w-100" alt="{{ "Slide $index" }}">
                 </div>
-                <div class="carousel-item">
-                    <img src="https://via.placeholder.com/800x400" class="d-block w-100" alt="Slide 2">
-                </div>
-                <div class="carousel-item">
-                    <img src="https://via.placeholder.com/800x400" class="d-block w-100" alt="Slide 3">
-                </div>
+            @endforeach
             </div>
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -83,7 +79,7 @@
             @foreach ($trendingItems as $item)
                 <div class="col-md-4 mb-3">
                     <div class="card product-card">
-                        <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Product Image">
+                        <img src="{{ asset("storage/$item->item_image") }}" class="card-img-top" alt="Product Image">
                         <div class="card-body">
                             <h3 class="text-primary font-semibold mb-2">{{ $item->item_name }}</h3>
                             <p class="text-primary mb-3">Price: ${{ $item->item_price }}</p>
