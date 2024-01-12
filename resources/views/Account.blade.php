@@ -53,7 +53,7 @@
                         </li>
                         <li class="row d-flex align-items-center list-group-item">
                             <div class="col-2"><strong>Balance:</strong></div>
-                            <div class="col-10">Rp{{ auth()->user()->balance }}</div>
+                            <div class="col-10">Rp{{ number_format(auth()->user()->balance , 0, ",", ".") }}</div>
                         </li>
                         <li class="row d-flex align-items-center list-group-item">
                             <div class="col-2"><strong>Role:</strong></div>
