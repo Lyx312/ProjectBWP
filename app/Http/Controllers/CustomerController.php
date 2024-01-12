@@ -159,6 +159,9 @@ class CustomerController extends Controller
             $item = Item::where('item_id', $cartItem->cart_item_id)->first();
             $item->item_stock = $item->item_stock - $cartItem->cart_item_quantity;
             $item->save();
+            $seller = User::where('username', $item->item_seller)->first();
+            $seller->balance = $seller->balance + (80 * $cartItem->cart_subtotal / 100);
+            $seller->save();
         }
         Cart::where('cart_owner', Auth::user()->username)->delete();
         //dd($total);
