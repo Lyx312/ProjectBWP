@@ -35,15 +35,15 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
                 @if (Auth::check() && Auth::user()->role == 0)
-                    <a class="nav-link" href="{{route('customer-page')}}">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{route('customer-page')}}">Home <span class="sr-only"></span></a>
                 @elseif (Auth::check() && Auth::user()->role == 1)
-                    <a class="nav-link" href="{{route('seller-page')}}">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{route('seller-page')}}">Home <span class="sr-only"></span></a>
                 @elseif (Session::has('isAdmin'))
-                    <a class="nav-link" href="{{route('admin-page')}}">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{route('admin-page')}}">Home <span class="sr-only"></span></a>
                 @else
-                    <a class="nav-link" href="{{url('/')}}">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{url('/')}}">Home <span class="sr-only"></span></a>
                 @endif
             </li>
             <li class="nav-item">
@@ -84,10 +84,10 @@
                 </li>
             @elseif (Session::has('isAdmin'))
                 <li class="nav-item mx-2">
-                    <a class="navbar-text" href="{{route('report-page')}}">Reports</a>
+                    <a class="nav-link" href="{{route('report-page')}}">Reports</a>
                 </li>
                 <li class="nav-item mx-2">
-                    <p class="navbar-text">Admin</p>
+                    <a class="nav-link" href="#">Admin</a>
                 </li>
                 <li class="nav-item mx-2">
                     <a class="btn btn-danger" href="{{route('logout-process')}}">Logout</a>
