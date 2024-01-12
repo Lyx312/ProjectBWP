@@ -169,4 +169,9 @@ class CustomerController extends Controller
             ->with('success', 'Your order has been successfully placed!')
             ->with('thank_you', 'Thank you for shopping at E-Commerce.');
     }
+
+    public function getOrderListPage()
+    {
+        return view('ListOrder');
+    }
 }

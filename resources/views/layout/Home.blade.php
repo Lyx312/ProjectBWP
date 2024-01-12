@@ -66,6 +66,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{route("Cart-page")}}">Cart</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route("orders-page")}}">Orders</a>
+                </li>
             @endif
             @if(Auth::check())
                 <li class="nav-item" style="display: flex; align-items: center;">
