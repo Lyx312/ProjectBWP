@@ -46,4 +46,10 @@ class AdminController extends Controller
         $param["daftarUser"] = $daftarUser;
         return view("Admin", $param);
     }
+    public function getUserPage($username)
+    {
+        $user = User::find($username);
+        $param["user"] = $user;
+        return view('UserDetail', $param);
+    }
 }

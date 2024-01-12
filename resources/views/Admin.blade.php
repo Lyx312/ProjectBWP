@@ -23,7 +23,7 @@
             <th>Address</th>
             <th>Balance</th>
             <th>Role</th>
-            <th>Status</th>
+            <th>Action</th>
         </tr>
         @foreach ($daftarUser as $user)
             <tr @if($user->is_banned == 1) style="background-color: red;" @endif>
@@ -42,9 +42,15 @@
                 </td>
                 <td>
                     @if($user->is_banned == 0)
-                        <a class="btn btn-danger" href='{{url("admin/ban/" . $user->username)}}'>Ban</a>
+                        <div class="btn-group">
+                            <a class="btn btn-info" href="/admin/userDetail/{{ $user->username }}">Detail</a>
+                            <a class="btn btn-danger" href='{{url("admin/ban/" . $user->username)}}'>Ban</a>
+                        </div>
                     @elseif($user->is_banned == 1)
-                        <a class="btn btn-primary" href='{{url("admin/ban/" . $user->username)}}'>Unban</a>
+                        <div class="btn-group">
+                            <a class="btn btn-info" href="/admin/userDetail/{{ $user->username }}">Detail</a>
+                            <a class="btn btn-primary" href='{{url("admin/ban/" . $user->username)}}'>Unban</a>
+                        </div>
                     @endif
                 </td>
             </tr>
