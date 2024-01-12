@@ -54,10 +54,30 @@
         <div class="col-md-4">
             <div class="card position-fixed mt-4" style="top: 50; right: 50; z-index: 1000; width: 400px;">
                 <div class="card-body">
+                    <h5 class="card-title" style="<?php echo ($cartSubtotal > Auth::user()->balance) ? 'color: red;' : 'color: black;'; ?>">
+                        Balance: Rp{{ number_format(Auth::user()->balance, 0, ",", ".") }}
+                    </h5>
                     <h5 class="card-title">Total</h5>
                     <p class="card-text font-weight-bold">Items In Cart: {{$cartTotalItems}}</p>
                     <p class="card-text font-weight-bold">Price: Rp{{ number_format($cartSubtotal, 0, ",", ".") }}</p>
-                    <a href="{{ route('doCheckout') }}" class="btn btn-primary btn-block">Checkout</a>
+                    <a href="{{ route('doCheckout') }}" class="btn btn-primary btn-block" style="margin-bottom: 10px;">Checkout</a>
+                    @if(session('error'))
+                        <div class="alert alert-danger"">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if(session('thank_you'))
+                        <div class="alert alert-info">
+                            {{ session('thank_you') }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

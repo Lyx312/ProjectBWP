@@ -6,6 +6,8 @@ use App\Models\Cart;
 use App\Models\Discount;
 use App\Models\Item;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -118,6 +120,12 @@ class CustomerController extends Controller
     public function doCheckout()
     {
         $cart = Cart::where('cart_owner', Auth::user()->username)->get();
+        $cartNow = Cart::where('cart_owner', Auth::user()->username)->first();
+        //dd($cartNow);
+        if ($cart->isEmpty()) {
+            return redirect()->route('Cart-page')->with('error', 'Cannot checkout with an empty cart.');
+        }
+
         $total = 0;
         foreach ($cart as $cartSubtotal) {
             if (isset($cartSubtotal->Discount)) {
@@ -127,8 +135,35 @@ class CustomerController extends Controller
                 $total += $cartSubtotal->cart_subtotal;
             }
         }
-        //add to order & order detail
+
+        if ($total>Auth::user()->balance) {
+            return redirect()->route('Cart-page')->with('error', 'Your balance is not enough for this order!');
+        }
+        $user = Auth::user();
+        $user->balance = $user->balance - $total;
+        $user->save();
+        $newOrder = Order::create([
+            "order_buyer" => $cartNow->cart_owner,
+            "order_total" => $total,
+            ]);
+        $newOrderId = $newOrder->order_id;
+        foreach ($cart as $cartItem) {
+            OrderDetail::create([
+            "detail_order_id" => $newOrderId,
+            "detail_item_id" => $cartItem->cart_item_id,
+            "detail_item_price" => $cartItem->cart_item_price,
+            "detail_discount_id" => $cartItem->cart_discount_id ?? null,
+            "detail_item_quantity" => $cartItem->cart_item_quantity,
+            "detail_subtotal" => $cartItem->cart_subtotal,
+            ]);
+            $item = Item::where('item_id', $cartItem->cart_item_id)->first();
+            $item->item_stock = $item->item_stock - $cartItem->cart_item_quantity;
+            $item->save();
+        }
+        Cart::where('cart_owner', Auth::user()->username)->delete();
         //dd($total);
-        return redirect()->route('Cart-page');
+        return redirect()->route('Cart-page')
+            ->with('success', 'Your order has been successfully placed!')
+            ->with('thank_you', 'Thank you for shopping at E-Commerce.');
     }
 }

@@ -129,7 +129,7 @@ class UserController extends Controller
                 'profile_picture' => "sometimes|mimes:gif,jpg,jpeg,png,webp",
                 'display_name' => 'required|string',
                 'email' => 'required|email',
-                'phone_number' => 'required|numeric|min:9|max:12',
+                'phone_number' => 'required|numeric|digits_between:9,12',
                 'address' => 'required|string',
             ],
             [
