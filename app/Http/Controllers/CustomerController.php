@@ -178,6 +178,9 @@ class CustomerController extends Controller
 
     public function getOrderListPage()
     {
-        return view('ListOrder');
+        $orders = Order::where('order_buyer', '=', Auth::user()->username)->get();
+
+        $param["orders"] = $orders;
+        return view('ListOrder', $param);
     }
 }
