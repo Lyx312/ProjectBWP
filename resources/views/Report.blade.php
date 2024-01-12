@@ -1,7 +1,7 @@
 @extends("layout.Home")
 
 @section("content")
-    
+
     <div class="card-columns mx-3 mb-3">
         @foreach ($order as $orders)
         <div class="card">
