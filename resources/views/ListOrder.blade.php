@@ -10,7 +10,7 @@
         </button>
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">All Orders</a></li>
-            <li><a class="dropdown-item" href="#">Shipping</a></li>
+            <li><a class="dropdown-item" href="#">Packed</a></li>
             <li><a class="dropdown-item" href="#">Delivered</a></li>
         </ul>
     </div>
