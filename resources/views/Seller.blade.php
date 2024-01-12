@@ -42,6 +42,12 @@
 
                 <div class="col-md-9">
                     <!-- Daftar Pesanan  -->
+                    @if(Session::has('success'))
+                        <div class="alert alert-success">
+                            <p class="m-0">{{Session::get('success')}}</p>
+                        </div>
+                    @endif
+
                     <div id="daftar-pesanan">
                         <div class="card" style="width: auto;">
                             <div class="card-header" id="simple-list-item-1">
@@ -107,9 +113,13 @@
                                 </form>
                             </div>
                             <div id="daftar-produk-content" class="col-md-9">
-                                <form method="POST" action="{{route('add-item-process')}}" enctype="multipart/form-data">
+                                <form method="POST" action="{{route('master-item-process')}}" id="masterItemForm" enctype="multipart/form-data">
                                     @csrf
-                                    <h2 class="card-header" id="simple-list-item-3">Add New Item</h2>
+                                    <h2 class="card-header" id="simple-list-item-3">Master Item</h2>
+                                    <div class="mb-3">
+                                        <label for="item_name" class="form-label">Item ID</label>
+                                        <input type="text" class="form-control" id="item_id" name="item_id" readonly>
+                                    </div>
                                     <div class="mb-3">
                                         <label for="item_name" class="form-label">Item Name</label>
                                         @if($errors->has('item_name'))
@@ -174,32 +184,64 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Add New Item</button>
+                                    <button type="submit" class="btn btn-primary" name="item_add">Add New Item</button>
+                                    <button type="submit" class="btn btn-warning" name="item_update">Update Item</button>
+                                    <button type="reset" class="btn btn-danger">Reset Input</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                     <!-- Daftar Produk -->
-                        <div id="daftar-pesanan" style="padding-top: 50px">
-                            <div class="card" style="width: auto;">
-                                <div class="card-header" id="simple-list-item-4">
-                                    <h2>Items Being Sold</h2>
-                                </div>
-                                @foreach($items as $item)
-                                <ul class="list-group list-group-flush rounded">
-                                    <button type="button" class="list-group-item list-group-item-action rounded" value="'{{$item->item_id}}'">
-                                        <img src="{{"storage/$item->item_image"}}" width="200px" alt="Item_Image_{{$item->item_id}}"><br>
-                                        Item ID: {{ $item->item_id}}<br>
-                                        Item Name: {{$item->item_name}}<br>
-                                        Item Description: {{$item->item_description}}<br>
-                                        Item Price: Rp{{number_format($item["item_price"], 0, ",", ".")}}<br>
-                                        Item Stock: {{$item->item_stock}}<br>
-                                        Category: {{$item->Category->category_name}}<br>
-                                        <a href="/detail/{{ $item->item_id }}" style="text-decoration: none" class="btn btn-info btn-block mt-2">View Details</a>
-                                    </button>
-                                </ul>
-                                @endforeach
+                    <div id="daftar-pesanan" class="mb-5" style="padding-top: 50px">
+                        <div class="card" style="width: auto;">
+                            <div class="card-header" id="simple-list-item-4">
+                                <h2>Items Being Sold</h2>
                             </div>
+                            @if (count($items) == 0)
+                                <h5 class="text-center m-3">No items being sold</h5>
+                            @endif
+                            @foreach($items as $item)
+                            <ul class="list-group list-group-flush rounded">
+                                <li class="list-group-item list-group-item-action rounded">
+                                    <img src="{{"storage/$item->item_image"}}" width="200px" alt="Item_Image_{{$item->item_id}}"><br>
+                                    Item ID: {{ $item->item_id}}<br>
+                                    Item Name: {{$item->item_name}}<br>
+                                    Item Description: {{$item->item_description}}<br>
+                                    Item Price: Rp{{number_format($item["item_price"], 0, ",", ".")}}<br>
+                                    Item Stock: {{$item->item_stock}}<br>
+                                    Category: {{$item->Category->category_name}}<br>
+                                    <div class="d-flex btn-group mt-2" role="group" aria-label="Item Actions">
+                                        <a href="/detail/{{ $item->item_id }}" class="btn btn-info">View Details</a>
+                                        <button class="btn btn-warning" id="btnUpdate" item="{{json_encode($item)}}">Update Item</button>
+                                        <a href="/delete/{{ $item->item_id }}" id="btnDelete" class="btn btn-danger">Delete Item</a>
+                                    </div>
+                                </li>
+                            </ul>
+                            @endforeach
+                        </div>
+
+                        <div class="card mt-3" style="width: auto;">
+                            <div class="card-header" id="simple-list-item-4">
+                                <h2>Deleted Items</h2>
+                            </div>
+                            @if (count($deletedItems) == 0)
+                                <h5 class="text-center m-3">No deleted items</h5>
+                            @endif
+                            @foreach($deletedItems as $item)
+                            <ul class="list-group list-group-flush rounded">
+                                <li class="list-group-item list-group-item-action rounded">
+                                    <img src="{{"storage/$item->item_image"}}" width="200px" alt="Item_Image_{{$item->item_id}}"><br>
+                                    Item ID: {{ $item->item_id}}<br>
+                                    Item Name: {{$item->item_name}}<br>
+                                    Item Description: {{$item->item_description}}<br>
+                                    Item Price: Rp{{number_format($item["item_price"], 0, ",", ".")}}<br>
+                                    Item Stock: {{$item->item_stock}}<br>
+                                    Category: {{$item->Category->category_name}}<br>
+                                    <a href="/restore/{{ $item->item_id }}" id="btnRestore" class="btn btn-warning w-100 mt-2">Restore Item</a>
+                                </li>
+                            </ul>
+                            @endforeach
+                        </div>
 
                     </div>
                 </div>
@@ -214,5 +256,40 @@
 
 </body>
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function(){
+        $(btnUpdate).click(function () {
+            var itemJSON = $(this).attr('item');
+            var item = JSON.parse(itemJSON);
+
+            console.log(item.item_id);
+            $(item_id).val(item.item_id);
+            $(item_name).val(item.item_name);
+            $(item_description).val(item.item_description);
+
+            $(item_price).val(item.item_price);
+            $(item_stock).val(item.item_stock);
+            $(item_category).val(item.item_category);
+
+            document.getElementById('daftar-produk').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        $(btnDelete).click(function (e) {
+            var confirmDelete = confirm("Are you sure you want to delete this item?");
+            if (!confirmDelete) {
+                e.preventDefault();
+            }
+        });
+
+        $(btnRestore).click(function (e) {
+            var confirmRestore = confirm("Are you sure you want to restore this item?");
+            if (!confirmRestore) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
 
 </html>

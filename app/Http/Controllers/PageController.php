@@ -63,9 +63,13 @@ class PageController extends Controller
 
     public function getSellerPage() {
         $items = Item::get()->where("item_seller", "=", Auth::user()->username);
+        $deletedItems = Item::onlyTrashed()->where("item_seller", "=", Auth::user()->username)->get();
         $categories = Category::all();
+
         $param["items"] = $items;
+        $param["deletedItems"] = $deletedItems;
         $param["categories"] = $categories;
+
         return view('Seller', $param);
     }
 
