@@ -1,4 +1,4 @@
-@extends("layout.FrontPage")
+@extends("layout.Home")
 
 @section("content")
     <div class="container mt-5">
@@ -77,7 +77,7 @@
 
                         <div class="mb-3">
                             <label for="role" class="form-label">Role:</label>
-                            <select class="form-select" id="role" name="role">
+                            <select class="form-control" id="role" name="role">
                                 <option value="0" {{ old('role') == 0 ? 'selected' : '' }}>Customer</option>
                                 <option value="1" {{ old('role') == 1 ? 'selected' : '' }}>Seller</option>
                             </select>

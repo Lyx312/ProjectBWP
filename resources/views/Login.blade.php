@@ -1,4 +1,4 @@
-@extends("layout.FrontPage")
+@extends("layout.Home")
 
 @section("content")
     <div class="container mt-5">
