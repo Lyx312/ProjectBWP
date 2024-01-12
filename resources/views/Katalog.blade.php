@@ -12,12 +12,9 @@
     gap:10px;
 
 }
-
-
 </style>
 
-
-<div class="container-fluid ">
+<div class="container-fluid" style="margin-bottom: 75px;">
     <div class="container mt-4">
         <h2 class="text-center mb-4">Welcome to Our E-Commerce Store</h2>
 
@@ -101,13 +98,14 @@
     <div class="container mt-4 border rounded shadow">
         <h2 class="text-start mb-4">Discount Product</h2>
         <div class="container media-scroller mb-3 d-flex flex-row">
-            @foreach(range(1, 10) as $index)
+            @foreach($discountedItems as $disc)
                 <div class="col-md-4 mb-3">
                     <div class="card product-card">
-                        <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Product Image">
+                        <img src="{{ asset("storage/$disc->item_image") }}" class="card-img-top" alt="Product Image">
                         <div class="card-body">
-                            <p class="text-primary mb-3">Price: ${{ rand(20, 100) }}</p>
-                            <div class="progress" role="progressbar" aria-label="Info example" aria-valuenow="50"
+                            <p class="text-danger mb-1" style="text-decoration: line-through;">Rp{{ number_format($disc->item_price, 0, ",", ".") }}</p>
+                            <p class="text-primary mb-3">Price: Rp{{ number_format($disc->item_price - ($disc->Discount->discount_amount * $disc->item_price / 100), 0, ",", ".") }}</p>
+                            <div class="progress" role="progressbar" aria-label="Info example" aria-valuenow="{{$disc->Discount->discount_amount}}"
                                 aria-valuemin="0" aria-valuemax="100">
                                 <div class="progress-bar bg-info" style="width: 15%"></div>
                             </div>

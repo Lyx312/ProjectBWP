@@ -170,7 +170,7 @@
                     <input type="hidden" name="item_id" value="{{$item["item_id"]}}">
                     <div class="rounded border border-tertiary d-flex justify-content-center" style="width: 50%">
                         <button type="button" class="bg-light border-0 w-25" id="down" onclick="updateSpinner(this, {{ isset($discount) ? $item['item_price'] * ((100 - $discount['discount_amount'])/100) : $item['item_price'] }});" style="outline: none">-</button>
-                        <input class="form-text text-center align-middle" name="item_quantity" id="itemQty" value="0" type="text" style="width:50px; display: inline; border: none; outline: none; text-align">
+                        <input class="form-text text-center align-middle" name="item_quantity" id="itemQty" value="0" type="text" style="width:50px; display: inline; border: none; outline: none; text-align" readonly>
                         <button type="button" class="bg-light border-0 w-25" id="up" onclick="updateSpinner(this, {{ isset($discount) ? $item['item_price'] * ((100 - $discount['discount_amount'])/100) : $item['item_price']  }});" style="outline: none">+</button>
                     </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -24,5 +25,11 @@ class AdminController extends Controller
         $action = ($user->is_banned == 1) ? 'banned' : 'unbanned';
 
         return redirect()->back()->with('success', "User '$username' has been $action successfully.");
+    }
+
+    public function getReportPage()
+    {
+        $param["order"] = Order::all();
+        return view('Report', $param);
     }
 }

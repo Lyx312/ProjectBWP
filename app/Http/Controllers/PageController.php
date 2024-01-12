@@ -29,7 +29,13 @@ class PageController extends Controller
     }
 
     public function getKatalogPage() {
-        return view('Katalog');
+        $items = Item::all();
+        $param["item"] = $items;
+        $param["discountedItems"] = $items->filter(function ($item) {
+            return $item->discount !== null;
+        });
+        //dd($param["discountedItems"]);
+        return view('Katalog', $param);
     }
 
     public function getDiscount($itemID) {

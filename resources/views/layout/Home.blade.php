@@ -17,7 +17,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" style="margin-bottom: 20px">
     <a class="navbar-brand" href="#">E-Commerce</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -70,6 +70,9 @@
                 </li>
             @elseif (Session::has('isAdmin'))
                 <li class="nav-item mx-2">
+                    <a class="navbar-text" href="{{route('report-page')}}">Reports</a>
+                </li>
+                <li class="nav-item mx-2">
                     <p class="navbar-text">Admin</p>
                 </li>
                 <li class="nav-item mx-2">
@@ -87,27 +90,27 @@
 @yield("content")
 
 
-<footer class="bg-dark text-light d-flex align-items-center" style="padding: 10px 24px 0px 24px;">
+<footer class="bg-dark text-light d-flex align-items-center" style="padding: 10px 24px 0px 24px; position: fixed; bottom: 0; width: 100%;">
     <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <p>&copy; 2024 M.I.E. All rights reserved.</p>
+        <div class="row">
+            <div class="col-md-6">
+                <p>&copy; 2024 E-Commerce. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="https://www.facebook.com/istts.page/" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/900px-Facebook_f_logo_%282019%29.svg.png" alt="Facebook" class="text-light" style="width: 32px; height: 32px; margin-right: 10px;">
+                </a>
+                <a href="https://twitter.com/istts_sby" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/X_logo_2023_%28white%29.png/900px-X_logo_2023_%28white%29.png" alt="X" class="text-light" style="width: 32px; height: 32px; margin-right: 10px;">
+                </a>
+                <a href="https://www.instagram.com/haloistts/" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/900px-Instagram_logo_2022.svg.png" alt="Instagram" class="text-light" style="width: 32px; height: 32px; margin-right: 10px;">
+                </a>
+                <a href="https://id.linkedin.com/company/istts" target="_blank" rel="noopener noreferrer">
+                    <img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/circle-linkedin-512.png" alt="LinkedIn" class="text-light" style="width: 32px; height: 32px; margin-right: 10px;">
+                </a>
+            </div>
         </div>
-        <div class="col-md-6 text-right">
-          <a href="https://www.facebook.com/istts.page/" target="_blank" rel="noopener noreferrer">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/900px-Facebook_f_logo_%282019%29.svg.png" alt="Facebook" class="text-light" style="width: 32px; height: 32px; margin-right: 10px;">
-          </a>
-          <a href="https://twitter.com/istts_sby" target="_blank" rel="noopener noreferrer">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/X_logo_2023_%28white%29.png/900px-X_logo_2023_%28white%29.png" alt="X" class="text-light" style="width: 32px; height: 32px; margin-right: 10px;">
-          </a>
-          <a href="https://www.instagram.com/haloistts/" target="_blank" rel="noopener noreferrer">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/900px-Instagram_logo_2022.svg.png" alt="Instagram" class="text-light" style="width: 32px; height: 32px; margin-right: 10px;">
-          </a>
-          <a href="https://id.linkedin.com/company/istts" target="_blank" rel="noopener noreferrer">
-            <img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/circle-linkedin-512.png" alt="LinkedIn" class="text-light" style="width: 32px; height: 32px; margin-right: 10px;">
-          </a>
-        </div>
-      </div>
     </div>
 </footer>
 
