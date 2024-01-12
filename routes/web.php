@@ -79,4 +79,5 @@ Route::controller(AdminController::class)->group(function () {
     Route::get('/admin/ban/{username}', 'banUser')->name('ban-user-get')->middleware([EnsureUserIsAdmin::class]);
     Route::post('/admin/ban/{username}', 'banUser')->name('ban-user')->middleware([EnsureUserIsAdmin::class]);
     Route::get('/admin/reports', 'getReportPage')->name('report-page')->middleware([EnsureUserIsAdmin::class]);
+    Route::post('/admin', 'filter')->name('filter-user')->middleware([EnsureUserIsAdmin::class]);
 });
