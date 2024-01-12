@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Pesanan dan Produk</title>
+    <title>Products & Orders</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -16,6 +16,11 @@
 
         .list-group-item:hover {
             transform: scale(1.005);
+        }
+        #kategori.sticky-top {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 75px;
         }
     </style>
 </head>
@@ -32,25 +37,24 @@
                     <div id="kategori" class="sticky-top">
                         <h2>Categories</h2>
                         <ul class="list-group" id="scrollspy">
-                            <li class="list-group-item" ><a href="#simple-list-item-1">List Of Orders</a></li>
+                            <li class="list-group-item"><a href="#simple-list-item-1">List Of Orders</a></li>
                             <li class="list-group-item"><a href="#simple-list-item-2">Order Data</a></li>
                             <li class="list-group-item"><a href="#simple-list-item-3">Add New Item</a></li>
                             <li class="list-group-item"><a href="#simple-list-item-4">Items Being Sold</a></li>
+                            <li class="list-group-item"><a href="#simple-list-item-5">Deleted Items</a></li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="col-md-9">
+                <div class="col-md-9" id="simple-list-item-1">
                     <!-- Daftar Pesanan  -->
                     @if(Session::has('success'))
                         <div class="alert alert-success">
                             <p class="m-0">{{Session::get('success')}}</p>
                         </div>
                     @endif
-
-                    <div id="daftar-pesanan">
                         <div class="card" style="width: auto;">
-                            <div class="card-header" id="simple-list-item-1">
+                            <div class="card-header">
                                 <h2>List Of Orders</h2>
                             </div>
                             @foreach($items as $item)
@@ -70,11 +74,11 @@
                             @endif
                             @endforeach
                         </div>
-                    </div>
+
 
                     <!-- Data Penjualan -->
-                    <div id="data-penjualan" class="container py-5" style="width:auto">
-                        <strong><h2 id="simple-list-item-2">Order Data</h2></strong>
+                    <div  id="simple-list-item-2" class="container py-5" style="width:auto">
+                        <strong><h2>Order Data</h2></strong>
 
                         <h4>Best Seller </h4>
                         <div class="row">
@@ -91,7 +95,7 @@
                     </div>
 
                     <!-- Produk -->
-                    <div id="daftar-produk" class="container py-5 border">
+                    <div  id="simple-list-item-3" class="container py-5 border">
                         <div class="row">
                             <div class="col-md-3">
                                 <!-- Filter -->
@@ -115,7 +119,7 @@
                             <div id="daftar-produk-content" class="col-md-9">
                                 <form method="POST" action="{{route('master-item-process')}}" id="masterItemForm" enctype="multipart/form-data">
                                     @csrf
-                                    <h2 class="card-header" id="simple-list-item-3">Master Item</h2>
+                                    <h2 class="card-header">Master Item</h2>
                                     <div class="mb-3">
                                         <label for="item_id" class="form-label">Item ID</label>
                                         <input type="text" class="form-control" id="item_id" name="item_id" readonly>
@@ -192,9 +196,9 @@
                         </div>
                     </div>
                     <!-- Daftar Produk -->
-                    <div id="daftar-pesanan" class="mb-5" style="padding-top: 50px">
+                    <div id="simple-list-item-4" class="mb-5" style="padding-top: 50px">
                         <div class="card" style="width: auto;">
-                            <div class="card-header" id="simple-list-item-4">
+                            <div class="card-header">
                                 <h2>Items Being Sold</h2>
                             </div>
                             @if (count($items) == 0)
@@ -223,8 +227,8 @@
                             @endforeach
                         </div>
 
-                        <div class="card mt-3" style="width: auto;">
-                            <div class="card-header" id="simple-list-item-4">
+                        <div class="card mt-3" style="width: auto;" id="simple-list-item-5">
+                            <div class="card-header">
                                 <h2>Deleted Items</h2>
                             </div>
                             @if (count($deletedItems) == 0)

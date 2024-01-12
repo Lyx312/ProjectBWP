@@ -17,7 +17,7 @@
                                     {{ $errors->first('jumlah') }}
                                 </div>
                             @endif
-                            <input type="text" class="form-control" id="jumlah" name="jumlah">
+                            <input type="text" class="form-control" id="jumlah" name="jumlah" value="{{old('jumlah')}}">
                         </div>
 
                         <div class="form-group">
@@ -28,8 +28,11 @@
                                 </div>
                             @endif
                             <select class="form-control" id="payment_method" name="payment_method">
-                                <option value="bank_transfer" >BCA</option>
-                                <option value="e_wallet">Pulsa</option>
+                                <option value="payment_1">BCA</option>
+                                <option value="payment_2">Pulsa</option>
+                                <option value="payment_3">Ovo</option>
+                                <option value="payment_4">Gopay</option>
+                                <option value="payment_5">Dana</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Top Up</button>

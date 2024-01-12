@@ -8,10 +8,21 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
-         .full-width-dropdown .dropdown-menu {
+    .full-width-dropdown .dropdown-menu {
         width: 100%;
         max-height: 200px;
         overflow-y: auto;
+    }
+    .dropdown-item {
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    .wide-dropdown-menu {
+        min-width: 250px;
+    }
+    .dropdown-menu-right {
+        right: 0;
+        left: auto;
     }
     </style>
 </head>
@@ -42,7 +53,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCategories" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Categories
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownCategories">
+                <div class="dropdown-menu wide-dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCategories">
                     @foreach (\App\Models\Category::all() as $category)
                         <a class="dropdown-item" href="/shop/{{ $category->category_id }}" data-category-id="{{ $category->category_id }}">{{ $category->category_name }}</a>
                     @endforeach
