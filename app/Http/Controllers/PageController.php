@@ -66,9 +66,34 @@ class PageController extends Controller
         $deletedItems = Item::onlyTrashed()->where("item_seller", "=", Auth::user()->username)->get();
         $categories = Category::all();
 
+        $user = User::with('Item.Discount')->find(Auth::user()->username);
+
+        $activeDiscounts = collect();
+        $pastDiscounts = collect();
+        $upcomingDiscounts = collect();
+
+
+        $discounts = Discount::whereHas('Item', function ($query) use ($user) {
+            $query->where('item_seller', $user->username);
+        })->get();
+
+        $currentDate = now();
+        foreach ($discounts as $discount) {
+            if ($currentDate->isBefore($discount->discount_start_date)) {
+                $upcomingDiscounts->push($discount);
+            } elseif ($currentDate->isBetween($discount->discount_start_date, $discount->discount_end_date)) {
+                $activeDiscounts->push($discount);
+            } else {
+                $pastDiscounts->push($discount);
+            }
+        }
+
         $param["items"] = $items;
         $param["deletedItems"] = $deletedItems;
         $param["categories"] = $categories;
+        $param["activeDiscounts"] = $activeDiscounts;
+        $param["pastDiscounts"] = $pastDiscounts;
+        $param["upcomingDiscounts"] = $upcomingDiscounts;
 
         return view('Seller', $param);
     }

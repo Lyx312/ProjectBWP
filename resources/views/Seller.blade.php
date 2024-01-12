@@ -117,7 +117,7 @@
                                     @csrf
                                     <h2 class="card-header" id="simple-list-item-3">Master Item</h2>
                                     <div class="mb-3">
-                                        <label for="item_name" class="form-label">Item ID</label>
+                                        <label for="item_id" class="form-label">Item ID</label>
                                         <input type="text" class="form-control" id="item_id" name="item_id" readonly>
                                     </div>
                                     <div class="mb-3">
@@ -208,6 +208,9 @@
                                     Item Name: {{$item->item_name}}<br>
                                     Item Description: {{$item->item_description}}<br>
                                     Item Price: Rp{{number_format($item["item_price"], 0, ",", ".")}}<br>
+                                    @if ($item->Discount && now()->isBetween($item->Discount->discount_start_date, $item->Discount->discount_end_date))
+                                        Discount Price: Rp{{number_format($item->item_price*((100-$item->Discount->discount_amount)/100), 0, ",", ".")}}<br>
+                                    @endif
                                     Item Stock: {{$item->item_stock}}<br>
                                     Category: {{$item->Category->category_name}}<br>
                                     <div class="d-flex btn-group mt-2" role="group" aria-label="Item Actions">
@@ -244,7 +247,165 @@
                         </div>
 
                     </div>
+                    <div id="discounts" class="container py-5 border">
+                        <div id="form_discount">
+                            <form method="POST" action="{{route('master-discount-process')}}" id="discountForm">
+                                @csrf
+                                <h2 class="card-header" id="simple-list-item-3">Master Discount</h2>
+                                <div class="mb-3">
+                                    <label for="discount_id" class="form-label">Discount ID</label>
+                                    <input type="text" class="form-control" id="discount_id" name="discount_id" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="discount_name" class="form-label">Discount Name</label>
+                                    @if($errors->has('discount_name'))
+                                        <div class="alert alert-danger">
+                                            {{ $errors->first('discount_name') }}
+                                        </div>
+                                    @endif
+                                    <input type="text" class="form-control" id="discount_name" name="discount_name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="discount_item_id" class="form-label">Item</label>
+                                    @if($errors->has('discount_item_id'))
+                                        <div class="alert alert-danger">
+                                            {{ $errors->first('discount_item_id') }}
+                                        </div>
+                                    @endif
+                                    <select class="form-control" name="discount_item_id" id="discount_item_id">
+                                        @foreach ($items as $item)
+                                            <option class="form-control" value="{{$item->item_id}}">{{$item->item_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="discount_amount" class="form-label">Discount Amount</label>
+                                    @if($errors->has('discount_amount'))
+                                        <div class="alert alert-danger">
+                                            {{ $errors->first('discount_amount') }}
+                                        </div>
+                                    @endif
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="discount_amount" name="discount_amount" min="1" value="1">
+                                        <span class="input-group-text">% Off</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="discount_start_date" class="form-label">Start Date</label>
+                                    @if($errors->has('discount_start_date'))
+                                        <div class="alert alert-danger">
+                                            {{ $errors->first('discount_start_date') }}
+                                        </div>
+                                    @endif
+                                    <input type="datetime-local" class="form-control" id="discount_start_date" name="discount_start_date">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="discount_end_date" class="form-label">End Date</label>
+                                    @if($errors->has('discount_end_date'))
+                                        <div class="alert alert-danger">
+                                            {{ $errors->first('discount_end_date') }}
+                                        </div>
+                                    @endif
+                                    <input type="datetime-local" class="form-control" id="discount_end_date" name="discount_end_date">
+                                </div>
+
+                                <button type="submit" class="btn btn-primary" name="discount_add">Add New Discount</button>
+                                <button type="submit" class="btn btn-warning" name="discount_update">Update Discount</button>
+                                <button type="reset" class="btn btn-danger">Reset Input</button>
+                            </form>
+                        </div>
+                    </div>
+
+
+                    <!-- Discount list -->
+                    <div id="discounts_list" class="mb-5" style="padding-top: 50px">
+                        <div class="card" style="width: auto;">
+                            <div class="card-header" id="simple-list-item-4">
+                                <h2>Active Discounts</h2>
+                            </div>
+                            @if (count($activeDiscounts) == 0)
+                                <h5 class="text-center m-3">No active discounts</h5>
+                            @endif
+                            @foreach($activeDiscounts as $discount)
+                            <ul class="list-group list-group-flush rounded">
+                                <li class="list-group-item list-group-item-action rounded">
+                                    Discount ID: {{ $discount->discount_id}}<br>
+                                    Discount Name: {{ $discount->discount_name}}<br>
+                                    Item: {{ $discount->Item->item_name}}<br>
+                                    <img src="{{"storage/" . $discount->Item->item_image}}" width="200px" alt="Item_Image_{{$discount->discount_item_id}}"><br>
+                                    Discount Amount: {{ $discount->discount_amount}}% Off<br>
+                                    Original Price: Rp{{ number_format($discount->Item->item_price, 0, ",", ".")}}<br>
+                                    Discount Price: Rp{{number_format($discount->Item->item_price*((100-$discount->discount_amount)/100), 0, ",", ".")}}<br>
+                                    Start Date: {{ $discount->discount_start_date}}<br>
+                                    End Date: {{ $discount->discount_end_date}}<br>
+                                    <div class="d-flex btn-group mt-2" role="group" aria-label="Item Actions">
+                                        <button class="btn btn-warning" id="btnUpdateDiscount" discount="{{json_encode($discount)}}">Update Discount</button>
+                                        <a href="/deleteDiscount/{{ $discount->discount_id }}" id="btnDeleteDiscount" class="btn btn-danger">Delete Discount</a>
+                                    </div>
+                                </li>
+                            </ul>
+                            @endforeach
+                        </div>
+
+                        <div class="card mt-3" style="width: auto;">
+                            <div class="card-header" id="simple-list-item-4">
+                                <h2>Upcoming Discounts</h2>
+                            </div>
+                            @if (count($upcomingDiscounts) == 0)
+                                <h5 class="text-center m-3">No upcoming discounts</h5>
+                            @endif
+                            @foreach($upcomingDiscounts as $discount)
+                            <ul class="list-group list-group-flush rounded">
+                                <li class="list-group-item list-group-item-action rounded">
+                                    Discount ID: {{ $discount->discount_id}}<br>
+                                    Discount Name: {{ $discount->discount_name}}<br>
+                                    Item: {{ $discount->Item->item_name}}<br>
+                                    <img src="{{"storage/" . $discount->Item->item_image}}" width="200px" alt="Item_Image_{{$discount->discount_item_id}}"><br>
+                                    Discount Amount: {{ $discount->discount_amount}}% Off<br>
+                                    Original Price: Rp{{ number_format($discount->Item->item_price, 0, ",", ".")}}<br>
+                                    Discount Price: Rp{{number_format($discount->Item->item_price*((100-$discount->discount_amount)/100), 0, ",", ".")}}<br>
+                                    Start Date: {{ $discount->discount_start_date}}<br>
+                                    End Date: {{ $discount->discount_end_date}}<br>
+                                    <div class="d-flex btn-group mt-2" role="group" aria-label="Item Actions">
+                                        <button class="btn btn-warning" id="btnUpdateDiscount" discount="{{json_encode($discount)}}">Update Discount</button>
+                                        <a href="/deleteDiscount/{{ $discount->discount_id }}" id="btnDeleteDiscount" class="btn btn-danger">Delete Discount</a>
+                                    </div>
+                                </li>
+                            </ul>
+                            @endforeach
+                        </div>
+
+                        <div class="card mt-3" style="width: auto;">
+                            <div class="card-header" id="simple-list-item-4">
+                                <h2>Past Discounts</h2>
+                            </div>
+                            @if (count($pastDiscounts) == 0)
+                                <h5 class="text-center m-3">No past discounts</h5>
+                            @endif
+                            @foreach($pastDiscounts as $discount)
+                            <ul class="list-group list-group-flush rounded">
+                                <li class="list-group-item list-group-item-action rounded">
+                                    Discount ID: {{ $discount->discount_id}}<br>
+                                    Discount Name: {{ $discount->discount_name}}<br>
+                                    Item: {{ $discount->Item->item_name}}<br>
+                                    <img src="{{"storage/" . $discount->Item->item_image}}" width="200px" alt="Item_Image_{{$discount->discount_item_id}}"><br>
+                                    Discount Amount: {{ $discount->discount_amount}}% Off<br>
+                                    Original Price: Rp{{ number_format($discount->Item->item_price, 0, ",", ".")}}<br>
+                                    Discount Price: Rp{{number_format($discount->Item->item_price*((100-$discount->discount_amount)/100), 0, ",", ".")}}<br>
+                                    Start Date: {{ $discount->discount_start_date}}<br>
+                                    End Date: {{ $discount->discount_end_date}}<br>
+                                    <div class="d-flex btn-group mt-2" role="group" aria-label="Item Actions">
+                                        <button class="btn btn-warning" id="btnUpdateDiscount" discount="{{json_encode($discount)}}">Update Discount</button>
+                                        <a href="/deleteDiscount/{{ $discount->discount_id }}" id="btnDeleteDiscount" class="btn btn-danger">Delete Discount</a>
+                                    </div>
+                                </li>
+                            </ul>
+                            @endforeach
+                        </div>
+
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -264,7 +425,6 @@
             var itemJSON = $(this).attr('item');
             var item = JSON.parse(itemJSON);
 
-            console.log(item.item_id);
             $(item_id).val(item.item_id);
             $(item_name).val(item.item_name);
             $(item_description).val(item.item_description);
@@ -281,6 +441,30 @@
             if (!confirmDelete) {
                 e.preventDefault();
             }
+        });
+
+        $(btnUpdateDiscount).click(function () {
+            var discountJSON = $(this).attr('discount');
+            var discount = JSON.parse(discountJSON);
+
+            console.log(discount.discount_id);
+
+            $(discount_id).val(discount.discount_id);
+            $(discount_name).val(discount.discount_name);
+            $(discount_item_id).val(discount.discount_item_id);
+            $(discount_amount).val(discount.discount_amount);
+
+            var startDate = new Date(discount.discount_start_date);
+            startDate.setHours(startDate.getHours() + 7);
+            var formattedStartDate = startDate.toISOString().slice(0, 16).replace("T", " ");
+            $(discount_start_date).val(formattedStartDate);
+
+            var endDate = new Date(discount.discount_end_date);
+            endDate.setHours(endDate.getHours() + 7);
+            var formattedEndDate = endDate.toISOString().slice(0, 16).replace("T", " ");
+            $(discount_end_date).val(formattedEndDate);
+
+            document.getElementById('discounts').scrollIntoView({ behavior: 'smooth' });
         });
 
         $(btnRestore).click(function (e) {

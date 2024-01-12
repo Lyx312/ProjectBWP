@@ -65,6 +65,8 @@ Route::controller(SellerController::class)->group(function () {
     Route::post('/masterItem', 'masterItemProcess')->name('master-item-process')->middleware([EnsureUserIsSeller::class]);
     Route::get('/delete/{itemID}', 'deleteItemProcess')->name('delete-item-process')->middleware([EnsureUserIsSeller::class]);
     Route::get('/restore/{itemID}', 'restoreItemProcess')->name('restore-item-process')->middleware([EnsureUserIsSeller::class]);
+
+    Route::post('/masterDiscount', 'masterDiscountProcess')->name('master-discount-process')->middleware([EnsureUserIsSeller::class]);
 });
 
 Route::controller(AdminController::class)->group(function () {
