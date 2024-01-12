@@ -20,6 +20,11 @@
     .carousel-control-next-icon {
         filter: invert(100%);
     }
+
+    .card-body {
+        padding: 15px;
+    }
+
 </style>
 
 <div class="container-fluid" style="margin-bottom: 75px;">
@@ -46,8 +51,8 @@
         </div>
     </div>
     <div class="container mt-4 border rounded shadow">
-        <h2 class="text-start mb-4">Trending Products</h2>
-        <div class="container media-scroller mb-3 d-flex flex-row">
+        <h2 class="text-start mb-4 mt-2">Trending Products</h2>
+        <div class="container mb-3 d-flex flex-row">
             @foreach ($trendingItems as $item)
                 <div class="col-md-4 mb-3">
                     <div class="card product-card">
@@ -56,7 +61,12 @@
                         </a>
                         <div class="card-body">
                             <h3 class="text-primary font-semibold mb-2">{{ $item->item_name }}</h3>
-                            <p class="text-primary mb-3">Price: Rp. {{ $item->item_price }}</p>
+                            @if ($item->discount)
+                                <p class="text-danger mb-1" style="text-decoration: line-through;">Rp{{ number_format($item->item_price, 0, ",", ".") }}</p>
+                                <p class="text-primary mb-3">Price: Rp. {{ number_format($item->item_price - ($item->Discount->discount_amount * $item->item_price / 100), 0, ",", ".") }}</p>
+                            @else
+                                <p class="text-primary mb-3">Price: Rp. {{ number_format($item->item_price, 0, ",", ".") }}</p>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -64,7 +74,7 @@
         </div>
     </div>
     <div class="container mt-4 border rounded shadow">
-        <h2 class="text-start mb-4">Discount Product</h2>
+        <h2 class="text-start mb-4 mt-2">Discount Product</h2>
         <div class="container media-scroller mb-3 d-flex flex-row">
             @foreach($discountedItems as $disc)
                 <div class="col-md-4 mb-3">
@@ -73,12 +83,9 @@
                             <img src="{{ asset("storage/$disc->item_image") }}" class="card-img-top" alt="Product Image">
                         </a>
                         <div class="card-body">
+                            <h3 class="text-primary font-semibold mb-2">{{ $disc->item_name }}</h3>
                             <p class="text-danger mb-1" style="text-decoration: line-through;">Rp{{ number_format($disc->item_price, 0, ",", ".") }}</p>
                             <p class="text-primary mb-3">Price: Rp. {{ number_format($disc->item_price - ($disc->Discount->discount_amount * $disc->item_price / 100), 0, ",", ".") }}</p>
-                            <div class="progress" role="progressbar" aria-label="Info example" aria-valuenow="{{$disc->Discount->discount_amount}}"
-                                aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar bg-info" style="width: 15%"></div>
-                            </div>
                         </div>
                     </div>
                 </div>

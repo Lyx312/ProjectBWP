@@ -36,17 +36,14 @@ class PageController extends Controller
             return $item->discount !== null;
         });
 
-        // Calculate trending items
         $trendingItems = OrderDetail::select('detail_item_id')
             ->groupBy('detail_item_id')
             ->orderByRaw('COUNT(*) DESC')
             ->take(3)
             ->get();
 
-        // Get the items for the trending item IDs
         $param["trendingItems"] = Item::whereIn('item_id', $trendingItems->pluck('detail_item_id'))->get();
 
-        // Find top 3 items with the highest average ratings
         $topRatedItems = Review::select('review_item_id')
             ->selectRaw('AVG(review_rating) as avg_rating')
             ->groupBy('review_item_id')
@@ -54,7 +51,6 @@ class PageController extends Controller
             ->take(3)
             ->get();
 
-        // Get the items for the top-rated item IDs
         $param["topRatedItems"] = Item::whereIn('item_id', $topRatedItems->pluck('review_item_id'))->get();
 
         return view('Katalog', $param);
