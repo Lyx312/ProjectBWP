@@ -69,7 +69,7 @@
                                 <h5 class="text-center m-3">No items being sold</h5>
                             @endif
                             @foreach($user->Item as $item)
-                            <ul class="list-group list-group-flush rounded">
+                            <ul class="list-group list-group-flush rounded" style="margin-bottom: 75px;">
                                 <li class="list-group-item list-group-item-action rounded text-left">
                                     <div class="d-flex">
                                         <img src="{{asset("storage/$item->item_image")}}" height="200px" width="200px" alt="Item_Image_{{$item->item_id}}" class="float-left">
