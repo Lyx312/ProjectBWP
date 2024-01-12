@@ -113,7 +113,7 @@ class PageController extends Controller
             ->get();
         $param["sellerItems"] = $sellerItems;
         $param["categoryIsOn"] = false;
-        return view('layout.Shop',$param);
+        return view('Shop',$param);
     }
 
     public function getCategoryPage($categoryID)
@@ -127,6 +127,6 @@ class PageController extends Controller
             $param["sellerItems"] = $sellerItems;
             $param["categoryIsOn"] = true;
             $param["category"] = Category::Find($categoryID);
-            return view('layout.Shop',$param);
+            return view('Shop',$param);
     }
 }

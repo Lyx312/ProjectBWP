@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SellerController;
@@ -36,8 +37,13 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/login', 'getLoginPage')->name('login-page')->middleware([EnsureUserNotLoggedIn::class]);
     Route::get('/register', 'getRegisterPage')->name('register-page')->middleware([EnsureUserNotLoggedIn::class]);
 
+
     Route::get('/test', 'test')->name('test-page');
 });
+
+Route::get('/search', [AjaxController::class, 'search']);
+Route::post('/searhItem,', [AjaxController::class, 'searchItem'])->name('postSubmit');
+
 
 Route::controller(UserController::class)->group(function () {
     Route::post('/login', 'loginProcess')->name('login-process');
