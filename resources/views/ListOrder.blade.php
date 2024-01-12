@@ -2,9 +2,6 @@
 @section("content")
 {{-- untuk melihat barang yg di order oleh customer --}}
 <div class="container mt-5">
-    @php
-        use App\Models\Discount;
-    @endphp
     <h2>List Order</h2>
 
     @foreach ($orders as $order)
@@ -26,7 +23,7 @@
                     <td scope="col">{{$index+1}}</td>
                     <td scope="col">{{$detail->Item->item_name}}</td>
                     <td scope="col">Rp{{$detail->Item->item_price}}</td>
-                    <td scope="col">{{$detail->detail_discount_id!=null ? "Rp" . $detail->Item->item_price * ((100-Discount::find($detail->detail_discount_id)->discount_amount)/100) : "-"}}</td>
+                    <td scope="col">{{$detail->detail_discount_id!=null ? "Rp" . $detail->Item->item_price * ((100-$detail->Discount->discount_amount)/100) : "-"}}</td>
                     <td scope="col">{{$detail->detail_item_quantity}}</td>
                     <td scope="col">Rp{{$detail->detail_subtotal}}</td>
                 </tr>

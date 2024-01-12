@@ -31,4 +31,8 @@ class OrderDetail extends Model
     public function Order(){
         return $this->belongsTo(Order::class, "detail_order_id", "order_id");
     }
+
+    public function Discount(){
+        return $this->belongsTo(Discount::class, "detail_discount_id", "discount_id");
+    }
 }
