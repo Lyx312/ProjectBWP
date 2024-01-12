@@ -1,6 +1,7 @@
 @extends("layout.Home")
 
 @section("content")
+<h2 class="text-center mb-4">Order Report</h2>
     <div class="card-columns mx-3 mb-3">
         @foreach ($order as $orders)
             <div class="card">
@@ -36,4 +37,42 @@
             </div>
         @endforeach
     </div>
+<h2 class="text-center mb-4">Customer Report</h2>
+<div class="card-columns mx-3 mb-3">
+    @foreach ($customers as $customer)
+        <div class="card">
+            <div class="card-header bg-success">
+                <h5 class="card-title">Customer: {{ $customer->display_name }}</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Total Spending: ${{ number_format($customer->Order->sum('order_total'), 0, ",", ".") }}</p>
+                <p class="card-text">Items Bought:</p>
+                @if ($customer->OrderDetail)
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Item Name</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($customer->OrderDetail as $index => $orderDetail)
+                                <tr>
+                                    <th scope="row">{{ $index + 1 }}</th>
+                                    <td>{{ $orderDetail->Item->item_name }}</td>
+                                    <td>{{ $orderDetail->detail_item_quantity }}</td>
+                                    <td>${{ number_format($orderDetail->detail_subtotal, 0, ",", ".") }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <p class="card-text">No items bought.</p>
+                @endif
+            </div>
+        </div>
+    @endforeach
+</div>
 @endsection

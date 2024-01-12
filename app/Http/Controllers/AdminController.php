@@ -30,6 +30,13 @@ class AdminController extends Controller
     public function getReportPage()
     {
         $param["order"] = Order::all();
+        $customers = User::whereHas('Order')->with('Order')->get();
+
+        // Pass the customers data to the view
+        $param["customers"] = $customers;
+
         return view('Report', $param);
     }
+
+    
 }

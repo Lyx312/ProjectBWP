@@ -69,4 +69,9 @@ class User extends Authenticatable
     public function Review(){
         return $this->hasMany(Review::class, "review_user", "username");
     }
+
+    public function OrderDetail()
+    {
+        return $this->hasManyThrough(OrderDetail::class, Order::class, 'order_buyer', 'detail_order_id', 'username', 'order_id');
+    }
 }
