@@ -34,13 +34,19 @@
                                     @endif
                             </div>
                             <div class="col-md-2">
-                                <input type="number" class="form-control" value="{{ $cartItem->cart_item_quantity }}" min="1" data-cart-id="{{ $cartItem->cart_id }}">
+                                <div class="rounded border border-tertiary d-flex justify-content-center" style="width: 100%">
+                                    <button type="button" class="bg-light border-0 w-25" id="down" cartId="{{$cartItem->cart_id}}" onclick="updateSpinner(this, {{ isset($cartItem->cart_discount_id) ? $cartItem->cart_item_price * ((100 - $cartItem->Discount->discount_amount)/100) : $cartItem->cart_item_price }}, {{$cartItem->Item->item_stock}});" style="outline: none">-</button>
+                                    <input class="form-text text-center align-middle" name="cart_item_quantity" id="itemQty{{$cartItem->cart_id}}" value="{{ $cartItem->cart_item_quantity }}" type="text" style="width:50px; display: inline; border: none; outline: none; text-align" readonly>
+                                    <button type="button" class="bg-light border-0 w-25" id="up" cartId="{{$cartItem->cart_id}}" onclick="updateSpinner(this, {{ isset($cartItem->cart_discount_id) ? $cartItem->cart_item_price * ((100 - $cartItem->Discount->discount_amount)/100) : $cartItem->cart_item_price }}, {{$cartItem->Item->item_stock}});" style="outline: none">+</button>
+                                </div>
                             </div>
                             <div class="col-md-4 text-right">
-                            <form method="POST" action="{{route("cart-remove", $cartItem["cart_id"])}}">
+                            <form method="POST" action="{{route("cart-master", $cartItem["cart_id"])}}">
                                 @csrf
                                 <input type="hidden" name="cart_id" value="{{$cartItem["cart_id"]}}">
-                                <button type="submit" class="btn btn-danger">Remove</button>
+                                <input type="hidden" name="cart_item_quantity" id="cartQuantity{{$cartItem->cart_id}}" value="{{$cartItem["cart_item_quantity"]}}">
+                                <button type="submit" class="btn btn-warning" name="editCart" style="width: 50%">Edit</button><br>
+                                <button type="submit" class="btn btn-danger" name="removeCart" style="width: 50%">Remove</button>
                             </form>
                             </div>
                         </div>
@@ -58,11 +64,11 @@
                         Balance: Rp{{ number_format(Auth::user()->balance, 0, ",", ".") }}
                     </h5>
                     <h5 class="card-title">Total</h5>
-                    <p class="card-text font-weight-bold">Items In Cart: {{$cartTotalItems}}</p>
-                    <p class="card-text font-weight-bold">Price: Rp{{ number_format($cartSubtotal, 0, ",", ".") }}</p>
+                    <p class="card-text font-weight-bold" id="cartTotalItemText">Items In Cart: {{$cartTotalItems}}</p>
+                    <p class="card-text font-weight-bold" id="cartSubtotalText">Price: Rp{{ number_format($cartSubtotal, 0, ",", ".") }}</p>
                     <a href="{{ route('doCheckout') }}" class="btn btn-primary btn-block" style="margin-bottom: 10px;">Checkout</a>
                     @if(session('error'))
-                        <div class="alert alert-danger"">
+                        <div class="alert alert-danger">
                             {{ session('error') }}
                         </div>
                     @endif
@@ -86,3 +92,25 @@
 @endsection
 
 
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script>
+    function updateSpinner(obj, itemPrice, itemStock)
+    {
+        var cartId = obj.getAttribute('cartId');
+        var value = parseInt($("#itemQty"+cartId).val());
+
+        if(isNaN(value) || value<0 || value>itemStock){
+            $(itemQty).val(0);
+            return;
+        } else {
+            if(obj.id == "down" && value >= 1) {
+                value--;
+            } else if(obj.id == "up" && value < itemStock){
+                value++;
+            }
+        }
+        $("#itemQty"+cartId).val(value);
+        $("#cartQuantity"+cartId).val(value);
+
+    }
+</script>
