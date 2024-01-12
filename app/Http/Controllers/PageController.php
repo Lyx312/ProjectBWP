@@ -32,9 +32,14 @@ class PageController extends Controller
     public function getKatalogPage() {
         $items = Item::all();
         $param["item"] = $items;
-        $param["discountedItems"] = $items->filter(function ($item) {
-            return $item->discount !== null;
-        });
+        $discountedItems = [];
+
+        foreach ($items as $item) {
+            if ($this->getDiscount($item->item_id) != null) {
+                $discountedItems[] = $item;
+            }
+        }
+        $param["discountedItems"] = $discountedItems;
 
         $trendingItems = OrderDetail::select('detail_item_id')
             ->groupBy('detail_item_id')
