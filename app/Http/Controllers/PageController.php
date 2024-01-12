@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Discount;
 use App\Models\Item;
+use App\Models\OrderDetail;
 use App\Models\User;
 use App\Models\Review;
 use Illuminate\Http\Request;
@@ -34,9 +35,19 @@ class PageController extends Controller
         $param["discountedItems"] = $items->filter(function ($item) {
             return $item->discount !== null;
         });
-        //dd($param["discountedItems"]);
+    
+        // Calculate trending items
+        $trendingItems = OrderDetail::select('detail_item_id')
+            ->groupBy('detail_item_id')
+            ->orderByRaw('COUNT(*) DESC')
+            ->take(3)
+            ->get();
+    
+        // Get the items for the trending item IDs
+        $param["trendingItems"] = Item::whereIn('item_id', $trendingItems->pluck('detail_item_id'))->get();
+    
         return view('Katalog', $param);
-    }
+    }    
 
     public function getDiscount($itemID) {
         return Discount::where('discount_item_id', $itemID)
@@ -113,7 +124,7 @@ class PageController extends Controller
             ->get();
         $param["sellerItems"] = $sellerItems;
         $param["categoryIsOn"] = false;
-        return view('layout.Shop',$param);
+        return view('Shop',$param);
     }
 
     public function getCategoryPage($categoryID)
@@ -127,6 +138,6 @@ class PageController extends Controller
             $param["sellerItems"] = $sellerItems;
             $param["categoryIsOn"] = true;
             $param["category"] = Category::Find($categoryID);
-            return view('layout.Shop',$param);
+            return view('Shop',$param);
     }
 }

@@ -59,7 +59,11 @@
             @if ($categoryIsOn)
                 <h1>Category: {{ $category->category_name }}</h1>
             @endif
-            <div class="row justify-content-center align-items-start">
+            <div class="search d-flex align-items-center my-2">
+                <p class="m-0" style="width: 8vw">Search Item:</p>
+                <input type="text" class="form-control" name="search" id="search" onkeyup="refreshItems()">
+            </div>
+            <div class="row justify-content-center align-items-start" id="item_list" onload="refreshItems()">
                 <div class="col">
                     <div class="row">
                         @foreach($sellerItems as $item)
@@ -101,3 +105,32 @@
 
 </section>
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    // Use the ready function to ensure the document is fully loaded
+
+        var itemList = $('#item_list');
+
+        // $('#search').keyup(function() {
+        //     refreshItems();
+        //     console.log($("#search").val());
+        // });
+
+        function refreshItems() {
+        //     // Use the full jQuery.ajax() instead of $.get
+            $.ajax({
+                url: '/search',
+                method: 'GET',
+                data: { keyword: $("#search").val() },
+                success: function(data) {
+                    itemList.html(data);
+                },
+                error: function(error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+
+        }
+
+</script>

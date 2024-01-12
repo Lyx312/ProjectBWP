@@ -80,17 +80,16 @@
     <div class="container mt-4 border rounded shadow">
         <h2 class="text-start mb-4">Trending Products</h2>
         <div class="container media-scroller mb-3 d-flex flex-row">
-            @foreach(range(1, 10) as $index)
-            <div class="col-md-4 mb-3">
-                <div class="card product-card">
-                    <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Product Image">
-                    <div class="card-body">
-                        <h3 class="text-primary font-semibold mb-2">Product {{ $index }}</h3>
-                        <p class="text-primary mb-3">Price: ${{ rand(20, 100) }}</p>
-
+            @foreach ($trendingItems as $item)
+                <div class="col-md-4 mb-3">
+                    <div class="card product-card">
+                        <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Product Image">
+                        <div class="card-body">
+                            <h3 class="text-primary font-semibold mb-2">{{ $item->item_name }}</h3>
+                            <p class="text-primary mb-3">Price: ${{ $item->item_price }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endforeach
         </div>
     </div>
