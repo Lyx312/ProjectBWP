@@ -35,17 +35,17 @@ class PageController extends Controller
         $param["discountedItems"] = $items->filter(function ($item) {
             return $item->discount !== null;
         });
-    
+
         // Calculate trending items
         $trendingItems = OrderDetail::select('detail_item_id')
             ->groupBy('detail_item_id')
             ->orderByRaw('COUNT(*) DESC')
             ->take(3)
             ->get();
-    
+
         // Get the items for the trending item IDs
         $param["trendingItems"] = Item::whereIn('item_id', $trendingItems->pluck('detail_item_id'))->get();
-    
+
         // Find top 3 items with the highest average ratings
         $topRatedItems = Review::select('review_item_id')
             ->selectRaw('AVG(review_rating) as avg_rating')
@@ -53,12 +53,12 @@ class PageController extends Controller
             ->orderByRaw('avg_rating DESC')
             ->take(3)
             ->get();
-    
+
         // Get the items for the top-rated item IDs
         $param["topRatedItems"] = Item::whereIn('item_id', $topRatedItems->pluck('review_item_id'))->get();
-    
+
         return view('Katalog', $param);
-    }    
+    }
 
     public function getDiscount($itemID) {
         return Discount::where('discount_item_id', $itemID)
@@ -110,12 +110,28 @@ class PageController extends Controller
             }
         }
 
+        $bestSeller = OrderDetail::with('item')
+            ->join('items as i', 'order_details.detail_item_id', '=', 'i.item_id')
+            ->where('i.item_seller', $user->username)
+            ->select([
+                'order_details.detail_item_id',
+                'order_details.detail_item_quantity',
+            ])
+            ->groupBy('order_details.detail_item_id','order_details.detail_item_quantity')
+            ->orderByDesc(
+                OrderDetail::selectRaw('SUM(detail_item_quantity) as temp')
+                    ->whereColumn('detail_item_id', 'order_details.detail_item_id')
+                    ->limit(1)
+            )
+            ->first();
+
         $param["items"] = $items;
         $param["deletedItems"] = $deletedItems;
         $param["categories"] = $categories;
         $param["activeDiscounts"] = $activeDiscounts;
         $param["pastDiscounts"] = $pastDiscounts;
         $param["upcomingDiscounts"] = $upcomingDiscounts;
+        $param["bestSeller"] = $bestSeller;
 
         return view('Seller', $param);
     }

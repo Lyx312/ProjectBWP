@@ -38,10 +38,14 @@
                         <h2>Categories</h2>
                         <ul class="list-group" id="scrollspy">
                             <li class="list-group-item"><a href="#simple-list-item-1">List Of Orders</a></li>
-                            <li class="list-group-item"><a href="#simple-list-item-2">Order Data</a></li>
+                            <li class="list-group-item"><a href="#simple-list-item-2">Best Seller</a></li>
                             <li class="list-group-item"><a href="#simple-list-item-3">Add New Item</a></li>
                             <li class="list-group-item"><a href="#simple-list-item-4">Items Being Sold</a></li>
                             <li class="list-group-item"><a href="#simple-list-item-5">Deleted Items</a></li>
+                            <li class="list-group-item"><a href="#simple-list-item-6">Add Discounts</a></li>
+                            <li class="list-group-item"><a href="#simple-list-item-7">Ongoing Discounts</a></li>
+                            <li class="list-group-item"><a href="#simple-list-item-8">Upcoming Discounts</a></li>
+                            <li class="list-group-item"><a href="#simple-list-item-9">Past Discounts</a></li>
                         </ul>
                     </div>
                 </div>
@@ -59,18 +63,22 @@
                             </div>
                             @foreach($items as $item)
                             @if ($item->OrderDetail != null)
-                            <ul class="list-group list-group-flush rounded">
-                                <button type="button" class="list-group-item list-group-item-action rounded" value="'{{$item->item_id}}'">
-                                    <img src="{{"storage/$item->item_image"}}" width="200px" alt="Item_Image_{{$item->item_id}}"><br>
-                                    Order Detail ID: {{$item->OrderDetail->detail_id}}<br>
-                                    Item Name: {{$item->item_name}}<br>
-                                    Item Price: Rp{{number_format($item->OrderDetail->detail_item_price, 0, ",", ".")}}<br>
-                                    Item Quantity: {{$item->OrderDetail->detail_item_quantity}}<br>
-                                    Item Subtotal: Rp{{number_format($item->OrderDetail->detail_subtotal, 0, ",", ".")}}<br>
-                                    Category: {{$item->Category->category_name}}<br>
-                                    Buyer: {{$item->OrderDetail->Order->User->display_name}}
-                                </button>
-                            </ul>
+                            <a href="/detail/{{ $item->item_id }}" style="text-decoration: none">
+                                <ul class="list-group list-group-flush rounded">
+                                    <button type="button" class="list-group-item list-group-item-action rounded text-left"" value="'{{$item->item_id}}'">
+                                        <img src="{{"storage/$item->item_image"}}" height="200px" width="200px" alt="Item_Image_{{$item->item_id}}" class="float-left">
+                                        <div  style="padding-left: 250px;">
+                                            Order Detail ID: {{$item->OrderDetail->detail_id}}<br>
+                                            Item Name: {{$item->item_name}}<br>
+                                            Item Price: Rp{{number_format($item->OrderDetail->detail_item_price, 0, ",", ".")}}<br>
+                                            Item Quantity: {{$item->OrderDetail->detail_item_quantity}}<br>
+                                            Item Subtotal: Rp{{number_format($item->OrderDetail->detail_subtotal, 0, ",", ".")}}<br>
+                                            Category: {{$item->Category->category_name}}<br>
+                                            Buyer: {{$item->OrderDetail->Order->User->display_name}}
+                                        </div>
+                                    </button>
+                                </ul>
+                            </a>
                             @endif
                             @endforeach
                         </div>
@@ -78,45 +86,36 @@
 
                     <!-- Data Penjualan -->
                     <div  id="simple-list-item-2" class="container py-5" style="width:auto">
-                        <strong><h2>Order Data</h2></strong>
-
-                        <h4>Best Seller </h4>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="card">
-                                    <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="https://via.placeholder.com/600x400">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Barang : 1</h5>
-                                        <p class="card-text">Harga: $1</p>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="card-header">
+                            <h2>Best Seller</h2>
                         </div>
+                        <ul class="list-group list-group-flush rounded">
+
+                            @if ($bestSeller)
+                                <a href="/detail/{{ $bestSeller->Item->item_id }}" style="text-decoration: none">
+                                    <button type="button" class="list-group-item list-group-item-action rounded text-left" value="'{{$bestSeller->Item->item_id}}'">
+                                        <!-- Display the bestseller item information -->
+                                        <img src="{{ asset("storage/{$bestSeller->Item->item_image}") }}" height="200px" width="200px" alt="Item_Image_{{ $bestSeller->Item->item_id }}" class="float-left">
+                                        <div style="padding-left: 250px;">
+                                            Order Detail ID: {{ $bestSeller->detail_id }}<br>
+                                            Item Name: {{ $bestSeller->Item->item_name }}<br>
+                                            Item Price: Rp{{ number_format($bestSeller->detail_item_price, 0, ",", ".") }}<br>
+                                            Item Quantity: {{ $bestSeller->detail_item_quantity }}<br>
+                                            Item Subtotal: Rp{{ number_format($bestSeller->detail_subtotal, 0, ",", ".") }}<br>
+                                            Category: {{ $bestSeller->Item->Category->category_name }}<br>
+                                        </div>
+                                    </button>
+                                </a>
+                                @else
+                                <strong><h5>No Item Has Been Reviewed</h5></strong>
+                            @endif
+                        </ul>
                     </div>
 
                     <!-- Produk -->
                     <div  id="simple-list-item-3" class="container py-5 border">
                         <div class="row">
-                            <div class="col-md-3">
-                                <!-- Filter -->
-                                <form action="#" method="post">
-                                    <h5>Filter</h5>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="filter_low" name="filter_low" value="1">
-                                        <label class="form-check-label" for="filter_low">Harga Rendah</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="filter_medium" name="filter_medium" value="1">
-                                        <label class="form-check-label" for="filter_medium">Harga Sedang</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="filter_high" name="filter_high" value="1">
-                                        <label class="form-check-label" for="filter_high">Harga Tinggi</label>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary mt-3">Filter</button>
-                                </form>
-                            </div>
-                            <div id="daftar-produk-content" class="col-md-9">
+                            <div id="daftar-produk-content" class="col-md-12">
                                 <form method="POST" action="{{route('master-item-process')}}" id="masterItemForm" enctype="multipart/form-data">
                                     @csrf
                                     <h2 class="card-header">Master Item</h2>
@@ -206,17 +205,21 @@
                             @endif
                             @foreach($items as $item)
                             <ul class="list-group list-group-flush rounded">
-                                <li class="list-group-item list-group-item-action rounded">
-                                    <img src="{{"storage/$item->item_image"}}" width="200px" alt="Item_Image_{{$item->item_id}}"><br>
-                                    Item ID: {{ $item->item_id}}<br>
-                                    Item Name: {{$item->item_name}}<br>
-                                    Item Description: {{$item->item_description}}<br>
-                                    Item Price: Rp{{number_format($item["item_price"], 0, ",", ".")}}<br>
-                                    @if ($item->Discount && now()->isBetween($item->Discount->discount_start_date, $item->Discount->discount_end_date))
-                                        Discount Price: Rp{{number_format($item->item_price*((100-$item->Discount->discount_amount)/100), 0, ",", ".")}}<br>
-                                    @endif
-                                    Item Stock: {{$item->item_stock}}<br>
-                                    Category: {{$item->Category->category_name}}<br>
+                                <li class="list-group-item list-group-item-action rounded text-left">
+                                    <div class="d-flex">
+                                        <img src="{{"storage/$item->item_image"}}" height="200px" width="200px" alt="Item_Image_{{$item->item_id}}" class="float-left">
+                                        <div style="padding-left: 20px;">
+                                            Item ID: {{ $item->item_id}}<br>
+                                            Item Name: {{$item->item_name}}<br>
+                                            Item Description: {{$item->item_description}}<br>
+                                            Item Price: Rp{{number_format($item["item_price"], 0, ",", ".")}}<br>
+                                            @if ($item->Discount && now()->isBetween($item->Discount->discount_start_date, $item->Discount->discount_end_date))
+                                                Discount Price: Rp{{number_format($item->item_price*((100-$item->Discount->discount_amount)/100), 0, ",", ".")}}<br>
+                                            @endif
+                                            Item Stock: {{$item->item_stock}}<br>
+                                            Category: {{$item->Category->category_name}}<br>
+                                        </div>
+                                    </div>
                                     <div class="d-flex btn-group mt-2" role="group" aria-label="Item Actions">
                                         <a href="/detail/{{ $item->item_id }}" class="btn btn-info">View Details</a>
                                         <button class="btn btn-warning" id="btnUpdate" item="{{json_encode($item)}}">Update Item</button>
@@ -236,22 +239,24 @@
                             @endif
                             @foreach($deletedItems as $item)
                             <ul class="list-group list-group-flush rounded">
-                                <li class="list-group-item list-group-item-action rounded">
-                                    <img src="{{"storage/$item->item_image"}}" width="200px" alt="Item_Image_{{$item->item_id}}"><br>
-                                    Item ID: {{ $item->item_id}}<br>
-                                    Item Name: {{$item->item_name}}<br>
-                                    Item Description: {{$item->item_description}}<br>
-                                    Item Price: Rp{{number_format($item["item_price"], 0, ",", ".")}}<br>
-                                    Item Stock: {{$item->item_stock}}<br>
-                                    Category: {{$item->Category->category_name}}<br>
-                                    <a href="/restore/{{ $item->item_id }}" id="btnRestore" class="btn btn-warning w-100 mt-2">Restore Item</a>
+                                <li class="list-group-item list-group-item-action rounded text-left">
+                                    <img src="{{"storage/$item->item_image"}}" height="200px" width="200px" alt="Item_Image_{{$item->item_id}}" class="float-left">
+                                    <div style="padding-left: 250px">
+                                        Item ID: {{ $item->item_id}}<br>
+                                        Item Name: {{$item->item_name}}<br>
+                                        Item Description: {{$item->item_description}}<br>
+                                        Item Price: Rp{{number_format($item["item_price"], 0, ",", ".")}}<br>
+                                        Item Stock: {{$item->item_stock}}<br>
+                                        Category: {{$item->Category->category_name}}<br>
+                                        <a href="/restore/{{ $item->item_id }}" id="btnRestore" class="btn btn-warning w-100 mt-2">Restore Item</a>
+                                    </div>
                                 </li>
                             </ul>
                             @endforeach
                         </div>
 
                     </div>
-                    <div id="discounts" class="container py-5 border">
+                    <div  id="simple-list-item-6" class="container py-5 border">
                         <div id="form_discount">
                             <form method="POST" action="{{route('master-discount-process')}}" id="discountForm">
                                 @csrf
@@ -322,7 +327,7 @@
 
 
                     <!-- Discount list -->
-                    <div id="discounts_list" class="mb-5" style="padding-top: 50px">
+                    <div  id="simple-list-item-7" class="mb-5" style="padding-top: 50px">
                         <div class="card" style="width: auto;">
                             <div class="card-header" id="simple-list-item-4">
                                 <h2>Active Discounts</h2>
@@ -332,16 +337,20 @@
                             @endif
                             @foreach($activeDiscounts as $discount)
                             <ul class="list-group list-group-flush rounded">
-                                <li class="list-group-item list-group-item-action rounded">
-                                    Discount ID: {{ $discount->discount_id}}<br>
-                                    Discount Name: {{ $discount->discount_name}}<br>
-                                    Item: {{ $discount->Item->item_name}}<br>
-                                    <img src="{{"storage/" . $discount->Item->item_image}}" width="200px" alt="Item_Image_{{$discount->discount_item_id}}"><br>
-                                    Discount Amount: {{ $discount->discount_amount}}% Off<br>
-                                    Original Price: Rp{{ number_format($discount->Item->item_price, 0, ",", ".")}}<br>
-                                    Discount Price: Rp{{number_format($discount->Item->item_price*((100-$discount->discount_amount)/100), 0, ",", ".")}}<br>
-                                    Start Date: {{ $discount->discount_start_date}}<br>
-                                    End Date: {{ $discount->discount_end_date}}<br>
+                                <li class="list-group-item list-group-item-action rounded text-left">
+                                    <div class="d-flex">
+                                        <img src="{{"storage/" . $discount->Item->item_image}}" height="200px" width="200px" alt="Item_Image_{{$discount->discount_item_id}}" class="float-left">
+                                        <div style="padding-left: 20px;">
+                                            Discount ID: {{ $discount->discount_id}}<br>
+                                            Discount Name: {{ $discount->discount_name}}<br>
+                                            Item: {{ $discount->Item->item_name}}<br>
+                                            Discount Amount: {{ $discount->discount_amount}}% Off<br>
+                                            Original Price: Rp{{ number_format($discount->Item->item_price, 0, ",", ".")}}<br>
+                                            Discount Price: Rp{{number_format($discount->Item->item_price*((100-$discount->discount_amount)/100), 0, ",", ".")}}<br>
+                                            Start Date: {{ $discount->discount_start_date}}<br>
+                                            End Date: {{ $discount->discount_end_date}}<br>
+                                        </div>
+                                    </div>
                                     <div class="d-flex btn-group mt-2" role="group" aria-label="Item Actions">
                                         <button class="btn btn-warning" id="btnUpdateDiscount" discount="{{json_encode($discount)}}">Update Discount</button>
                                         <a href="/deleteDiscount/{{ $discount->discount_id }}" id="btnDeleteDiscount" class="btn btn-danger">Delete Discount</a>
@@ -351,8 +360,8 @@
                             @endforeach
                         </div>
 
-                        <div class="card mt-3" style="width: auto;">
-                            <div class="card-header" id="simple-list-item-4">
+                        <div class="card mt-3" style="width: auto;" id="simple-list-item-8">
+                            <div class="card-header">
                                 <h2>Upcoming Discounts</h2>
                             </div>
                             @if (count($upcomingDiscounts) == 0)
@@ -360,16 +369,20 @@
                             @endif
                             @foreach($upcomingDiscounts as $discount)
                             <ul class="list-group list-group-flush rounded">
-                                <li class="list-group-item list-group-item-action rounded">
-                                    Discount ID: {{ $discount->discount_id}}<br>
-                                    Discount Name: {{ $discount->discount_name}}<br>
-                                    Item: {{ $discount->Item->item_name}}<br>
-                                    <img src="{{"storage/" . $discount->Item->item_image}}" width="200px" alt="Item_Image_{{$discount->discount_item_id}}"><br>
-                                    Discount Amount: {{ $discount->discount_amount}}% Off<br>
-                                    Original Price: Rp{{ number_format($discount->Item->item_price, 0, ",", ".")}}<br>
-                                    Discount Price: Rp{{number_format($discount->Item->item_price*((100-$discount->discount_amount)/100), 0, ",", ".")}}<br>
-                                    Start Date: {{ $discount->discount_start_date}}<br>
-                                    End Date: {{ $discount->discount_end_date}}<br>
+                                <li class="list-group-item list-group-item-action rounded text-left">
+                                    <div class="d-flex">
+                                        <img src="{{"storage/" . $discount->Item->item_image}}" height="200px" width="200px" alt="Item_Image_{{$discount->discount_item_id}}" class="float-left">
+                                        <div style="padding-left: 20px;">
+                                            Discount ID: {{ $discount->discount_id}}<br>
+                                            Discount Name: {{ $discount->discount_name}}<br>
+                                            Item: {{ $discount->Item->item_name}}<br>
+                                            Discount Amount: {{ $discount->discount_amount}}% Off<br>
+                                            Original Price: Rp{{ number_format($discount->Item->item_price, 0, ",", ".")}}<br>
+                                            Discount Price: Rp{{number_format($discount->Item->item_price*((100-$discount->discount_amount)/100), 0, ",", ".")}}<br>
+                                            Start Date: {{ $discount->discount_start_date}}<br>
+                                            End Date: {{ $discount->discount_end_date}}<br>
+                                        </div>
+                                    </div>
                                     <div class="d-flex btn-group mt-2" role="group" aria-label="Item Actions">
                                         <button class="btn btn-warning" id="btnUpdateDiscount" discount="{{json_encode($discount)}}">Update Discount</button>
                                         <a href="/deleteDiscount/{{ $discount->discount_id }}" id="btnDeleteDiscount" class="btn btn-danger">Delete Discount</a>
@@ -379,8 +392,8 @@
                             @endforeach
                         </div>
 
-                        <div class="card mt-3" style="width: auto;">
-                            <div class="card-header" id="simple-list-item-4">
+                        <div class="card mt-3" style="width: auto;" id="simple-list-item-9">
+                            <div class="card-header">
                                 <h2>Past Discounts</h2>
                             </div>
                             @if (count($pastDiscounts) == 0)
@@ -388,16 +401,20 @@
                             @endif
                             @foreach($pastDiscounts as $discount)
                             <ul class="list-group list-group-flush rounded">
-                                <li class="list-group-item list-group-item-action rounded">
-                                    Discount ID: {{ $discount->discount_id}}<br>
-                                    Discount Name: {{ $discount->discount_name}}<br>
-                                    Item: {{ $discount->Item->item_name}}<br>
-                                    <img src="{{"storage/" . $discount->Item->item_image}}" width="200px" alt="Item_Image_{{$discount->discount_item_id}}"><br>
-                                    Discount Amount: {{ $discount->discount_amount}}% Off<br>
-                                    Original Price: Rp{{ number_format($discount->Item->item_price, 0, ",", ".")}}<br>
-                                    Discount Price: Rp{{number_format($discount->Item->item_price*((100-$discount->discount_amount)/100), 0, ",", ".")}}<br>
-                                    Start Date: {{ $discount->discount_start_date}}<br>
-                                    End Date: {{ $discount->discount_end_date}}<br>
+                                <li class="list-group-item list-group-item-action rounded text-left">
+                                    <div class="d-flex">
+                                        <img src="{{"storage/" . $discount->Item->item_image}}" height="200px" width="200px" alt="Item_Image_{{$discount->discount_item_id}}" class="float-left">
+                                        <div style="padding-left: 20px;">
+                                            Discount ID: {{ $discount->discount_id}}<br>
+                                            Discount Name: {{ $discount->discount_name}}<br>
+                                            Item: {{ $discount->Item->item_name}}<br>
+                                            Discount Amount: {{ $discount->discount_amount}}% Off<br>
+                                            Original Price: Rp{{ number_format($discount->Item->item_price, 0, ",", ".")}}<br>
+                                            Discount Price: Rp{{number_format($discount->Item->item_price*((100-$discount->discount_amount)/100), 0, ",", ".")}}<br>
+                                            Start Date: {{ $discount->discount_start_date}}<br>
+                                            End Date: {{ $discount->discount_end_date}}<br>
+                                        </div>
+                                    </div>
                                     <div class="d-flex btn-group mt-2" role="group" aria-label="Item Actions">
                                         <button class="btn btn-warning" id="btnUpdateDiscount" discount="{{json_encode($discount)}}">Update Discount</button>
                                         <a href="/deleteDiscount/{{ $discount->discount_id }}" id="btnDeleteDiscount" class="btn btn-danger">Delete Discount</a>
