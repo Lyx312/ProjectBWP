@@ -1,9 +1,7 @@
 @extends("layout.Home")
 
 @section("content")
-<<<<<<< HEAD
 <h2 class="text-center mb-4">Order Report</h2>
-=======
     <div class="card-rows mx-3 mb-3">
         @foreach ($order as $orders)
             <div class="card mt-5">

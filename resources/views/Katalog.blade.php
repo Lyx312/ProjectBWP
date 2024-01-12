@@ -56,7 +56,7 @@
                         </a>
                         <div class="card-body">
                             <h3 class="text-primary font-semibold mb-2">{{ $item->item_name }}</h3>
-                            <p class="text-primary mb-3">Price: ${{ $item->item_price }}</p>
+                            <p class="text-primary mb-3">Price: Rp. {{ $item->item_price }}</p>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                         </a>
                         <div class="card-body">
                             <p class="text-danger mb-1" style="text-decoration: line-through;">Rp{{ number_format($disc->item_price, 0, ",", ".") }}</p>
-                            <p class="text-primary mb-3">Price: Rp{{ number_format($disc->item_price - ($disc->Discount->discount_amount * $disc->item_price / 100), 0, ",", ".") }}</p>
+                            <p class="text-primary mb-3">Price: Rp. {{ number_format($disc->item_price - ($disc->Discount->discount_amount * $disc->item_price / 100), 0, ",", ".") }}</p>
                             <div class="progress" role="progressbar" aria-label="Info example" aria-valuenow="{{$disc->Discount->discount_amount}}"
                                 aria-valuemin="0" aria-valuemax="100">
                                 <div class="progress-bar bg-info" style="width: 15%"></div>
